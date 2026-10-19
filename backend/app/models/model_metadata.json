@@ -1,0 +1,52 @@
+{
+  "model_version": "1.0.0-rf-experimental",
+  "model_type": "RandomForestClassifier",
+  "features": [
+    "temperature",
+    "relative_humidity",
+    "wind_speed",
+    "apparent_temperature"
+  ],
+  "training_samples": 2400,
+  "test_samples": 600,
+  "dataset_provenance": "Synthetic rule-derived labels (Formula Approximation Only)",
+  "clinical_validation": false,
+  "metrics": {
+    "macro_f1": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "confusion_matrix": [
+      [
+        243,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        56,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        84,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        217
+      ]
+    ],
+    "class_labels": [
+      "Low",
+      "Moderate",
+      "High",
+      "Very High"
+    ]
+  },
+  "disclaimer": "Metrics represent approximation of rule-based thresholds and do not constitute clinical validation."
+}

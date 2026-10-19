@@ -3,6 +3,7 @@ package com.heathealth.app.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
@@ -22,20 +24,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.heathealth.app.data.model.RiskLevel
 import com.heathealth.app.data.model.RiskPrediction
 import com.heathealth.app.ui.theme.HeatAmber
 import com.heathealth.app.ui.theme.HeatOrange
 import com.heathealth.app.ui.theme.HeatRiskBg
 import com.heathealth.app.ui.theme.HeatRiskBorder
+import com.heathealth.app.ui.theme.PrimaryTeal
 import com.heathealth.app.ui.theme.SurfaceWhite
 import com.heathealth.app.ui.theme.TextPrimary
 import com.heathealth.app.ui.theme.TextSecondary
 
 @Composable
 fun RiskIndicatorCard(
-    riskPrediction: RiskPrediction
+    riskPrediction: RiskPrediction,
+    factors: List<String> = emptyList(),
 ) {
+    val levelColor = when (riskPrediction.level) {
+        RiskLevel.LOW -> Color(0xFF2E7D32) // Green
+        RiskLevel.MODERATE -> HeatAmber      // Amber
+        RiskLevel.HIGH -> HeatOrange        // Orange
+        RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> Color(0xFFC62828) // Red
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,7 +74,7 @@ fun RiskIndicatorCard(
                     Icon(
                         imageVector = Icons.Default.Warning,
                         contentDescription = "Risk Indicator",
-                        tint = HeatOrange,
+                        tint = levelColor,
                         modifier = Modifier.size(24.dp)
                     )
                     Text(
@@ -71,11 +84,11 @@ fun RiskIndicatorCard(
                     )
                 }
 
-                // Sample Badge
+                // Method / Subtitle Badge
                 Text(
-                    text = riskPrediction.subtitle,
+                    text = riskPrediction.method,
                     style = MaterialTheme.typography.labelSmall,
-                    color = HeatOrange,
+                    color = levelColor,
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
                         .background(SurfaceWhite)
@@ -85,7 +98,7 @@ fun RiskIndicatorCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Risk Level Category Display
+            // Risk Level Category Display with Text + Color Indicator
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -96,15 +109,34 @@ fun RiskIndicatorCard(
                     color = TextSecondary
                 )
 
-                Text(
-                    text = riskPrediction.level.displayName,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = HeatOrange,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier
                         .clip(RoundedCornerShape(12.dp))
-                        .background(HeatAmber.copy(alpha = 0.2f))
-                        .padding(horizontal = 12.dp, vertical = 4.dp)
-                )
+                        .background(levelColor.copy(alpha = 0.15f))
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(10.dp)
+                            .clip(CircleShape)
+                            .background(levelColor)
+                    )
+                    Text(
+                        text = riskPrediction.level.displayName,
+                        style = MaterialTheme.typography.titleLarge,
+                        color = levelColor
+                    )
+                }
+
+                riskPrediction.score?.let { scoreVal ->
+                    Text(
+                        text = "Score: ${scoreVal}°C",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = TextSecondary
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -114,6 +146,48 @@ fun RiskIndicatorCard(
                 style = MaterialTheme.typography.bodyMedium,
                 color = TextPrimary
             )
+
+            // Main Contributing Factors Section
+            if (factors.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(14.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = "Factors",
+                        tint = PrimaryTeal,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Text(
+                        text = "Contributing Factors:",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = TextPrimary
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                factors.forEach { factor ->
+                    Row(
+                        modifier = Modifier.padding(start = 8.dp, top = 2.dp),
+                        verticalAlignment = Alignment.Top,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Text(
+                            text = "•",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = PrimaryTeal
+                        )
+                        Text(
+                            text = factor,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = TextSecondary
+                        )
+                    }
+                }
+            }
         }
     }
 }

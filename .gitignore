@@ -11,7 +11,9 @@ app/build/
 .cxx
 local.properties
 backend/venv/
+backend/.venv/
+venv/
+.venv/
 __pycache__/
+**/__pycache__/
 *.apk
-
-

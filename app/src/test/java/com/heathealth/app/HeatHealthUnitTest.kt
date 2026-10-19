@@ -32,9 +32,18 @@ class HeatHealthUnitTest {
 
         assertEquals(RiskLevel.MODERATE, risk.level)
         assertEquals("Moderate", risk.level.displayName)
-        assertEquals("Sample Risk", risk.title)
+        assertEquals("Sample Risk Assessment", risk.title)
         assertEquals("Demo Prediction", risk.subtitle)
         assertTrue("Risk prediction must be explicitly marked as demo data", risk.isDemoData)
+    }
+
+    @Test
+    fun testRiskLevelMapping() {
+        assertEquals(RiskLevel.LOW, RiskLevel.fromDisplayName("Low"))
+        assertEquals(RiskLevel.MODERATE, RiskLevel.fromDisplayName("Moderate"))
+        assertEquals(RiskLevel.HIGH, RiskLevel.fromDisplayName("High"))
+        assertEquals(RiskLevel.VERY_HIGH, RiskLevel.fromDisplayName("Very High"))
+        assertEquals(RiskLevel.VERY_HIGH, RiskLevel.fromDisplayName("VERY_HIGH"))
     }
 
     @Test
@@ -59,16 +68,13 @@ class HeatHealthUnitTest {
     }
 
     @Test
-    fun testDashboardViewModelState() {
-        val viewModel = DashboardViewModel(repository)
+    fun testDashboardViewModelOfflineSampleLoad() {
+        val viewModel = DashboardViewModel(repository, autoLoad = false)
+        viewModel.loadSampleData()
         val state = viewModel.uiState.value
 
         assertFalse(state.isLoading)
         assertNull(state.errorMessage)
         assertEquals(34, state.weatherData.temperatureCelsius)
-
-        viewModel.refreshData()
-        val refreshedState = viewModel.uiState.value
-        assertEquals(34, refreshedState.weatherData.temperatureCelsius)
     }
 }

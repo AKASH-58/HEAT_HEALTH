@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Air
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Thermostat
 import androidx.compose.material.icons.filled.WaterDrop
@@ -38,7 +40,8 @@ import com.heathealth.app.ui.theme.TextSecondary
 
 @Composable
 fun WeatherSummaryCard(
-    weatherData: WeatherData
+    weatherData: WeatherData,
+    locationLabel: String = ""
 ) {
     Card(
         modifier = Modifier
@@ -53,51 +56,89 @@ fun WeatherSummaryCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Demonstration Badge Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Weather Summary",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = TextPrimary
-                )
-
-                Row(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(PrimaryTealLight)
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Info,
-                        contentDescription = "Demo Badge",
-                        tint = PrimaryTeal,
-                        modifier = Modifier.size(14.dp)
-                    )
+                Column {
                     Text(
-                        text = "DEMONSTRATION DATA",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = PrimaryTeal
+                        text = "Weather Summary",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = TextPrimary
                     )
+                    if (locationLabel.isNotEmpty()) {
+                        Text(
+                            text = locationLabel,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = TextSecondary
+                        )
+                    }
+                }
+
+                if (weatherData.isDemoData) {
+                    Row(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(PrimaryTealLight)
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = "Demo Badge",
+                            tint = PrimaryTeal,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Text(
+                            text = "DEMONSTRATION DATA",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = PrimaryTeal
+                        )
+                    }
+                } else {
+                    Row(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(PrimaryTeal.copy(alpha = 0.15f))
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = "Live Data Badge",
+                            tint = PrimaryTeal,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Text(
+                            text = "LIVE DATA",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = PrimaryTeal
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Weather Metrics Grid
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 WeatherMetricItem(
                     icon = Icons.Default.Thermostat,
-                    label = "Temperature",
-                    value = "${weatherData.temperatureCelsius}°C",
+                    label = "Temp",
+                    value = if (weatherData.temperatureCelsius != null) "${weatherData.temperatureCelsius}°C" else "N/A",
+                    iconColor = HeatOrange,
+                    modifier = Modifier.weight(1f)
+                )
+
+                WeatherMetricItem(
+                    icon = Icons.Default.WbSunny,
+                    label = "Feels Like",
+                    value = if (weatherData.feelsLikeCelsius != null) "${weatherData.feelsLikeCelsius}°C" else "N/A",
                     iconColor = HeatOrange,
                     modifier = Modifier.weight(1f)
                 )
@@ -105,17 +146,26 @@ fun WeatherSummaryCard(
                 WeatherMetricItem(
                     icon = Icons.Default.WaterDrop,
                     label = "Humidity",
-                    value = "${weatherData.humidityPercent}%",
+                    value = if (weatherData.humidityPercent != null) "${weatherData.humidityPercent}%" else "N/A",
                     iconColor = PrimaryTeal,
                     modifier = Modifier.weight(1f)
                 )
 
                 WeatherMetricItem(
-                    icon = Icons.Default.WbSunny,
-                    label = "Feels Like",
-                    value = "${weatherData.feelsLikeCelsius}°C",
-                    iconColor = HeatOrange,
+                    icon = Icons.Default.Air,
+                    label = "Wind",
+                    value = if (weatherData.windSpeedKmh != null) "${weatherData.windSpeedKmh} km/h" else "N/A",
+                    iconColor = PrimaryTeal,
                     modifier = Modifier.weight(1f)
+                )
+            }
+
+            if (weatherData.source.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = "Source: ${weatherData.source}${if (weatherData.timestamp.isNotEmpty()) " • " + weatherData.timestamp else ""}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = TextSecondary
                 )
             }
         }
@@ -138,17 +188,17 @@ private fun WeatherMetricItem(
             imageVector = icon,
             contentDescription = label,
             tint = iconColor,
-            modifier = Modifier.size(28.dp)
+            modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = value,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             color = TextPrimary
         )
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodySmall,
             color = TextSecondary
         )
     }
