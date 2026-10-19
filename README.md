@@ -1,15 +1,26 @@
 # HeatHealth — Heat-Health Risk Prediction & Early Warning System
 
-> **College Project — Phase 2 Completed: Live Weather Integration, Heat-Risk Engine, Bottom Navigation & Early Warnings**
+> **Comprehensive Project Documentation — Phase 1 & Phase 2**
 
 HeatHealth is an open-source health-technology application designed to help students, outdoor workers, athletes, and vulnerable individuals monitor heat-health risks and receive preventive early warning recommendations during extreme thermal conditions.
 
 ---
 
-## 📌 Phase 2 Completed Objectives & Scope
+## 📚 Phase Documentation Links
+- 📘 [Phase 1 Detailed Documentation](README_PHASE1.md) — Foundation Dashboard & Local FastAPI Backend Setup.
+- 📙 [Phase 2 Detailed Documentation](README_PHASE2.md) — Live Open-Meteo Integration, Heat-Risk Engine, Bottom Navigation & Hourly Forecasts.
 
-Phase 2 builds a complete end-to-end integration between the Android Jetpack Compose application and the Python FastAPI backend:
-- **Live Weather Integration**: Real-time current weather and 24-hour forecasts via the free, open-source **Open-Meteo API** (Temperature, Relative Humidity, Apparent "Feels-like" Temperature, and Wind Speed).
+---
+
+## 📌 Project Overview & Roadmap
+
+### **Phase 1: Foundation Dashboard & Backend Setup (Completed)**
+- **Android App**: Modern, responsive Jetpack Compose dashboard with Material 3 design and clearly labeled demonstration data.
+- **Backend Service**: Lightweight Python FastAPI backend providing system health checks and RESTful endpoints.
+- **Zero-Cost Development**: 100% free, open-source stack designed to run locally without paid APIs, subscriptions, or cloud billing accounts.
+
+### **Phase 2: Live Weather Integration, Heat-Risk Engine & Navigation (Completed)**
+- **Live Weather Integration**: Real-time current weather and 24-hour hourly forecasts via the free, open-source **Open-Meteo API** (Temperature, Relative Humidity, Apparent "Feels-like" Temperature, and Wind Speed).
 - **Dual Heat-Risk Prediction Engine**:
   - **Baseline Rule Engine**: Documented environmental thermal stress calculations based on National Weather Service (NWS) Heat Index equations and World Health Organization (WHO) safety principles.
   - **Experimental Machine Learning Pipeline**: Trainable scikit-learn `RandomForestClassifier` pipeline with baseline fallback logic and explicit dataset provenance labeling.
@@ -18,23 +29,24 @@ Phase 2 builds a complete end-to-end integration between the Android Jetpack Com
   - **Risk Map**: Regional heat stress monitoring zone selector (e.g., New Delhi, Bengaluru, Mumbai, Chennai, Kolkata) with location search.
   - **Alerts**: Early warning advisories (Peak Afternoon Extreme Heat Advisory, High Humidity Strain Warning) and customizable notification preference toggles.
   - **Safety**: Vulnerability profile selector (Outdoor Worker, Student, Senior Citizen, Athlete) with custom hydration targets, heat illness symptom checklists, and emergency helpline shortcuts (`108 / 112`).
-- **Resilient Network Layer**: Retrofit 2 + Gson HTTP client with OkHttp timeouts, cleartext network security rules for local development, and explicit error recovery states with offline demo fallback.
+- **Resilient Network Layer**: Retrofit 2 + Gson HTTP client with OkHttp timeouts, cleartext network security rules for local development (`10.0.2.2:8000` / `10.92.1.9:8000`), and explicit error recovery states with offline demo fallback.
 
 > [!IMPORTANT]
 > **Environmental Estimate Notice**: HeatHealth evaluates environmental thermal stress risk using meteorological data. It is an early-stage research prototype and does not provide an individualized medical diagnosis or official public weather warning.
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Complete Technology Stack
 
 ### Android Frontend
 - **Language**: Kotlin
 - **UI Framework**: Jetpack Compose with Material 3
-- **Navigation**: Jetpack Navigation Compose (`androidx.navigation:navigation-compose`)
+- **Navigation**: Jetpack Navigation Compose (`androidx.navigation:navigation-compose:2.8.8`)
 - **Networking**: Retrofit 2 + Gson Converter + OkHttp 3
 - **Architecture**: MVVM (`DashboardViewModel`, `HeatHealthRepository`, `DashboardUiState`)
 - **Minimum SDK**: API 26 (Android 8.0+)
 - **Target SDK**: API 37 (Android 15+)
+- **Theme**: Light health-tech theme (Teal `#00897B` primary accent, Amber `#F59E0B` heat indicators)
 
 ### Python Backend
 - **Language**: Python 3.13+
@@ -86,7 +98,9 @@ HeatHealth/
 │   ├── run_audit_tests.py                  # Comprehensive audit test suite
 │   └── test_backend.py                     # Integration test suite
 ├── build.gradle.kts                        # Root Gradle configuration
-├── README.md                               # Project documentation
+├── README.md                               # Combined project documentation
+├── README_PHASE1.md                        # Dedicated Phase 1 documentation
+├── README_PHASE2.md                        # Dedicated Phase 2 documentation
 └── .gitignore                              # Git exclusion rules
 ```
 
@@ -94,7 +108,7 @@ HeatHealth/
 
 ## ⚙️ Backend API Endpoints
 
-The FastAPI backend runs locally on `http://127.0.0.1:8000` (or `0.0.0.0:8000`):
+The FastAPI backend runs locally on `http://127.0.0.1:8000` or `0.0.0.0:8000`:
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
@@ -107,7 +121,7 @@ The FastAPI backend runs locally on `http://127.0.0.1:8000` (or `0.0.0.0:8000`):
 
 ---
 
-## 💻 How to Build & Run Phase 2
+## 💻 How to Build & Run
 
 ### 1. Running the FastAPI Backend
 
@@ -115,7 +129,7 @@ The FastAPI backend runs locally on `http://127.0.0.1:8000` (or `0.0.0.0:8000`):
 # Navigate to backend directory
 cd backend
 
-# Create virtual environment (if not already created)
+# Create virtual environment
 python -m venv .venv
 
 # Activate virtual environment (Windows PowerShell)
@@ -128,7 +142,7 @@ python -m pip install -r requirements.txt
 python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-To test backend functionality:
+To run test suites:
 ```powershell
 python -m unittest run_audit_tests.py
 python -m unittest test_backend.py
@@ -149,10 +163,11 @@ python -m unittest test_backend.py
 
 ---
 
-## 🧪 Automated Test Results
+## 🧪 Automated Test Summary
 
-- **Backend Audit & Integration Tests**: **15/15 PASSED (100% Success)**
-- **Android Unit Tests**: **6/6 PASSED (100% Success)**
+- **Phase 1 Unit Tests**: 100% Passed
+- **Phase 2 Backend Audit & Integration Tests**: **15/15 PASSED (100% Success)**
+- **Phase 2 Android Unit Tests**: **6/6 PASSED (100% Success)**
 - **Android Gradle Assembly (`assembleDebug`)**: **BUILD SUCCESSFUL**
 - **Android Static Analysis (`lintDebug`)**: **0 Fatal Errors**
 
