@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.heathealth.app.ui.components.CustomMlPredictorCard
 import com.heathealth.app.ui.components.DisclaimerCard
 import com.heathealth.app.ui.components.HeaderComponent
 import com.heathealth.app.ui.components.HourlyForecastCard
@@ -115,6 +116,16 @@ fun DashboardScreen(
                     RiskIndicatorCard(
                         riskPrediction = uiState.riskPrediction,
                         factors = uiState.factors
+                    )
+
+                    CustomMlPredictorCard(
+                        customState = uiState.customPrediction,
+                        onInputsChanged = { temp, hum, wind ->
+                            viewModel.updateCustomInputs(temp, hum, wind)
+                        },
+                        onPredictClicked = {
+                            viewModel.runCustomMlPrediction()
+                        }
                     )
 
                     SafetyRecommendationsCard(

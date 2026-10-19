@@ -13,7 +13,9 @@ from app.schemas import (
     HourlyWeatherModel,
     RiskModel,
     RecommendationModel,
-    MetadataModel
+    MetadataModel,
+    PredictRequest,
+    PredictResponse
 )
 from app.weather_service import WeatherService
 from app.heat_risk_engine import BaselineHeatRiskEngine
@@ -64,6 +66,32 @@ def health_check():
         "experimental_ml_model_loaded": ml_predictor.loaded,
         "ml_dataset_status": "Synthetic rule-derived labels (Not clinically validated)"
     }
+
+@app.post("/predict", response_model=PredictResponse)
+async def post_predict(request: PredictRequest):
+    """
+    Predicts heat-health risk level and recommendations for custom environmental weather conditions.
+    """
+    prediction = ml_predictor.predict_custom(
+        temperature_c=request.temperature_c,
+        humidity_percent=request.humidity_percent,
+        wind_speed_kmh=request.wind_speed_kmh,
+        apparent_temperature_c=request.apparent_temperature_c
+    )
+
+    recommendations = [
+        RecommendationModel(**rec) for rec in prediction["safety_recommendations"]
+    ]
+
+    return PredictResponse(
+        risk_level=prediction["risk_level"],
+        risk_score=prediction["risk_score"],
+        prediction_message=prediction["prediction_message"],
+        factors=prediction["factors"],
+        safety_recommendations=recommendations,
+        model_version=prediction["model_version"],
+        is_demo_model=prediction["is_demo_model"]
+    )
 
 @app.get("/api/v1/weather", response_model=WeatherResponse)
 async def get_weather(

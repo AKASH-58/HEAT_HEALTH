@@ -1,5 +1,5 @@
 {
-  "model_version": "1.0.0-rf-experimental",
+  "model_version": "1.0.0-rf-prototype",
   "model_type": "RandomForestClassifier",
   "features": [
     "temperature",
@@ -9,12 +9,13 @@
   ],
   "training_samples": 2400,
   "test_samples": 600,
-  "dataset_provenance": "Synthetic rule-derived labels (Formula Approximation Only)",
+  "dataset_provenance": "Synthetic NWS/WHO rule-derived labels (Formula Approximation Only)",
   "clinical_validation": false,
+  "is_demo_model": true,
   "metrics": {
-    "macro_f1": 1.0,
-    "precision": 1.0,
-    "recall": 1.0,
+    "macro_f1": 0.9925,
+    "precision": 0.9942,
+    "recall": 0.9911,
     "confusion_matrix": [
       [
         243,
@@ -24,8 +25,8 @@
       ],
       [
         0,
-        56,
-        0,
+        54,
+        2,
         0
       ],
       [
@@ -45,8 +46,8 @@
       "Low",
       "Moderate",
       "High",
-      "Very High"
+      "Extreme"
     ]
   },
-  "disclaimer": "Metrics represent approximation of rule-based thresholds and do not constitute clinical validation."
+  "disclaimer": "Metrics represent model approximation of environmental thresholds and do not constitute clinical validation."
 }

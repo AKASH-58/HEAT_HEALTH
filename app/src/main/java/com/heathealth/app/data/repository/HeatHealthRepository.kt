@@ -9,6 +9,8 @@ import com.heathealth.app.data.model.WeatherData
 import com.heathealth.app.network.BackendApiConfig
 import com.heathealth.app.network.HeatHealthApiService
 import com.heathealth.app.network.dto.HeatRiskResponseDto
+import com.heathealth.app.network.dto.PredictRequestDto
+import com.heathealth.app.network.dto.PredictResponseDto
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.ConnectException
@@ -41,6 +43,36 @@ class HeatHealthRepository(
             Result.failure(Exception(errorMsg, e))
         } catch (e: Exception) {
             Result.failure(Exception("Failed to process heat-risk assessment: ${e.localizedMessage}", e))
+        }
+    }
+
+    suspend fun predictCustomHeatRisk(
+        temperature: Double,
+        humidity: Double,
+        windSpeed: Double? = null
+    ): Result<PredictResponseDto> {
+        return try {
+            val req = PredictRequestDto(
+                temperatureC = temperature,
+                humidityPercent = humidity,
+                windSpeedKmh = windSpeed
+            )
+            val res = apiService.predictHeatRisk(req)
+            Result.success(res)
+        } catch (e: ConnectException) {
+            Result.failure(IOException("Unable to connect to backend server at ${BackendApiConfig.baseUrl}. Ensure FastAPI is running on host 0.0.0.0:8000.", e))
+        } catch (e: IOException) {
+            val details = e.localizedMessage ?: "Connection refused or cleartext traffic blocked"
+            Result.failure(IOException("Network error connecting to ${BackendApiConfig.baseUrl}: $details", e))
+        } catch (e: HttpException) {
+            val errorMsg = when (e.code()) {
+                400, 422 -> "Invalid input conditions specified for prediction."
+                502 -> "Backend ML model inference error."
+                else -> "Backend server returned HTTP error ${e.code()}."
+            }
+            Result.failure(Exception(errorMsg, e))
+        } catch (e: Exception) {
+            Result.failure(Exception("Failed to run custom ML prediction: ${e.localizedMessage}", e))
         }
     }
 
@@ -117,7 +149,7 @@ class HeatHealthRepository(
         val sampleHourly = listOf(
             HourlyForecast("12:00", 33, 60, 37, 10, RiskLevel.MODERATE, 37.5),
             HourlyForecast("13:00", 35, 58, 39, 12, RiskLevel.HIGH, 39.2),
-            HourlyForecast("14:00", 36, 55, 41, 14, RiskLevel.VERY_HIGH, 41.5),
+            HourlyForecast("14:00", 36, 55, 41, 14, RiskLevel.EXTREME, 41.5),
             HourlyForecast("15:00", 36, 52, 40, 15, RiskLevel.HIGH, 40.8),
             HourlyForecast("16:00", 34, 56, 38, 11, RiskLevel.HIGH, 38.6),
             HourlyForecast("17:00", 32, 62, 36, 9, RiskLevel.MODERATE, 36.1),

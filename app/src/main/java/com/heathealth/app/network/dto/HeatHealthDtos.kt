@@ -65,3 +65,20 @@ data class WeatherResponseDto(
     @SerializedName("hourly_forecast") val hourlyForecast: List<HourlyWeatherDto> = emptyList(),
     @SerializedName("units") val units: Map<String, String> = emptyMap()
 )
+
+data class PredictRequestDto(
+    @SerializedName("temperature_c") val temperatureC: Double,
+    @SerializedName("humidity_percent") val humidityPercent: Double,
+    @SerializedName("wind_speed_kmh") val windSpeedKmh: Double? = null,
+    @SerializedName("apparent_temperature_c") val apparentTemperatureC: Double? = null
+)
+
+data class PredictResponseDto(
+    @SerializedName("risk_level") val riskLevel: String,
+    @SerializedName("risk_score") val riskScore: Double? = null,
+    @SerializedName("prediction_message") val predictionMessage: String,
+    @SerializedName("factors") val factors: List<String> = emptyList(),
+    @SerializedName("safety_recommendations") val safetyRecommendations: List<RecommendationDto> = emptyList(),
+    @SerializedName("model_version") val modelVersion: String = "1.0.0-rf-prototype",
+    @SerializedName("is_demo_model") val isDemoModel: Boolean = true
+)

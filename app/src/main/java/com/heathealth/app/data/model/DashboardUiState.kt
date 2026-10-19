@@ -1,5 +1,16 @@
 package com.heathealth.app.data.model
 
+import com.heathealth.app.network.dto.PredictResponseDto
+
+data class CustomPredictionState(
+    val temperatureC: Double = 38.0,
+    val humidityPercent: Double = 65.0,
+    val windSpeedKmh: Double = 8.0,
+    val isPredicting: Boolean = false,
+    val predictionResult: PredictResponseDto? = null,
+    val errorMessage: String? = null
+)
+
 data class DashboardUiState(
     val weatherData: WeatherData = WeatherData(),
     val hourlyForecast: List<HourlyForecast> = emptyList(),
@@ -13,5 +24,6 @@ data class DashboardUiState(
     val locationLabel: String = "New Delhi, India",
     val latitude: Double = 28.6139,
     val longitude: Double = 77.2090,
-    val lastUpdated: String = ""
+    val lastUpdated: String = "",
+    val customPrediction: CustomPredictionState = CustomPredictionState()
 )

@@ -39,7 +39,11 @@ class DashboardViewModel(
             val result = repository.fetchHeatRiskData(latitude, longitude, label)
             result.fold(
                 onSuccess = { state ->
-                    _uiState.value = state.copy(isLoading = false, isRefreshing = false)
+                    _uiState.value = state.copy(
+                        isLoading = false,
+                        isRefreshing = false,
+                        customPrediction = _uiState.value.customPrediction
+                    )
                 },
                 onFailure = { error ->
                     _uiState.value = _uiState.value.copy(
@@ -67,5 +71,50 @@ class DashboardViewModel(
 
     fun loadSampleData() {
         _uiState.value = repository.getDashboardSampleData()
+    }
+
+    fun updateCustomInputs(temp: Double, humidity: Double, windSpeed: Double) {
+        _uiState.value = _uiState.value.copy(
+            customPrediction = _uiState.value.customPrediction.copy(
+                temperatureC = temp,
+                humidityPercent = humidity,
+                windSpeedKmh = windSpeed
+            )
+        )
+    }
+
+    fun runCustomMlPrediction() {
+        val current = _uiState.value.customPrediction
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(
+                customPrediction = current.copy(isPredicting = true, errorMessage = null)
+            )
+
+            val result = repository.predictCustomHeatRisk(
+                temperature = current.temperatureC,
+                humidity = current.humidityPercent,
+                windSpeed = current.windSpeedKmh
+            )
+
+            result.fold(
+                onSuccess = { res ->
+                    _uiState.value = _uiState.value.copy(
+                        customPrediction = _uiState.value.customPrediction.copy(
+                            isPredicting = false,
+                            predictionResult = res,
+                            errorMessage = null
+                        )
+                    )
+                },
+                onFailure = { err ->
+                    _uiState.value = _uiState.value.copy(
+                        customPrediction = _uiState.value.customPrediction.copy(
+                            isPredicting = false,
+                            errorMessage = err.localizedMessage ?: "Failed to run custom ML prediction."
+                        )
+                    )
+                }
+            )
+        }
     }
 }

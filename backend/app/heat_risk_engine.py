@@ -11,7 +11,7 @@ class BaselineHeatRiskEngine:
 
     MODERATE_THRESHOLD = 27.0   # 27°C (approx 80°F): Caution threshold
     HIGH_THRESHOLD = 32.0       # 32°C (approx 90°F): Extreme Caution / High Risk threshold
-    VERY_HIGH_THRESHOLD = 41.0  # 41°C (approx 105°F): Danger / Very High Risk threshold
+    EXTREME_THRESHOLD = 41.0    # 41°C (approx 105°F): Danger / Extreme Risk threshold
 
     RULES_VERSION = "1.0.0-baseline"
 
@@ -78,14 +78,14 @@ class BaselineHeatRiskEngine:
                 "Warm thermal conditions present moderate environmental heat strain. "
                 "Fatigue is possible with prolonged outdoor exposure or strenuous activity."
             )
-        elif effective_score < cls.VERY_HIGH_THRESHOLD:
+        elif effective_score < cls.EXTREME_THRESHOLD:
             level = "High"
             interpretation = (
                 "Significant heat strain risk. Outdoor exertion or prolonged exposure is likely "
                 "to cause heat cramps, exhaustion, or dehydration."
             )
         else:
-            level = "Very High"
+            level = "Extreme"
             interpretation = (
                 "Dangerous extreme thermal strain. High probability of heat stroke, fainting, or severe "
                 "heat illness with continued outdoor exposure."
@@ -147,7 +147,7 @@ class BaselineHeatRiskEngine:
             }
         ]
 
-        if level in ["High", "Very High"]:
+        if level in ["High", "Extreme", "Very High"]:
             recs.append({
                 "id": "3",
                 "title": "Limit peak outdoor activity",

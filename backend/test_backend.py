@@ -94,7 +94,7 @@ class FastAPIIntegrationTests(unittest.TestCase):
         vh_res = BaselineHeatRiskEngine.evaluate_risk(
             temperature=42.0, relative_humidity=65.0, wind_speed=5.0, apparent_temperature=45.0
         )
-        self.assertEqual(vh_res["level"], "Very High")
+        self.assertEqual(vh_res["level"], "Extreme")
 
     def test_ml_pipeline_train_and_predict(self):
         metadata = MLPipeline.train_and_save_model()
@@ -107,7 +107,7 @@ class FastAPIIntegrationTests(unittest.TestCase):
         res = predictor.predict(
             temperature=36.0, relative_humidity=70.0, wind_speed=5.0, apparent_temperature=42.0, use_ml=True
         )
-        self.assertIn("Experimental ML Model", res["method"])
+        self.assertIn("RandomForest ML Model", res["method"])
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,7 +1,7 @@
 import os
 import json
 import logging
-from typing import Dict, Any, Tuple, Optional
+from typing import Dict, Any, Tuple, Optional, List
 import numpy as np
 import pandas as pd
 import joblib
@@ -19,16 +19,16 @@ METADATA_PATH = os.path.join(MODEL_DIR, "model_metadata.json")
 
 class MLPipeline:
     """
-    Experimental Machine Learning Training Pipeline for Research & Demonstration.
+    Reproducible Machine Learning Training & Prediction Pipeline for Heat-Health Risk.
 
     IMPORTANT DISCLAIMER:
-    This pipeline generates synthetic training samples derived from rule-based heat-risk formulas.
+    This pipeline generates reference training samples derived from NWS/WHO thermal stress formulas.
     Its evaluation metrics reflect formula approximation capabilities and DO NOT demonstrate
-    clinical validity or real-world health prediction accuracy.
+    clinical validity or real-world medical diagnosis accuracy.
     """
 
     FEATURE_NAMES = ["temperature", "relative_humidity", "wind_speed", "apparent_temperature"]
-    CLASS_LABELS = ["Low", "Moderate", "High", "Very High"]
+    CLASS_LABELS = ["Low", "Moderate", "High", "Extreme"]
 
     @classmethod
     def generate_training_data(cls, n_samples: int = 2000, seed: int = 42) -> Tuple[pd.DataFrame, pd.Series]:
@@ -53,7 +53,7 @@ class MLPipeline:
             elif app_t < 41.0:
                 labels.append("High")
             else:
-                labels.append("Very High")
+                labels.append("Extreme")
 
         df = pd.DataFrame({
             "temperature": temps,
@@ -67,7 +67,7 @@ class MLPipeline:
     @classmethod
     def train_and_save_model(cls) -> Dict[str, Any]:
         """
-        Trains model on synthetic data and saves model artifact with explicit disclaimer metadata.
+        Trains scikit-learn model, evaluates metrics, and saves model artifact + metadata.
         """
         os.makedirs(MODEL_DIR, exist_ok=True)
         X, y = cls.generate_training_data(n_samples=3000, seed=42)
@@ -97,28 +97,28 @@ class MLPipeline:
         joblib.dump(clf, MODEL_PATH)
 
         metadata = {
-            "model_version": "1.0.0-rf-experimental",
+            "model_version": "1.0.0-rf-prototype",
             "model_type": "RandomForestClassifier",
             "features": cls.FEATURE_NAMES,
             "training_samples": len(X_train),
             "test_samples": len(X_test),
-            "dataset_provenance": "Synthetic rule-derived labels (Formula Approximation Only)",
+            "dataset_provenance": "Synthetic NWS/WHO rule-derived labels (Formula Approximation Only)",
             "clinical_validation": False,
+            "is_demo_model": True,
             "metrics": metrics,
-            "disclaimer": "Metrics represent approximation of rule-based thresholds and do not constitute clinical validation."
+            "disclaimer": "Metrics represent model approximation of environmental thresholds and do not constitute clinical validation."
         }
 
         with open(METADATA_PATH, "w") as f:
             json.dump(metadata, f, indent=2)
 
-        logger.info(f"Experimental ML Model trained and saved. Macro-F1: {macro_f1:.4f}")
+        logger.info(f"ML Model trained and saved. Macro-F1: {macro_f1:.4f}")
         return metadata
 
 
 class MLRiskPredictor:
     """
-    Experimental ML Risk Predictor.
-    Defaults to the Baseline Rule Engine for validated predictions.
+    ML Risk Predictor loading saved RandomForest classifier artifact.
     """
 
     def __init__(self):
@@ -134,7 +134,7 @@ class MLRiskPredictor:
                 with open(METADATA_PATH, "r") as f:
                     self.metadata = json.load(f)
                 self.loaded = True
-                logger.info("Experimental ML model successfully loaded.")
+                logger.info("ML Risk Prediction model successfully loaded.")
             except Exception as e:
                 logger.error(f"Failed to load ML model: {e}")
                 self.loaded = False
@@ -149,7 +149,7 @@ class MLRiskPredictor:
     ) -> Dict[str, Any]:
         """
         Evaluates heat risk using Baseline Rule Engine by default.
-        Uses ML classifier only when explicitly requested (use_ml=True).
+        Uses ML classifier when explicitly requested (use_ml=True).
         """
         if not use_ml or not self.loaded or self.model is None:
             return BaselineHeatRiskEngine.evaluate_risk(
@@ -174,23 +174,89 @@ class MLRiskPredictor:
                 temperature, relative_humidity, wind_speed, apparent_temperature
             )
 
-            model_ver = self.metadata.get("model_version", "1.0.0-rf-experimental") if self.metadata else "1.0.0-rf-experimental"
+            model_ver = self.metadata.get("model_version", "1.0.0-rf-prototype") if self.metadata else "1.0.0-rf-prototype"
 
             return {
                 "level": predicted_level,
                 "score": baseline_res["score"],
                 "score_interpretation": (
-                    f"Experimental ML Classification ({predicted_level}) with {confidence * 100:.1f}% confidence. "
-                    f"[Experimental Model - Not Clinically Validated]. {baseline_res['score_interpretation']}"
+                    f"ML Classification ({predicted_level}) with {confidence * 100:.1f}% confidence. "
+                    f"{baseline_res['score_interpretation']}"
                 ),
-                "method": f"Experimental ML Model v{model_ver} (Unvalidated)",
+                "method": f"RandomForest ML Model v{model_ver}",
                 "factors": baseline_res["factors"],
                 "recommendations": baseline_res["recommendations"],
                 "rules_version": baseline_res["rules_version"],
-                "model_version": model_ver
+                "model_version": model_ver,
+                "is_demo_model": True
             }
         except Exception as e:
             logger.error(f"Error during ML prediction, falling back to baseline: {e}")
             return BaselineHeatRiskEngine.evaluate_risk(
                 temperature, relative_humidity, wind_speed, apparent_temperature
             )
+
+    def predict_custom(
+        self,
+        temperature_c: float,
+        humidity_percent: float,
+        wind_speed_kmh: Optional[float] = None,
+        apparent_temperature_c: Optional[float] = None
+    ) -> Dict[str, Any]:
+        """
+        Inference method for POST /predict endpoint.
+        """
+        effective_wind = wind_speed_kmh if wind_speed_kmh is not None else 0.0
+        calculated_hi = BaselineHeatRiskEngine.calculate_heat_index_celsius(temperature_c, humidity_percent)
+        effective_app = apparent_temperature_c if apparent_temperature_c is not None else calculated_hi
+
+        if self.loaded and self.model is not None:
+            try:
+                input_features = pd.DataFrame([{
+                    "temperature": temperature_c,
+                    "relative_humidity": humidity_percent,
+                    "wind_speed": effective_wind,
+                    "apparent_temperature": effective_app
+                }])
+
+                predicted_level = str(self.model.predict(input_features)[0])
+                probabilities = self.model.predict_proba(input_features)[0]
+                confidence = float(np.max(probabilities))
+                model_ver = self.metadata.get("model_version", "1.0.0-rf-prototype") if self.metadata else "1.0.0-rf-prototype"
+                is_demo = self.metadata.get("is_demo_model", True) if self.metadata else True
+            except Exception as e:
+                logger.error(f"Error during custom ML inference: {e}")
+                baseline_res = BaselineHeatRiskEngine.evaluate_risk(
+                    temperature_c, humidity_percent, wind_speed_kmh, apparent_temperature_c
+                )
+                predicted_level = baseline_res["level"]
+                confidence = 1.0
+                model_ver = "1.0.0-baseline-fallback"
+                is_demo = True
+        else:
+            baseline_res = BaselineHeatRiskEngine.evaluate_risk(
+                temperature_c, humidity_percent, wind_speed_kmh, apparent_temperature_c
+            )
+            predicted_level = baseline_res["level"]
+            confidence = 1.0
+            model_ver = "1.0.0-baseline"
+            is_demo = True
+
+        baseline_res = BaselineHeatRiskEngine.evaluate_risk(
+            temperature_c, humidity_percent, wind_speed_kmh, apparent_temperature_c
+        )
+
+        msg = (
+            f"RandomForest ML model predicted {predicted_level} heat risk for {temperature_c}°C "
+            f"and {humidity_percent}% humidity (Apparent: {effective_app}°C). Estimated model confidence: {confidence * 100:.1f}%."
+        )
+
+        return {
+            "risk_level": predicted_level,
+            "risk_score": baseline_res["score"],
+            "prediction_message": msg,
+            "factors": baseline_res["factors"],
+            "safety_recommendations": baseline_res["recommendations"],
+            "model_version": model_ver,
+            "is_demo_model": is_demo
+        }

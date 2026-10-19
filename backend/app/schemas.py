@@ -21,11 +21,11 @@ class HourlyWeatherModel(BaseModel):
     relative_humidity: float = Field(..., description="Relative humidity in %")
     apparent_temperature: Optional[float] = Field(None, description="Apparent temperature / Feels-like in °C")
     wind_speed: Optional[float] = Field(None, description="Wind speed in km/h")
-    heat_risk_level: str = Field("Low", description="Risk level: Low, Moderate, High, Very High")
+    heat_risk_level: str = Field("Low", description="Risk level: Low, Moderate, High, Extreme")
     heat_index_score: Optional[float] = Field(None, description="Calculated heat index / thermal score in °C")
 
 class RiskModel(BaseModel):
-    level: str = Field(..., description="Risk category: Low, Moderate, High, Very High")
+    level: str = Field(..., description="Risk category: Low, Moderate, High, Extreme")
     score: Optional[float] = Field(None, description="Calculated thermal stress score / Heat Index in °C")
     score_interpretation: str = Field(..., description="Textual explanation of the risk score")
     method: str = Field(..., description="Calculation method used")
@@ -56,3 +56,19 @@ class WeatherResponse(BaseModel):
     weather: WeatherModel
     hourly_forecast: List[HourlyWeatherModel] = Field(default_factory=list)
     units: Dict[str, str]
+
+# Phase 3 ML Prediction Models
+class PredictRequest(BaseModel):
+    temperature_c: float = Field(..., ge=-100.0, le=80.0, description="Air temperature in degrees Celsius")
+    humidity_percent: float = Field(..., ge=0.0, le=100.0, description="Relative humidity in percentage (0-100%)")
+    wind_speed_kmh: Optional[float] = Field(None, ge=0.0, le=250.0, description="Wind speed in km/h if available")
+    apparent_temperature_c: Optional[float] = Field(None, ge=-100.0, le=80.0, description="Apparent temperature in °C if available")
+
+class PredictResponse(BaseModel):
+    risk_level: str = Field(..., description="Predicted risk level: Low, Moderate, High, Extreme")
+    risk_score: Optional[float] = Field(None, description="Calculated thermal stress score / Heat Index in °C")
+    prediction_message: str = Field(..., description="Understandable explanation of the predicted heat risk")
+    factors: List[str] = Field(default_factory=list, description="Contributing environmental factors")
+    safety_recommendations: List[RecommendationModel] = Field(default_factory=list, description="Actionable heat precautions")
+    model_version: str = Field("1.0.0-rf-prototype", description="ML model version tag")
+    is_demo_model: bool = Field(True, description="Identifies illustrative prototype ML model status")
