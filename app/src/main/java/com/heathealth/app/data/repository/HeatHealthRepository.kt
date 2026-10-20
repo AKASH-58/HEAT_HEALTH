@@ -13,10 +13,9 @@ import com.heathealth.app.network.dto.PredictRequestDto
 import com.heathealth.app.network.dto.PredictResponseDto
 import retrofit2.HttpException
 import java.io.IOException
-import java.net.ConnectException
 
 class HeatHealthRepository(
-    private val apiService: HeatHealthApiService = BackendApiConfig.createApiService()
+    private var apiService: HeatHealthApiService = BackendApiConfig.createApiService()
 ) {
 
     suspend fun fetchHeatRiskData(
@@ -24,26 +23,24 @@ class HeatHealthRepository(
         longitude: Double,
         label: String? = "New Delhi, India"
     ): Result<DashboardUiState> {
-        return try {
-            val dto = apiService.getHeatRisk(latitude, longitude, label)
-            val state = mapDtoToUiState(dto, latitude, longitude, label)
-            Result.success(state)
-        } catch (e: ConnectException) {
-            Result.failure(IOException("Unable to connect to backend server at ${BackendApiConfig.baseUrl}. Ensure FastAPI is running on host 0.0.0.0:8000.", e))
-        } catch (e: IOException) {
-            val details = e.localizedMessage ?: "Connection refused or cleartext traffic blocked"
-            Result.failure(IOException("Network error connecting to ${BackendApiConfig.baseUrl}: $details", e))
-        } catch (e: HttpException) {
-            val errorMsg = when (e.code()) {
-                400, 422 -> "Invalid location coordinates provided."
-                502 -> "Backend error fetching weather provider data."
-                504 -> "Weather provider gateway timeout. Please try again."
-                else -> "Backend server returned HTTP error ${e.code()}."
+        val candidates = BackendApiConfig.getCandidateBaseUrls()
+        var lastException: Exception? = null
+
+        for (candidateUrl in candidates) {
+            try {
+                val service = BackendApiConfig.createApiService(candidateUrl)
+                val dto = service.getHeatRisk(latitude, longitude, label)
+                BackendApiConfig.baseUrl = candidateUrl
+                this.apiService = service
+                val state = mapDtoToUiState(dto, latitude, longitude, label)
+                return Result.success(state)
+            } catch (e: Exception) {
+                lastException = e
             }
-            Result.failure(Exception(errorMsg, e))
-        } catch (e: Exception) {
-            Result.failure(Exception("Failed to process heat-risk assessment: ${e.localizedMessage}", e))
         }
+
+        val details = lastException?.localizedMessage ?: "Unable to connect to backend server"
+        return Result.failure(IOException("Unable to connect to FastAPI backend at ${BackendApiConfig.baseUrl}. Ensure FastAPI is running on host 0.0.0.0:8000. ($details)", lastException))
     }
 
     suspend fun predictCustomHeatRisk(
@@ -51,29 +48,28 @@ class HeatHealthRepository(
         humidity: Double,
         windSpeed: Double? = null
     ): Result<PredictResponseDto> {
-        return try {
-            val req = PredictRequestDto(
-                temperatureC = temperature,
-                humidityPercent = humidity,
-                windSpeedKmh = windSpeed
-            )
-            val res = apiService.predictHeatRisk(req)
-            Result.success(res)
-        } catch (e: ConnectException) {
-            Result.failure(IOException("Unable to connect to backend server at ${BackendApiConfig.baseUrl}. Ensure FastAPI is running on host 0.0.0.0:8000.", e))
-        } catch (e: IOException) {
-            val details = e.localizedMessage ?: "Connection refused or cleartext traffic blocked"
-            Result.failure(IOException("Network error connecting to ${BackendApiConfig.baseUrl}: $details", e))
-        } catch (e: HttpException) {
-            val errorMsg = when (e.code()) {
-                400, 422 -> "Invalid input conditions specified for prediction."
-                502 -> "Backend ML model inference error."
-                else -> "Backend server returned HTTP error ${e.code()}."
+        val candidates = listOf(BackendApiConfig.baseUrl) + BackendApiConfig.getCandidateBaseUrls()
+        var lastException: Exception? = null
+
+        for (candidateUrl in candidates.distinct()) {
+            try {
+                val service = BackendApiConfig.createApiService(candidateUrl)
+                val req = PredictRequestDto(
+                    temperatureC = temperature,
+                    humidityPercent = humidity,
+                    windSpeedKmh = windSpeed
+                )
+                val res = service.predictHeatRisk(req)
+                BackendApiConfig.baseUrl = candidateUrl
+                this.apiService = service
+                return Result.success(res)
+            } catch (e: Exception) {
+                lastException = e
             }
-            Result.failure(Exception(errorMsg, e))
-        } catch (e: Exception) {
-            Result.failure(Exception("Failed to run custom ML prediction: ${e.localizedMessage}", e))
         }
+
+        val details = lastException?.localizedMessage ?: "ML model inference error"
+        return Result.failure(IOException("Failed custom ML prediction: $details", lastException))
     }
 
     private fun mapDtoToUiState(

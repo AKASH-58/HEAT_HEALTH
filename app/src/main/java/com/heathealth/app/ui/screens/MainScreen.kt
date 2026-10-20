@@ -6,6 +6,8 @@ import androidx.compose.material.icons.filled.HealthAndSafety
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -33,9 +35,11 @@ sealed class BottomNavItem(
     val icon: ImageVector
 ) {
     object Home : BottomNavItem("home", "Home", Icons.Default.Home)
+    object Hydration : BottomNavItem("hydration", "Hydration", Icons.Default.WaterDrop)
     object RiskMap : BottomNavItem("risk_map", "Risk Map", Icons.Default.Map)
     object Alerts : BottomNavItem("alerts", "Alerts", Icons.Default.Notifications)
     object Safety : BottomNavItem("safety", "Safety", Icons.Default.HealthAndSafety)
+    object Profile : BottomNavItem("profile", "Profile", Icons.Default.Person)
 }
 
 @Composable
@@ -45,9 +49,11 @@ fun MainScreen(
     val navController = rememberNavController()
     val navItems = listOf(
         BottomNavItem.Home,
+        BottomNavItem.Hydration,
         BottomNavItem.RiskMap,
         BottomNavItem.Alerts,
-        BottomNavItem.Safety
+        BottomNavItem.Safety,
+        BottomNavItem.Profile
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -102,6 +108,9 @@ fun MainScreen(
             composable(BottomNavItem.Home.route) {
                 DashboardScreen(viewModel = viewModel)
             }
+            composable(BottomNavItem.Hydration.route) {
+                WaterTrackerScreen()
+            }
             composable(BottomNavItem.RiskMap.route) {
                 RiskMapScreen(viewModel = viewModel)
             }
@@ -110,6 +119,9 @@ fun MainScreen(
             }
             composable(BottomNavItem.Safety.route) {
                 SafetyScreen()
+            }
+            composable(BottomNavItem.Profile.route) {
+                ProfileScreen()
             }
         }
     }
