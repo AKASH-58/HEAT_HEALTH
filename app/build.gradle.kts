@@ -65,6 +65,9 @@ dependencies {
     // DataStore
     implementation(libs.datastore.preferences)
 
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.9.1")
+
     testImplementation(libs.junit)
     testImplementation("androidx.room:room-testing:2.7.0-alpha13")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")

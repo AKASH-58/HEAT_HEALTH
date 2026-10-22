@@ -30,16 +30,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.heathealth.app.ui.components.CustomMlPredictorCard
 import com.heathealth.app.ui.components.DisclaimerCard
 import com.heathealth.app.ui.components.HeaderComponent
 import com.heathealth.app.ui.components.HourlyForecastCard
+import com.heathealth.app.ui.components.OutdoorActivityPlannerCard
+import com.heathealth.app.ui.components.PersonalSafetyDashboardCard
 import com.heathealth.app.ui.components.RiskIndicatorCard
 import com.heathealth.app.ui.components.SafetyRecommendationsCard
 import com.heathealth.app.ui.components.WeatherSummaryCard
-import com.heathealth.app.ui.theme.HeatHealthTheme
 import com.heathealth.app.ui.theme.PrimaryTeal
 import com.heathealth.app.ui.theme.TextPrimary
 import com.heathealth.app.ui.theme.TextSecondary
@@ -47,9 +48,13 @@ import com.heathealth.app.viewmodel.DashboardViewModel
 
 @Composable
 fun DashboardScreen(
-    viewModel: DashboardViewModel = DashboardViewModel()
+    viewModel: DashboardViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val recentRiskLogs by viewModel.recentRiskLogs.collectAsState()
+    val recentAlertLogs by viewModel.recentAlertLogs.collectAsState()
+    val todayWaterIntakeMl by viewModel.todayWaterIntakeMl.collectAsState()
+    val weeklyWaterTotalMl by viewModel.weeklyWaterTotalMl.collectAsState()
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background
@@ -107,6 +112,20 @@ fun DashboardScreen(
                     WeatherSummaryCard(
                         weatherData = uiState.weatherData,
                         locationLabel = uiState.locationLabel
+                    )
+
+                    PersonalSafetyDashboardCard(
+                        latestRisk = uiState.riskPrediction,
+                        recentRiskLogs = recentRiskLogs,
+                        recentAlertLogs = recentAlertLogs,
+                        todayWaterIntakeMl = todayWaterIntakeMl,
+                        targetWaterIntakeMl = 2500,
+                        weeklyWaterTotalMl = weeklyWaterTotalMl,
+                        weeklyWaterDaysCount = 7
+                    )
+
+                    OutdoorActivityPlannerCard(
+                        hourlyForecast = uiState.hourlyForecast
                     )
 
                     HourlyForecastCard(
@@ -198,13 +217,5 @@ private fun ErrorCardView(
                 Text("View Offline Demo")
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DashboardPreview() {
-    HeatHealthTheme {
-        DashboardScreen()
     }
 }

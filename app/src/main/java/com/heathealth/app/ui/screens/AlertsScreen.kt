@@ -2,7 +2,9 @@ package com.heathealth.app.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,22 +29,27 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.heathealth.app.data.local.datastore.UserPreferencesRepository
 import com.heathealth.app.ui.theme.BorderLight
+import com.heathealth.app.ui.theme.HeatAmber
 import com.heathealth.app.ui.theme.HeatOrange
 import com.heathealth.app.ui.theme.PrimaryTeal
 import com.heathealth.app.ui.theme.PrimaryTealLight
 import com.heathealth.app.ui.theme.SurfaceWhite
 import com.heathealth.app.ui.theme.TextPrimary
 import com.heathealth.app.ui.theme.TextSecondary
+import com.heathealth.app.worker.WorkManagerScheduler
+import kotlinx.coroutines.launch
 
 data class HeatAlertItem(
     val id: String,
@@ -54,9 +61,12 @@ data class HeatAlertItem(
 
 @Composable
 fun AlertsScreen() {
-    var extremeHeatAlertsEnabled by remember { mutableStateOf(true) }
-    var humidityAdvisoriesEnabled by remember { mutableStateOf(true) }
-    var uvWarningsEnabled by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val prefsRepo = remember { UserPreferencesRepository(context) }
+    val userPrefs by prefsRepo.userPreferencesFlow.collectAsState(
+        initial = com.heathealth.app.data.local.datastore.UserPreferences()
+    )
 
     val activeAlerts = listOf(
         HeatAlertItem(
@@ -71,7 +81,7 @@ fun AlertsScreen() {
             title = "Elevated Humidity Strain Warning",
             timeLabel = "Current Observation",
             description = "High relative humidity (>=65%) restricts natural sweat evaporation.",
-            severityColor = Color(0xFFF59E0B)
+            severityColor = HeatAmber
         )
     )
 
@@ -112,7 +122,7 @@ fun AlertsScreen() {
             }
         }
 
-        // Prototype Disclaimer Note
+        // Disclaimer Note
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -135,7 +145,7 @@ fun AlertsScreen() {
                 )
 
                 Text(
-                    text = "Phase 2 Early Warning Notice: Background notifications and preference toggles simulate local early warning logic. Follow official public health alerts.",
+                    text = "Early Warning System Notice: Background alerts check live risk levels periodically and avoid duplicate alerts for unchanged conditions. Always follow official public health warnings.",
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary
                 )
@@ -148,7 +158,6 @@ fun AlertsScreen() {
             color = TextPrimary
         )
 
-        // Active Alerts List
         activeAlerts.forEach { alert ->
             AlertCardItem(alert = alert)
         }
@@ -156,12 +165,11 @@ fun AlertsScreen() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Early Warning Notification Preferences",
+            text = "Heat Alert Notification Preferences",
             style = MaterialTheme.typography.titleMedium,
             color = TextPrimary
         )
 
-        // Preferences Card
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -176,25 +184,54 @@ fun AlertsScreen() {
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 PreferenceToggleRow(
-                    title = "Extreme Heat Warnings",
-                    subtitle = "Alert when apparent temperature exceeds 35°C",
-                    checked = extremeHeatAlertsEnabled,
-                    onCheckedChange = { extremeHeatAlertsEnabled = it }
+                    title = "Enable Local Heat Alerts",
+                    subtitle = "Notify when local thermal risk crosses your selected threshold",
+                    checked = userPrefs.heatAlertsEnabled,
+                    onCheckedChange = { enabled ->
+                        scope.launch {
+                            prefsRepo.updateHeatAlertsEnabled(enabled)
+                            if (enabled) {
+                                WorkManagerScheduler.scheduleHeatAlertChecks(context)
+                            } else {
+                                WorkManagerScheduler.cancelHeatAlertChecks(context)
+                            }
+                        }
+                    }
                 )
 
-                PreferenceToggleRow(
-                    title = "High Relative Humidity Advisories",
-                    subtitle = "Notify when humidity reduces sweat cooling efficiency",
-                    checked = humidityAdvisoriesEnabled,
-                    onCheckedChange = { humidityAdvisoriesEnabled = it }
+                Text(
+                    text = "Alert Trigger Threshold:",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = TextSecondary
                 )
 
-                PreferenceToggleRow(
-                    title = "Peak Hours UV Radiation Warnings",
-                    subtitle = "Reminders for sun protection during midday peak",
-                    checked = uvWarningsEnabled,
-                    onCheckedChange = { uvWarningsEnabled = it }
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    listOf("Moderate", "High", "Extreme").forEach { threshold ->
+                        val isSelected = userPrefs.alertThreshold.equals(threshold, ignoreCase = true)
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(if (isSelected) PrimaryTeal else PrimaryTealLight)
+                                .clickable {
+                                    scope.launch {
+                                        prefsRepo.updateAlertThreshold(threshold)
+                                    }
+                                }
+                                .padding(vertical = 8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = threshold,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = if (isSelected) SurfaceWhite else PrimaryTeal
+                            )
+                        }
+                    }
+                }
             }
         }
     }

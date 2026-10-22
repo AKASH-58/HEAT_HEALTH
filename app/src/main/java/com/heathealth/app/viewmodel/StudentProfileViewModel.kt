@@ -7,6 +7,7 @@ import com.heathealth.app.data.local.HeatHealthDatabase
 import com.heathealth.app.data.local.datastore.UserPreferencesRepository
 import com.heathealth.app.data.model.ProfileUiState
 import com.heathealth.app.data.repository.StudentProfileRepository
+import com.heathealth.app.worker.WorkManagerScheduler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -89,6 +90,11 @@ class StudentProfileViewModel(
         _uiState.value = _uiState.value.copy(remindersEnabled = enabled)
         viewModelScope.launch {
             repository.updateHydrationRemindersEnabled(enabled)
+            if (enabled) {
+                WorkManagerScheduler.scheduleHydrationReminders(getApplication(), _uiState.value.reminderFrequencyHours)
+            } else {
+                WorkManagerScheduler.cancelHydrationReminders(getApplication())
+            }
         }
     }
 
@@ -96,6 +102,9 @@ class StudentProfileViewModel(
         _uiState.value = _uiState.value.copy(reminderFrequencyHours = hours)
         viewModelScope.launch {
             repository.updateReminderFrequencyHours(hours)
+            if (_uiState.value.remindersEnabled) {
+                WorkManagerScheduler.scheduleHydrationReminders(getApplication(), hours)
+            }
         }
     }
 
@@ -126,6 +135,13 @@ class StudentProfileViewModel(
             )
             repository.updateHydrationRemindersEnabled(state.remindersEnabled)
             repository.updateReminderFrequencyHours(state.reminderFrequencyHours)
+
+            if (state.remindersEnabled) {
+                WorkManagerScheduler.scheduleHydrationReminders(getApplication(), state.reminderFrequencyHours)
+            } else {
+                WorkManagerScheduler.cancelHydrationReminders(getApplication())
+            }
+
             _uiState.value = _uiState.value.copy(
                 isSaving = false,
                 targetValidationError = null,
@@ -137,6 +153,7 @@ class StudentProfileViewModel(
     fun resetToDefaults() {
         viewModelScope.launch {
             repository.resetProfileToDefaults()
+            WorkManagerScheduler.scheduleHydrationReminders(getApplication(), 2)
             _uiState.value = ProfileUiState(
                 nickname = "",
                 activityType = "Regular commuting",

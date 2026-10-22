@@ -3,6 +3,7 @@
 
     <!-- Permission required for local backend development & testing (e.g., http://10.0.2.2:8000) -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +27,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name="com.heathealth.app.worker.HydrationActionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.heathealth.app.ACTION_MARK_HYDRATED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

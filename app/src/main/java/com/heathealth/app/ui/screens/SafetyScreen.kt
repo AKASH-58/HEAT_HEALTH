@@ -38,9 +38,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.heathealth.app.data.model.PersonalizedGuidanceEngine
+import com.heathealth.app.data.model.RiskLevel
 import com.heathealth.app.ui.theme.BorderLight
 import com.heathealth.app.ui.theme.HeatAmber
-import com.heathealth.app.ui.theme.HeatOrange
 import com.heathealth.app.ui.theme.PrimaryTeal
 import com.heathealth.app.ui.theme.PrimaryTealLight
 import com.heathealth.app.ui.theme.SurfaceWhite
@@ -49,15 +50,16 @@ import com.heathealth.app.ui.theme.TextSecondary
 
 @Composable
 fun SafetyScreen() {
-    val profiles = listOf("Outdoor Worker", "Student", "Senior Citizen", "Athlete")
-    var selectedProfile by remember { mutableStateOf("Outdoor Worker") }
+    val profiles = listOf("Outdoor Class", "Student Athlete", "Campus Commuter", "Regular Student")
+    var selectedProfile by remember { mutableStateOf("Campus Commuter") }
+    var currentRiskLevel by remember { mutableStateOf(RiskLevel.HIGH) }
 
-    val hydrationGoal = when (selectedProfile) {
-        "Outdoor Worker" -> "3.5 - 4.0 Liters / Day (250ml every 20 mins in heat)"
-        "Athlete" -> "3.0 - 4.0 Liters / Day (Pre-hydration + electrolytes)"
-        "Senior Citizen" -> "2.0 - 2.5 Liters / Day (Regular small sips)"
-        else -> "2.5 - 3.0 Liters / Day (Keep water bottle accessible)"
-    }
+    val guidance = PersonalizedGuidanceEngine.generateGuidance(
+        riskLevel = currentRiskLevel,
+        temperatureC = 35,
+        humidityPercent = 60,
+        activityPattern = selectedProfile
+    )
 
     Column(
         modifier = Modifier
@@ -84,12 +86,12 @@ fun SafetyScreen() {
 
             Column {
                 Text(
-                    text = "Heat Safety & First Aid",
+                    text = "Personalized Heat Safety & Guidance",
                     style = MaterialTheme.typography.headlineSmall,
                     color = TextPrimary
                 )
                 Text(
-                    text = "Personalized protection protocols and emergency response",
+                    text = "Activity-tailored protection protocols and emergency response",
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary
                 )
@@ -97,12 +99,11 @@ fun SafetyScreen() {
         }
 
         Text(
-            text = "Select Vulnerability Profile",
+            text = "Select Student Profile / Activity:",
             style = MaterialTheme.typography.titleMedium,
             color = TextPrimary
         )
 
-        // Profile Selector Chips
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -127,64 +128,82 @@ fun SafetyScreen() {
             }
         }
 
-        // Personalized Hydration Protocol Card
+        // Overview Card
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .border(1.dp, BorderLight, RoundedCornerShape(16.dp)),
             shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = SurfaceWhite)
+            colors = CardDefaults.cardColors(containerColor = PrimaryTealLight.copy(alpha = 0.5f))
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                    .padding(14.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = null,
-                        tint = PrimaryTeal,
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Text(
-                        text = "$selectedProfile Safety Plan",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = TextPrimary
-                    )
-                }
-
                 Text(
-                    text = "Hydration Intake Target:",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = TextSecondary
-                )
-
-                Text(
-                    text = hydrationGoal,
-                    style = MaterialTheme.typography.titleSmall,
+                    text = "Thermal Risk Overview (${currentRiskLevel.displayName}):",
+                    style = MaterialTheme.typography.labelMedium,
                     color = PrimaryTeal
                 )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                SafetyBulletItem("Take mandatory 10-15 min rest breaks in shaded, cool areas every hour.")
-                SafetyBulletItem("Avoid heavy direct sun exposure between 11:00 AM and 4:00 PM.")
-                SafetyBulletItem("Wear lightweight, light-colored, and breathable cotton clothing.")
+                Text(
+                    text = guidance.overviewMessage,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextPrimary
+                )
             }
         }
 
         Text(
-            text = "Heat Illness Emergency Signs",
+            text = "Tailored Activity Guidance",
             style = MaterialTheme.typography.titleMedium,
             color = TextPrimary
         )
 
-        // Symptoms & First Aid Cards
+        guidance.activityGuidances.forEach { act ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(1.dp, BorderLight, RoundedCornerShape(12.dp)),
+                shape = RoundedCornerShape(12.dp),
+                colors = CardDefaults.cardColors(containerColor = SurfaceWhite)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = null,
+                            tint = PrimaryTeal,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Text(
+                            text = act.activityName,
+                            style = MaterialTheme.typography.titleSmall,
+                            color = TextPrimary
+                        )
+                    }
+
+                    SafetyBulletItem("Action: ${act.recommendedAction}")
+                    SafetyBulletItem("Hydration Tip: ${act.hydrationTip}")
+                }
+            }
+        }
+
+        Text(
+            text = "Heat Illness First Aid & Emergency Protocol",
+            style = MaterialTheme.typography.titleMedium,
+            color = TextPrimary
+        )
+
         SymptomCard(
             title = "Heat Exhaustion (Early Stage)",
             symptoms = "Dizziness, heavy sweating, headache, nausea, rapid pulse, weakness.",
@@ -195,11 +214,11 @@ fun SafetyScreen() {
         SymptomCard(
             title = "Heat Stroke (Medical Emergency)",
             symptoms = "High body temperature (>40°C), confusion, fainting, hot dry skin, vomiting.",
-            action = "Call Emergency Services (108/112) immediately. Cool body with cold water/ice.",
+            action = "1. Move to cooler place & cool body immediately.\n2. Call Emergency Services (108/112).\n3. CRITICAL: Do NOT give fluids if person has altered consciousness or cannot swallow safely.",
             color = Color(0xFFC62828)
         )
 
-        // Emergency Helplines Card
+        // Emergency Helpline Card
         Card(
             modifier = Modifier
                 .fillMaxWidth()

@@ -1,5 +1,9 @@
 package com.heathealth.app.data.repository
 
+import com.heathealth.app.data.local.dao.AlertLogDao
+import com.heathealth.app.data.local.dao.HeatRiskLogDao
+import com.heathealth.app.data.local.entity.AlertLogEntity
+import com.heathealth.app.data.local.entity.HeatRiskLogEntity
 import com.heathealth.app.data.model.DashboardUiState
 import com.heathealth.app.data.model.HourlyForecast
 import com.heathealth.app.data.model.Recommendation
@@ -11,11 +15,14 @@ import com.heathealth.app.network.HeatHealthApiService
 import com.heathealth.app.network.dto.HeatRiskResponseDto
 import com.heathealth.app.network.dto.PredictRequestDto
 import com.heathealth.app.network.dto.PredictResponseDto
-import retrofit2.HttpException
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import java.io.IOException
 
 class HeatHealthRepository(
-    private var apiService: HeatHealthApiService = BackendApiConfig.createApiService()
+    private var apiService: HeatHealthApiService = BackendApiConfig.createApiService(),
+    private val heatRiskLogDao: HeatRiskLogDao? = null,
+    private val alertLogDao: AlertLogDao? = null
 ) {
 
     suspend fun fetchHeatRiskData(
@@ -33,6 +40,26 @@ class HeatHealthRepository(
                 BackendApiConfig.baseUrl = candidateUrl
                 this.apiService = service
                 val state = mapDtoToUiState(dto, latitude, longitude, label)
+
+                // Persist risk assessment to Room database
+                heatRiskLogDao?.let { dao ->
+                    try {
+                        val log = HeatRiskLogEntity(
+                            timestamp = System.currentTimeMillis(),
+                            isoTimestamp = dto.metadata.predictionTimestamp,
+                            riskLevel = dto.risk.level,
+                            riskScore = dto.risk.score,
+                            temperatureCelsius = dto.weather.temperature.toInt(),
+                            humidityPercent = dto.weather.relativeHumidity.toInt(),
+                            feelsLikeCelsius = (dto.weather.apparentTemperature ?: dto.weather.temperature).toInt(),
+                            locationLabel = label ?: dto.location.locationLabel ?: "Current Location"
+                        )
+                        dao.insertLog(log)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
                 return Result.success(state)
             } catch (e: Exception) {
                 lastException = e
@@ -41,6 +68,14 @@ class HeatHealthRepository(
 
         val details = lastException?.localizedMessage ?: "Unable to connect to backend server"
         return Result.failure(IOException("Unable to connect to FastAPI backend at ${BackendApiConfig.baseUrl}. Ensure FastAPI is running on host 0.0.0.0:8000. ($details)", lastException))
+    }
+
+    fun getRecentRiskLogs(limit: Int = 5): Flow<List<HeatRiskLogEntity>> {
+        return heatRiskLogDao?.getRecentLogs(limit) ?: flowOf(emptyList())
+    }
+
+    fun getRecentAlertLogs(limit: Int = 5): Flow<List<AlertLogEntity>> {
+        return alertLogDao?.getRecentAlerts(limit) ?: flowOf(emptyList())
     }
 
     suspend fun predictCustomHeatRisk(
