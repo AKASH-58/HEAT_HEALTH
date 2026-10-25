@@ -1,0 +1,257 @@
+<resources>
+    <!-- App Information & Navigation -->
+    <string name="app_name">HeatHealth</string>
+    <string name="app_description">ಶಾಖ-ಆರೋಗ್ಯ ಅಪಾಯ ಮುನ್ಸೂಚನೆ ಮತ್ತು ಮುನ್ನೆಚ್ಚರಿಕೆ ವ್ಯವಸ್ಥೆ</string>
+    <string name="nav_home">ಮುಖಪುಟ</string>
+    <string name="nav_hydration">ಜಲಸಂಚಯನ</string>
+    <string name="nav_cool_map">ಕೂಲ್ ಮ್ಯಾಪ್</string>
+    <string name="nav_alerts">ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="nav_safety">ಸುರಕ್ಷತೆ</string>
+    <string name="nav_profile">ಪ್ರೊಫೈಲ್</string>
+
+    <!-- General Buttons & Common Labels -->
+    <string name="btn_view">ವೀಕ್ಷಿಸಿ</string>
+    <string name="btn_retry">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="btn_save">ಉಳಿಸಿ</string>
+    <string name="btn_reset">ಮರುಹೊಂದಿಸಿ</string>
+    <string name="btn_cancel">ರದ್ದುಗೊಳಿಸಿ</string>
+    <string name="btn_delete">ಳಿಸು</string>
+    <string name="btn_edit">ಸಂಪಾದಿಸಿ</string>
+    <string name="btn_clear_all">ಎಲ್ಲವನ್ನೂ ಅಳಿಸಿ</string>
+    <string name="btn_add">ಸೇರಿಸಿ</string>
+    <string name="btn_switch">ಬದಲಾಯಿಸಿ</string>
+    <string name="btn_directions">ದಿಕ್ಕುಗಳು</string>
+    <string name="btn_report_issue">ಸಮಸ್ಯೆ ವರದಿ ಮಾಡಿ</string>
+
+    <!-- Home & Dashboard -->
+    <string name="fetching_weather_evaluating_risk">ನೇರ ವಾತಾವರಣ ಪಡೆಯಲಾಗುತ್ತಿದೆ ಮತ್ತು ಶಾಖದ ಅಪಾಯ ಮೌಲ್ಯಮಾಪನ ಮಾಡಲಾಗುತ್ತಿದೆ…</string>
+    <string name="backend_connection_issue">ಬ್ಯಾಕೆಂಡ್ ಸಂಪರ್ಕ ಸಮಸ್ಯೆ</string>
+    <string name="backend_offline_displaying_cached">ಬ್ಯಾಕೆಂಡ್ ಆಫ್‌ಲೈನ್ — ಸಂಗ್ರಹಿಸಿದ ಮುನ್ಸೂಚನೆ ಪ್ರದರ್ಶಿಸಲಾಗುತ್ತಿದೆ</string>
+    <string name="last_successful_update">ಕೊನೆಯ ಯಶಸ್ವಿ ಅಪ್‌ಡೇಟ್: %1$s</string>
+    <string name="heat_risk_history_trends">ಶಾಖ-ಅಪಾಯದ ಇತಿಹಾಸ ಮತ್ತು ಪ್ರವೃತ್ತಿಗಳು</string>
+    <string name="view_recorded_prediction_trends">ದಾಖಲಾದ ಮುನ್ಸೂಚನೆ ಪ್ರವೃತ್ತಿಗಳು ಮತ್ತು ವಿದ್ಯಾರ್ಥಿ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ</string>
+    <string name="btn_view_offline_demo">ಆಫ್‌ಲೈನ್ ಡೆಮೊ ವೀಕ್ಷಿಸಿ</string>
+
+    <!-- Weather Summary Card -->
+    <string name="weather_summary">ಹವಾಮಾನ ಸಾರಾಂಶ</string>
+    <string name="live_data">ನೇರ ಡೇಟಾ</string>
+    <string name="cached_data_offline">ಸಂಗ್ರಹಿಸಿದ ಡೇಟಾ (ಆಫ್‌ಲೈನ್)</string>
+    <string name="demonstration_data">ಡೆಮೊ ಡೇಟಾ</string>
+    <string name="unavailable">ಲಭ್ಯವಿಲ್ಲ</string>
+    <string name="temp">ತಾಪಮಾನ</string>
+    <string name="feels_like">ಅನುಭವವಾಗುವ ತಾಪಮಾನ</string>
+    <string name="humidity">ಆರ್ದ್ರತೆ</string>
+    <string name="wind">ಗಾಳಿ</string>
+    <string name="source_label">ಮೂಲ: %1$s</string>
+
+    <!-- Risk Levels -->
+    <string name="risk_low">ಕಡಿಮೆ</string>
+    <string name="risk_moderate">ಮಧ್ಯಮ</string>
+    <string name="risk_high">ಹೆಚ್ಚು</string>
+    <string name="risk_very_high">ತುಂಬಾ ಹೆಚ್ಚು</string>
+    <string name="risk_extreme">ಅತ್ಯಂತ ಹೆಚ್ಚು</string>
+    <string name="risk_unknown">ಸಾಮಾನ್ಯ ಮಾರ್ಗದರ್ಶನ</string>
+    <string name="risk_level_title">%1$s ಶಾಖದ ಅಪಾಯ</string>
+    <string name="risk_level_badge">%1$s ಅಪಾಯ</string>
+    <string name="category_label">ವರ್ಗ:</string>
+    <string name="score_label">ಅಂಕ: %1$s°C</string>
+    <string name="contributing_factors">ಕಾರಣವಾಗುವ ಅಂಶಗಳು:</string>
+
+    <!-- Personal Safety Dashboard -->
+    <string name="personal_safety_dashboard">ವೈಯಕ್ತಿಕ ಸುರಕ್ಷತಾ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್</string>
+    <string name="personal_safety_dashboard_sub">ಅಪಾಯ ಮುನ್ಸೂಚನೆಗಳು, ಎಚ್ಚರಿಕೆಗಳು ಮತ್ತು ನೀರಿನ ಸೇವನೆಯ ಸಾರಾಂಶ</string>
+    <string name="current_heat_risk_state">ಪ್ರಸ್ತುತ ಶಾಖ ಅಪಾಯದ ಸ್ಥಿತಿ</string>
+    <string name="todays_hydration_progress">ಇಂದಿನ ನೀರಿನ ಸೇವನೆ ಪ್ರಗತಿ</string>
+    <string name="recent_recorded_risk_assessments">ಇತ್ತೀಚಿನ ದಾಖಲಾದ ಅಪಾಯದ ಮೌಲ್ಯಮಾಪನಗಳು</string>
+    <string name="no_recent_risk_predictions">ಸ್ಥಳೀಯ ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಇನ್ನೂ ಯಾವುದೇ ಇತ್ತೀಚಿನ ಮುನ್ಸೂಚನೆ ದಾಖಲಾಗಿಲ್ಲ.</string>
+    <string name="recent_triggered_heat_alerts">ಇತ್ತೀಚೆಗೆ ನೀಡಲಾದ ಶಾಖದ ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="no_local_heat_alerts">ಇನ್ನೂ ಯಾವುದೇ ಸ್ಥಳೀಯ ಶಾಖದ ಎಚ್ಚರಿಕೆಗಳನ್ನು ನೀಡಲಾಗಿಲ್ಲ.</string>
+
+    <!-- Outdoor Activity Planner -->
+    <string name="student_outdoor_activity_planner">ವಿದ್ಯಾರ್ಥಿ ಹೊರಾಂಗಣ ಚಟುವಟಿಕೆ ಯೋಜಕ</string>
+    <string name="plan_safe_outdoor_times">ಗಂಟೆಯ ಶಾಖ ಅಪಾಯದ ಆಧಾರದ ಮೇಲೆ ಸುರಕ್ಷಿತ ಹೊರಾಂಗಣ ಸಮಯವನ್ನು ಯೋಜಿಸಿ</string>
+    <string name="select_planned_activity">ಯೋಜಿಸಿದ ಚಟುವಟಿಕೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ:</string>
+    <string name="select_planned_time">ಯೋಜಿಸಿದ ಸಮಯವನ್ನು ಆಯ್ಕೆಮಾಡಿ:</string>
+    <string name="activity_walking">ತರಗತಿಗೆ ನಡೆದು ಹೋಗುವುದು</string>
+    <string name="activity_sports">ಹೊರಾಂಗಣ ಕ್ರೀಡೆಗಳು</string>
+    <string name="activity_commute">ಕ್ಯಾಂಪಸ್ ಪ್ರಯಾಣ</string>
+    <string name="activity_fieldwork">ಫೀಲ್ಡ್‌ವರ್ಕ್</string>
+    <string name="planned_time_label">ಯೋಜಿಸಿದ ಸಮಯ: %1$s</string>
+    <string name="suggested_cooler_alternative_times">ಸೂಚಿಸಿದ ತಂಪಾದ ಪರ್ಯಾಯ ಸಮಯಗಳು:</string>
+    <string name="no_cooler_hours_found">ಪ್ರಸ್ತುತ 24-ಗಂಟೆಯ ಮುನ್ಸೂಚನೆಯಲ್ಲಿ ಯಾವುದೇ ಗಮನಾರ್ಹ ತಂಪಾದ ಸಮಯ ಕಂಡುಬಂದಿಲ್ಲ.</string>
+    <string name="future_risk_estimate_unavailable">ಆಯ್ದ ದಿನಾಂಕ/ಸಮಯಕ್ಕೆ 24-ಗಂಟೆಯ ಮುನ್ಸೂಚನೆಗಿಂತ ಹೆಚ್ಚಿನ ಭವಿಷ್ಯದ ಅಪಾಯದ ಅಂದಾಜು ಲಭ್ಯವಿಲ್ಲ.</string>
+    <string name="rec_low_risk">%1$s ಗಾಗಿ ಉತ್ತಮ ಸ್ಥಿತಿ. ಸಾಮಾನ್ಯ ನೀರಿನ ಸೇವನೆಯನ್ನು ಕಾಯ್ದುಕೊಳ್ಳಿ.</string>
+    <string name="rec_mod_risk">ಎಚ್ಚರಿಕೆಯಿಂದ ಮುಂದುವರಿಯಿರಿ. ನೆರಳಿನಲ್ಲಿ ನಡೆದು ಹೋಗಿ, ನೀರಿನ ಬಾಟಲಿ ಕೊಂಡೊಯ್ಯಿರಿ ಮತ್ತು ವಿಶ್ರಾಂತಿ ತಗೊಳ್ಳಿ.</string>
+    <string name="rec_high_risk">ಹೆಚ್ಚಿನ ಶಾಖದ ಅಪಾಯದ ಸಮಯ. %1$s ಅನ್ನು ತಂಪಾದ ಸಮಯಕ್ಕೆ ಬದಲಾಯಿಸಲು ಪರಿಶೀಲಿಸಿ.</string>
+    <string name="rec_extreme_risk">ಈ ಸಮಯದಲ್ಲಿ ಕಠಿಣ ಹೊರಾಂಗಣ ಚಟುವಟಿಕೆಗಳನ್ನು ತಪ್ಪಿಸಿ. ಬೆಳಿಗ್ಗೆ ಅಥವಾ ಸಂಜೆಗೆ ಮರುಹೊಂದಿಸಿ.</string>
+
+    <!-- Custom ML Simulator -->
+    <string name="custom_heat_risk_simulator">ಕಸ್ಟಮ್ ಶಾಖ ಅಪಾಯ ಸಿಮ್ಯುಲೇಟರ್ (ML)</string>
+    <string name="custom_heat_risk_sub">ಮಿಷನ್ ಲರ್ನಿಂಗ್ ಇಂಜಿನ್ ಬಳಸಿ ಕಸ್ಟಮ್ ಶಾಖ-ಆರೋಗ್ಯ ಅಪಾಯವನ್ನು ಸಿಮ್ಯುಲೇಟ್ ಮಾಡಿ.</string>
+    <string name="temperature_label">ತಾಪಮಾನ</string>
+    <string name="relative_humidity">ಸಾಪೇಕ್ಷ ಆರ್ದ್ರತೆ</string>
+    <string name="wind_speed">ಗಾಳಿಯ ವೇಗ</string>
+    <string name="btn_predict_custom_heat_risk">ಕಸ್ಟಮ್ ಶಾಖ ಅಪಾಯವನ್ನು ಊಹಿಸಿ (ML)</string>
+    <string name="running_ml_inference">ML ಮುನ್ಸೂಚನೆ ಚಾಲನೆಯಲ್ಲಿದೆ…</string>
+    <string name="predicted_label">ಊಹಿಸಲಾಗಿದೆ: %1$s</string>
+    <string name="prototype_ml_model">ಪ್ರೋಟೋಟೈಪ್ ML ಮಾದರಿ</string>
+    <string name="heat_index_score">ಶಾಖ ಸೂಚ್ಯಂಕ ಅಂಕ: %1$s°C</string>
+    <string name="model_version_label">ಮಾದರಿ ಆವೃತ್ತಿ: %1$s</string>
+
+    <!-- Safety Recommendations -->
+    <string name="safety_recommendations">ಸುರಕ್ಷತಾ ಶಿಫಾರಸುಗಳು</string>
+
+    <!-- Campus Cool Map -->
+    <string name="campus_cool_map">ಕ್ಯಾಂಪಸ್ ಕೂಲ್ ಮ್ಯಾಪ್</string>
+    <string name="campus_cool_map_sub">ಕುಡಿಯುವ ನೀರಿನ ಸ್ಥಳಗಳು, ನೆರಳಿನ ಪ್ರದೇಶಗಳು, ಎಸಿ ಅಧ್ಯಯನ ಕೊಠಡಿಗಳು ಮತ್ತು ಪ್ರಥಮ ಚಿಕಿತ್ಸೆ ಹುಡುಕಿ</string>
+    <string name="real_time_synced">ಎಲ್ಲಾ ಸಾಧನಗಳಲ್ಲಿ ರಿಯಲ್-ಟೈಮ್ ಸಿಂಕ್ ಆಗಿದೆ</string>
+    <string name="switch_college">ಕಾಲೇಜು ಬದಲಾಯಿಸಿ</string>
+    <string name="search_facility_placeholder">ನೀರಿನ ಸ್ಥಳ, ಅಧ್ಯಯನ ಕೊಠಡಿ, ಕಟ್ಟಡ ಹುಡುಕಿ…</string>
+    <string name="all_facilities">ಎಲ್ಲಾ ಸೌಲಭ್ಯಗಳು</string>
+    <string name="cat_drinking_water">ಕುಡಿಯುವ ನೀರು</string>
+    <string name="cat_shaded_area">ನೆರಳಿನ ಪ್ರದೇಶ</string>
+    <string name="cat_cool_indoor">ತಂಪಾದ ಒಳಾಂಗಣ ಸ್ಥಳ</string>
+    <string name="cat_first_aid">ಪ್ರಥಮ ಚಿಕಿತ್ಸೆ</string>
+    <string name="fetching_verified_campus_facilities">ಖಾತರಿಪಡಿಸಿದ ಕ್ಯಾಂಪಸ್ ಸೌಲಭ್ಯಗಳನ್ನು ಪಡೆಯಲಾಗುತ್ತಿದೆ…</string>
+    <string name="campus_server_connection_issue">ಕ್ಯಾಂಪಸ್ ಸರ್ವರ್ ಸಂಪರ್ಕ ಸಮಸ್ಯೆ</string>
+    <string name="view_demo_directory">ಡೆಮೊ ಡೈರೆಕ್ಟರಿ ವೀಕ್ಷಿಸಿ</string>
+    <string name="campus_directory">ಕ್ಯಾಂಪಸ್ ಡೈರೆಕ್ಟರಿ (%1$d ಸೌಲಭ್ಯಗಳು)</string>
+    <string name="no_facilities_found">%1$s ಗಾಗಿ ಯಾವುದೇ ಸೌಲಭ್ಯಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="be_first_student_to_contribute">ನೀರಿನ ಸ್ಥಳ ಅಥವಾ ನೆರಳಿನ ಪ್ರದೇಶವನ್ನು ಸೇರಿಸಿದ ಮೊದಲ ವಿದ್ಯಾರ್ಥಿಯಾಗಿರಿ!</string>
+    <string name="btn_add_facility_to_campus">+ ಕ್ಯಾಂಪಸ್‌ಗೆ ಸೌಲಭ್ಯ ಸೇರಿಸಿ</string>
+    <string name="btn_add_facility">ಸೌಲಭ್ಯ ಸೇರಿಸಿ</string>
+
+    <!-- Water Tracker -->
+    <string name="daily_water_tracker">ದೈನಂದಿನ ನೀರಿನ ಟ್ರ್ಯಾಕರ್</string>
+    <string name="daily_water_tracker_sub">ನೀರಿನ ಸೇವನೆ ದಾಖಲಿಸಿ ಮತ್ತು ದೈನಂದಿನ ಗುರಿಯನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಿ</string>
+    <string name="todays_total_intake">ಇಂದಿನ ಒಟ್ಟು ನೀರಿನ ಸೇವನೆ</string>
+    <string name="quick_add_water">ತ್ವರಿತ ನೀರು ಸೇರಿಸಿ</string>
+    <string name="small_glass">ಚಿಕ್ಕ ಲೋಟ</string>
+    <string name="standard_cup">ಸಾಮಾನ್ಯ ಕಪ್</string>
+    <string name="water_bottle">ನೀರಿನ ಬಾಟಲಿ</string>
+    <string name="custom_amount">ಕಸ್ಟಮ್ ಪ್ರಮಾಣ</string>
+    <string name="todays_water_entries">ಇಂದಿನ ನೀರಿನ ನಮೂದುಗಳು</string>
+    <string name="no_water_entries_recorded">ಇಂದಿನ ದಿನಕ್ಕೆ ಇನ್ನೂ ಯಾವುದೇ ನೀರಿನ ನಮೂದುಗಳನ್ನು ದಾಖಲಿಸಲಾಗಿಲ್ಲ.</string>
+    <string name="tap_quick_add_hint">ಮೇಲಿನ ತ್ವರಿತ ಬಟನ್‌ಗಳನ್ನು ಸ್ಪರ್ಶಿಸಿ ಅಥವಾ ಕಸ್ಟಮ್ ಪ್ರಮಾಣ ನಮೂದಿಸಿ.</string>
+    <string name="hydration_notice">ನೀರಿನ ಗುರಿಗಳು ಸಾಮಾನ್ಯ ಮಾರ್ಗದರ್ಶಿ ಸೂತ್ರಗಳಾಗಿವೆ. ಹೆಚ್ಚಿನ ತಾಪಮಾನದಲ್ಲಿ ಸೇವನೆಯನ್ನು ಹೆಚ್ಚಿಸಿ.</string>
+    <string name="undo">ಪೂರ್ವಸ್ಥಿತಿಗೆ ತಂದಿ</string>
+
+    <!-- Smart Heat Alerts -->
+    <string name="smart_heat_alerts">ಸ್ಮಾರ್ಟ್ ಶಾಖದ ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="smart_heat_alerts_sub">ರಿಯಲ್-ಟೈಮ್ ಅಪಾಯದ ಎಚ್ಚರಿಕೆಗಳು ಮತ್ತು ವಿದ್ಯಾರ್ಥಿ ಸುರಕ್ಷತೆ</string>
+    <string name="live_environmental_thermal_risk">ನೇರ ವಾತಾವರಣದ ಶಾಖದ ಅಪಾಯ</string>
+    <string name="evaluating_heat_health_metrics">ಆರೋಗ್ಯ ಮಾಪನಗಳನ್ನು ಮೌಲ್ಯಮಾಪನ ಮಾಡಲಾಗುತ್ತಿದೆ…</string>
+    <string name="prediction_data_unavailable">ಮುನ್ಸೂಚನೆ ಡೇಟಾ ಲಭ್ಯವಿಲ್ಲ</string>
+    <string name="upcoming_high_risk_periods">ಮುಂಬರುವ ಹೆಚ್ಚಿನ ಅಪಾಯದ ಸಮಯಗಳು</string>
+    <string name="loading_hourly_forecast">ಗಂಟೆಯ ಮುನ್ಸೂಚನೆ ಲೋಡ್ ಆಗುತ್ತಿದೆ…</string>
+    <string name="no_upcoming_high_risk_periods">ಹವಾಮಾನ ಮುನ್ಸೂಚನೆ ಒದಗಿಸುವವರಿಂದ ಯಾವುದೇ ಮುಂಬರುವ ಹೆಚ್ಚಿನ ಅಪಾಯದ ಸಮಯಗಳು ಕಂಡುಬಂದಿಲ್ಲ.</string>
+    <string name="alert_history_advisories">ಎಚ್ಚರಿಕೆ ಇತಿಹಾಸ ಮತ್ತು ಸಲಹೆಗಳು</string>
+    <string name="no_historical_heat_risk_alerts">ಯಾವುದೇ ಇತಿಹಾಸದ ಶಾಖದ ಎಚ್ಚರಿಕೆಗಳು ದಾಖಲಾಗಿಲ್ಲ.</string>
+    <string name="notification_preferences_controls">ಸೂಚನೆ ಆದ್ಯತೆಗಳು ಮತ್ತು ನಿಯಂತ್ರಣಗಳು</string>
+    <string name="notification_perm_granted">ಸೂಚನೆ ಅನುಮತಿ ನೀಡಲಾಗಿದೆ</string>
+    <string name="notification_perm_required">ಸೂಚನೆ ಅನುಮತಿ ಅಗತ್ಯವಿದೆ</string>
+    <string name="android_notifications_enabled">ಆಂಡ್ರಾಯ್ಡ್ ಸೂಚನೆಗಳು ಸಕ್ರಿಯವಾಗಿವೆ</string>
+    <string name="tap_to_enable_system_perm">ಸಿಸ್ಟಮ್ ಅನುಮತಿಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು ಕೆಳಗೆ ಸ್ಪರ್ಶಿಸಿ</string>
+    <string name="enable_smart_heat_alerts">ಸ್ಮಾರ್ಟ್ ಶಾಖದ ಎಚ್ಚರಿಕೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
+    <string name="periodically_check_live_risk">ನಿಯತಕಾಲಿಕವಾಗಿ ಶಾಖ ಅಪಾಯವನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಅಪಾಯ ಹೆಚ್ಚಿದಾಗ ಎಚ್ಚರಿಸು</string>
+    <string name="alert_trigger_threshold">ಎಚ್ಚರಿಕೆ ಪ್ರಾರಂಭ ಮಿತಿ:</string>
+    <string name="check_frequency_cooldown">ಪರಿಶೀಲನೆ ಆವರ್ತನ / ಕೂಲ್‌ಡೌನ್:</string>
+    <string name="btn_trigger_sample_heat_alert">ಮಾದರಿ ಶಾಖದ ಎಚ್ಚರಿಕೆ ನೀಡಿ</string>
+    <string name="threshold_moderate">ಮಧ್ಯಮ</string>
+    <string name="threshold_high">ಹೆಚ್ಚು</string>
+    <string name="threshold_extreme">ಅತ್ಯಂತ ಹೆಚ್ಚು</string>
+
+    <!-- Student Heat-Safety Center -->
+    <string name="student_heat_safety_center">ವಿದ್ಯಾರ್ಥಿ ಶಾಖ-ಸುರಕ್ಷತಾ ಕೇಂದ್ರ</string>
+    <string name="student_heat_safety_center_sub">ಸುರಕ್ಷತಾ ನಿಯಮಗಳು, ದೈನಂದಿನ ಪರಿಶೀಲನಾ ಪಟ್ಟಿ, ಪ್ರಥಮ ಚಿಕಿತ್ಸೆ ಮತ್ತು ತುರ್ತು ಸಂಪರ್ಕಗಳು</string>
+    <string name="tab_safety_guidance">ಸುರಕ್ಷತಾ ಮಾರ್ಗದರ್ಶನ</string>
+    <string name="tab_daily_checklist">ದೈನಂದಿನ ಪರಿಶೀಲನಾ ಪಟ್ಟಿ</string>
+    <string name="tab_first_aid">ಪ್ರಥಮ ಚಿಕಿತ್ಸೆ</string>
+    <string name="tab_emergency_contacts">ತುರ್ತು ಸಂಪರ್ಕಗಳು</string>
+    <string name="live_risk_label">ನೇರ ಅಪಾಯ: %1$s</string>
+    <string name="offline_heat_safety_guidance">ಆಫ್‌ಲೈನ್ ಶಾಖ-ಸುರಕ್ಷತಾ ಮಾರ್ಗದರ್ಶನ</string>
+    <string name="live_prediction_badge">ನೇರ ಮುನ್ಸೂಚನೆ</string>
+    <string name="offline_protocols_badge">ಆಫ್‌ಲೈನ್ ನಿಯಮಗಳು</string>
+    <string name="select_student_profile_context">ವಿದ್ಯಾರ್ಥಿ ಪ್ರೊಫೈಲ್ / ಚಟುವಟಿಕೆ ಸಂದರ್ಭ ಆಯ್ಕೆಮಾಡಿ:</string>
+    <string name="profile_commuter">ಕ್ಯಾಂಪಸ್ ಪ್ರಯಾಣಿಕ</string>
+    <string name="profile_athlete">ವಿದ್ಯಾರ್ಥಿ ಕ್ರೀಡಾಪಟು</string>
+    <string name="profile_outdoor_class">ಹೊರಾಂಗಣ ತರಗತಿ</string>
+    <string name="profile_regular">ಸಾಮಾನ್ಯ ವಿದ್ಯಾರ್ಥಿ</string>
+    <string name="tailored_activity_protocols">ಅನುಕೂಲಕರ ಚಟುವಟಿಕೆ ನಿಯಮಗಳು</string>
+    <string name="recommended_action">ಶಿಫಾರಸು ಮಾಡಿದ ಕ್ರಮ</string>
+    <string name="hydration_tip">ನೀರಿನ ಸೇವನೆ ಸಲಹೆ</string>
+    <string name="todays_safety_actions">ಇಂದಿನ ಸುರಕ್ಷತಾ ಕ್ರಮಗಳು</string>
+    <string name="checklist_progress_notice">ಪ್ರಗತಿಯು ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಉಳಿಸಲ್ಪಡುತ್ತದೆ ಮತ್ತು ಮಧ್ಯರಾತ್ರಿ ಮರುಹೊಂದಿಸಲ್ಪಡುತ್ತದೆ.</string>
+    <string name="practical_safety_checklist">ಪ್ರಾಯೋಗಿಕ ಸುರಕ್ಷತಾ ಪರಿಶೀಲನಾ ಪಟ್ಟಿ:</string>
+    <string name="critical_medical_emergency_notice">ಗಂಭೀರ ವೈದ್ಯಕೀಯ ತುರ್ತು ಸೂಚನೆ</string>
+    <string name="heatstroke_emergency_warning">ಸಂಭಾವ್ಯ ಹೀಟ್‌ಸ್ಟ್ರೋಕ್ ಜೀವಕ್ಕೆ ಅಪಾಯಕಾರಿ ವೈದ್ಯಕೀಯ ತುರ್ತು ಪರಿಸ್ಥಿತಿಯಾಗಿದೆ! ತಕ್ಷಣವೇ ವೈದ್ಯಕೀಯ ನೆರವು ಪಡೆಯಿರಿ.</string>
+    <string name="btn_call_emergency_helpline">ತುರ್ತು ಸಹಾಯವಾಣಿಗೆ ಕರೆ ಮಾಡಿ (112 / 108)</string>
+    <string name="heat_exhaustion_title">ಶಾಖದ ದಣವು (ಆರಂಭಿಕ ಎಚ್ಚರಿಕೆ)</string>
+    <string name="heat_exhaustion_warning_signs">ಎಚ್ಚರಿಕೆಯ ಚಿಹ್ನೆಗಳು: ಅತಿಯಾದ ಬೆವರುವುದು, ತಲೆತಿರುಗುವಿಕೆ, ತಲೆನೋವು, ವಾಕರಿಕೆ, ಕ್ಷಿಪ್ರ ನಾಡಿ, ಸ್ನಾಯು ಸೆಳೆತ, ದೌರ್ಬಲ್ಯ.</string>
+    <string name="immediate_first_aid_actions">ತಕ್ಷಣದ ಪ್ರಥಮ ಚಿಕಿತ್ಸಾ ಕ್ರಮಗಳು:</string>
+    <string name="heatstroke_title">ಸಂಭಾವ್ಯ ಹೀಟ್‌ಸ್ಟ್ರೋಕ್ (ವೈದ್ಯಕೀಯ ತುರ್ತುಸ್ಥಿತಿ)</string>
+    <string name="heatstroke_warning_signs">ಎಚ್ಚರಿಕೆಯ ಚಿಹ್ನೆಗಳು: ಹೆಚ್ಚಿನ ದೇಹದ ತಾಪಮಾನ (&gt;40°C / 104°F), ಗೊಂದಲ, ಪ್ರಜ್ಞೆ ತಪ್ಪುವುದು, ಬಿಸಿ ಒಣ ಚರ್ಮ ಅಥವಾ ಅತಿಯಾದ ಬೆವರುವುದು.</string>
+    <string name="immediate_cooling_protocols">ತಕ್ಷಣ ತಂಪುಗೊಳಿಸುವ ನಿಯಮಗಳು:</string>
+
+    <!-- Student Profile & Settings Screen -->
+    <string name="student_profile_preferences">ವಿದ್ಯಾರ್ಥಿ ಪ್ರೊಫೈಲ್ ಮತ್ತು ಆದ್ಯತೆಗಳು</string>
+    <string name="customize_activity_language_hydration">ಚಟುವಟಿಕೆ ಮಟ್ಟಗಳು, ಭಾಷೆ ಮತ್ತು ನೀರಿನ ಗುರಿಗಳನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ</string>
+    <string name="personal_details_optional">ವೈಯಕ್ತಿಕ ವಿವರಗಳು (ಐಚ್ಛಿಕ)</string>
+    <string name="nickname_display_name">ಅಡ್ಡಹೆಸರು / ಪ್ರದರ್ಶನ ಹೆಸರು</string>
+    <string name="daily_activity_pattern">ದೈನಂದಿನ ಚಟುವಟಿಕೆ ವಿಧಾನ</string>
+    <string name="select_typical_routine">ಸುರಕ್ಷತಾ ಶಿಫಾರಸುಗಳನ್ನು ಸರಿಹೊಂದಿಸಲು ನಿಮ್ಮ ದಿನಚರಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ.</string>
+    <string name="activity_indoors">ಹೆಚ್ಚಾಗಿ ಒಳಾಂಗಣದಲ್ಲಿ</string>
+    <string name="activity_commuting">ಸಾಮಾನ್ಯ ಪ್ರಯಾಣ</string>
+    <string name="activity_outdoor">ಆಗಾಗ ಹೊರಾಂಗಣ ಚಟುವಟಿಕೆಗಳು</string>
+    <string name="app_preferences">ಆ್ಯಪ್ ಆದ್ಯತೆಗಳು</string>
+    <string name="preferred_language">ಆದ್ಯತೆಯ ಭಾಷೆ</string>
+    <string name="daily_hydration_reference_target">ದೈನಂದಿನ ನೀರಿನ ಗುರಿ (mL)</string>
+    <string name="daily_water_goal">ದೈನಂದಿನ ನೀರಿನ ಗುರಿ (mL)</string>
+    <string name="suggested_guideline">ಸೂಚಿಸಿದ ಸಾಮಾನ್ಯ ಮಾರ್ಗಸೂಚಿ: 2000 - 3000 mL/ದಿನ</string>
+    <string name="hydration_reminders">ನೀರಿನ ಸೇವನೆ ಜ್ಞಾಪನೆಗಳು</string>
+    <string name="save_preference_periodic_water">ನಿಯತಕಾಲಿಕ ನೀರಿನ ಜ್ಞಾಪನೆಗಳಿಗಾಗಿ ಆದ್ಯತೆಯನ್ನು ಉಳಿಸಿ</string>
+    <string name="reminder_interval">ಜ್ಞಾಪನೆ ಮಧ್ಯಂತರ</string>
+    <string name="non_medical_notice">ಸಾಮಾನ್ಯ ಮಾರ್ಗಸೂಚಿಗಳ ಸೂಚನೆ: ನೀರಿನ ಗುರಿಗಳು ಶೈಕ್ಷಣಿಕ ಉದ್ದೇಶಕ್ಕಾಗಿ ಮಾತ್ರ ಸಾಮಾನ್ಯ ಮಾರ್ಗಸೂಚಿಗಳಾಗಿವೆ.</string>
+    <string name="btn_save_profile">ಪ್ರೊಫೈಲ್ ಉಳಿಸಿ</string>
+
+    <!-- Languages Native Names -->
+    <string name="lang_english">English — English</string>
+    <string name="lang_hindi">Hindi — हिन्दी</string>
+    <string name="lang_kannada">Kannada — ಕನ್ನಡ</string>
+    <string name="lang_telugu">Telugu — తెలుగు</string>
+    <string name="lang_tamil">Tamil — தமிழ்</string>
+    <string name="lang_malayalam">Malayalam — മലയാളം</string>
+
+    <!-- Risk History Screen -->
+    <string name="historical_analytics_title">ಶಾಖ-ಅಪಾಯದ ಇತಿಹಾಸ ಮತ್ತು ಪ್ರವೃತ್ತಿಗಳು</string>
+    <string name="historical_analytics_sub">ಇತಿಹಾಸದ ವಿಶ್ಲೇಷಣೆ, ಅಪಾಯದ ಹಂಚಿಕೆ ಮತ್ತು ವಿದ್ಯಾರ್ಥಿ ವಿವರಗಳು</string>
+    <string name="time_period_today">ಇಂದು</string>
+    <string name="time_period_week">ಕಳೆದ 7 ದಿನಗಳು</string>
+    <string name="time_period_month">ಕಳೆದ 30 ದಿನಗಳು</string>
+    <string name="time_period_all">ಎಲ್ಲಾ ಸಮಯ</string>
+    <string name="risk_trends">ಅಪಾಯದ ಪ್ರವೃತ್ತಿಗಳು (%1$s)</string>
+    <string name="predictions_count">ಮುನ್ಸೂಚನೆಗಳು</string>
+    <string name="peak_risk">ಗರಿಷ್ಠ ಅಪಾಯ</string>
+    <string name="avg_feels_like">ಸರಾಸರಿ ಅನುಭವ ತಾಪಮಾನ</string>
+    <string name="risk_category_distribution">ಅಪಾಯದ ವರ್ಗ ವಿತರಣೆ:</string>
+    <string name="timeline_risk_trend">ಸಮಯರೇಖೆ ಅಪಾಯದ ಪ್ರವೃತ್ತಿ:</string>
+    <string name="oldest">ಅತಿ ಹಳೆಯದು</string>
+    <string name="timeline_trend">ಸಮಯರೇಖೆ ಪ್ರವೃತ್ತಿ</string>
+    <string name="latest">ಇತ್ತೀಚಿನದು</string>
+    <string name="student_friendly_insights">ವಿದ್ಯಾರ್ಥಿ ಸ್ನೇಹಿ ವಿವರಗಳು</string>
+    <string name="historical_prediction_records">ಇತಿಹಾಸದ ಮುನ್ಸೂಚನೆ ದಾಖಲೆಗಳು</string>
+    <string name="records_count">%1$d ದಾಖಲೆಗಳು</string>
+    <string name="no_predictions_recorded_for">%1$s ಗಾಗಿ ಯಾವುದೇ ಮುನ್ಸೂಚನೆಗಳು ದಾಖಲಾಗಿಲ್ಲ</string>
+    <string name="fetch_live_risk_to_build_history">ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಇತಿಹಾಸವನ್ನು ನಿರ್ಮಿಸಲು ಮುಖಪುಟದಲ್ಲಿ ನೇರ ಅಪಾಯದ ವಿವರಗಳನ್ನು ಪಡೆಯಿರಿ.</string>
+    <string name="clear_risk_history_title">ಅಪಾಯದ ಇತಿಹಾಸವನ್ನು ಅಳಿಸಬೇಕೇ?</string>
+    <string name="clear_risk_history_msg">ದಾಖಲಾದ ಎಲ್ಲಾ ಶಾಖ ಅಪಾಯದ ಇತಿಹಾಸವನ್ನು ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿದ್ದೀರಾ? ಈ ಕ್ರಮವನ್ನು ಹಿಂಪಡೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ.</string>
+    <string name="delete_record_title">ದಾಖಲೆಯನ್ನು ಅಳಿಸಬೇಕೇ?</string>
+    <string name="delete_record_msg">ಈ ಮುನ್ಸೂಚನೆ ದಾಖಲೆಯನ್ನು ಇತಿಹಾಸದಿಂದ ತೆಗೆದುಹಾಕಬೇಕೇ?</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_hydration">ನೀರಿನ ಸೇವನೆ ಜ್ಞಾಪನೆಗಳು</string>
+    <string name="notification_channel_hydration_desc">ಬಿಸಿ ಚಟುವಟಿಕೆಗಳಲ್ಲಿ ನೀರು ಕುಡಿಯಲು ನಿಯತಕಾಲಿಕ ಜ್ಞಾಪನೆಗಳು.</string>
+    <string name="notification_channel_alerts">ಶಾಖ ಅಪಾಯದ ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="notification_channel_alerts_desc">ಹೆಚ್ಚಿನ ಅಥವಾ ಅತ್ಯಂತ ಹೆಚ್ಚಿನ ಶಾಖದ ಅಪಾಯದ ಎಚ್ಚರಿಕೆಗಳು.</string>
+    <string name="notification_mark_hydrated">ನೀರು ಕುಡಿದಿದ್ದೇನೆ ಎಂದು ಗುರುತಿಸಿ (+250mL)</string>
+</resources>

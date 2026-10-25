@@ -1,6 +1,6 @@
 # HeatHealth — Heat-Health Risk Prediction & Early Warning System
 
-> **Comprehensive Project Documentation — Phase 1, Phase 2, Phase 3, Phase 4, & Phase 5**
+> **Comprehensive Project Documentation — Phase 1, Phase 2, Phase 3, Phase 4, Phase 5, Phase 6, & Phase 7**
 
 HeatHealth is an open-source health-technology application designed to help students, outdoor workers, athletes, and vulnerable individuals monitor heat-health risks and receive preventive early warning recommendations during extreme thermal conditions.
 
@@ -12,6 +12,8 @@ HeatHealth is an open-source health-technology application designed to help stud
 - 📕 [Phase 3 Detailed Documentation](README_PHASE3.md) — ML Integration, `POST /predict` Endpoint, & Custom Risk Simulator.
 - 📗 [Phase 4 Detailed Documentation](README_PHASE4.md) — Student Profiles, Water Intake Tracking, Room Database, & DataStore Persistence.
 - 📓 [Phase 5 Detailed Documentation](README_PHASE5.md) — Student Safety Features, Personalized Guidance, WorkManager Reminders, Activity Planner, & Personal Safety Dashboard.
+- 📒 [Phase 6 Detailed Documentation](README_PHASE6.md) — Smart Heat Alerts, Network Reliability, Comprehensive Unit Tests, & Final APK Builds.
+- 📓 [Phase 7 Detailed Documentation](README_PHASE7.md) — Campus Cool Map Implementation, Facility Directory, Room Migration v3, & Offline Data Handling Fix.
 
 ---
 
@@ -52,6 +54,17 @@ HeatHealth is an open-source health-technology application designed to help stud
 - **Feature 4 — Heat-Alert Notifications**: Periodic background risk monitoring (`HeatAlertCheckWorker`) with user threshold selection (*Moderate*, *High*, *Extreme*), duplicate alert suppression for unchanged states via DataStore tracking, and Room database alert logging.
 - **Feature 5 — Personal Safety Dashboard**: Comprehensive dashboard card (`PersonalSafetyDashboardCard`) showing current risk state, today's water progress, genuine weekly summary (liters and daily average), recent risk logs (`heat_risk_logs`), and recent alert logs (`alert_logs`).
 
+### **Phase 6: Smart Heat Alerts, Reliability, Testing & Final Integration (Completed)**
+- **API Integration & Network Reliability**: Differentiated exception handling for HTTP 400/422 validation errors, HTTP 500/502 gateway errors, malformed JSON structure errors, and network timeouts. Inflight request debouncing prevents duplicate parallel requests.
+- **Smart Alert Deduplication**: Evaluates live thermal risk against user threshold (*Moderate*, *High*, *Extreme*), tracks last alerted risk state in DataStore, suppresses duplicate notifications for unchanged states, and logs alert events to Room.
+- **Backend-Offline Data-Source Fix**: Introduced explicit `DataSource` enum (`LIVE`, `CACHED`, `DEMO`, `UNAVAILABLE`). Displays a prominent `StaleDataWarningCard` banner and `CACHED DATA (OFFLINE)` badge when offline without falsely claiming new live data or altering original timestamps.
+
+### **Phase 7: Collaborative Campus Cool Map & Multi-College Discovery (Completed)**
+- **Multi-College Directory & Search**: Allows students to search and follow colleges across Bengaluru, New Delhi, Mumbai, Chennai, Kolkata, and custom cities, with selection persisted in DataStore & Room DB v4.
+- **Geographic OpenStreetMap & Full-Screen Mode**: Renders OpenStreetMap tiles (`osmdroid-android:6.1.18`) with pinch zoom, drag panning, full-screen expansion mode, and bottom navigation hiding.
+- **Community Contributions & Status Reporting**: FAB button allowing students to submit new water points, shaded areas, cool rooms, and first aid stations, plus a "Report Issue" status reporter for broken dispensers or closed rooms.
+- **Real-Time Cross-Client Sync**: Centralized FastAPI backend endpoints (`/api/v1/campus-cool-map/colleges`, `/facilities`) and periodic polling sync engine ensuring updates submitted on Device A appear automatically on Device B in real time.
+
 > [!IMPORTANT]
 > **Environmental Estimate Notice**: HeatHealth evaluates environmental thermal stress risk using meteorological data. It is an early-stage research prototype and does not provide an individualized medical diagnosis or official public weather warning.
 
@@ -64,10 +77,10 @@ HeatHealth is an open-source health-technology application designed to help stud
 - **UI Framework**: Jetpack Compose with Material 3
 - **Navigation**: Jetpack Navigation Compose (`androidx.navigation:navigation-compose:2.8.8`)
 - **Background Tasks**: Android WorkManager (`androidx.work:work-runtime-ktx:2.9.1`)
-- **Local Database**: Android Room 2.7 (`androidx.room:room-runtime`, `androidx.room:room-ktx`, `androidx.room:room-compiler` via KSP) - Version 2
+- **Local Database**: Android Room 2.7 (`androidx.room:room-runtime`, `androidx.room:room-ktx`, `androidx.room:room-compiler` via KSP) - Version 3
 - **Preferences**: Android DataStore (`androidx.datastore:datastore-preferences:1.1.2`)
 - **Networking**: Retrofit 2 + Gson Converter + OkHttp 3 (with multi-endpoint candidate failover)
-- **Architecture**: MVVM (`DashboardViewModel`, `StudentProfileViewModel`, `WaterTrackerViewModel`, Repositories, StateFlow)
+- **Architecture**: MVVM (`DashboardViewModel`, `StudentProfileViewModel`, `WaterTrackerViewModel`, `CampusCoolMapViewModel`, Repositories, StateFlow)
 - **Minimum SDK**: API 26 (Android 8.0+)
 - **Target SDK**: API 37 (Android 15+)
 - **Theme**: Light health-tech theme (Teal `#00897B` primary accent, Amber `#F59E0B` heat indicators)
@@ -94,18 +107,18 @@ HeatHealth/
 │       │   ├── java/com/heathealth/app/
 │       │   │   ├── MainActivity.kt         # App Entry Activity (Launches MainScreen)
 │       │   │   ├── data/
-│       │   │   │   ├── local/              # Room DB v2, Entities (StudentProfile, WaterIntake, HeatRiskLog, AlertLog), DAOs, DataStore
-│       │   │   │   ├── model/              # PersonalizedGuidance, ProfileUiState, WaterTrackerUiState, DashboardUiState
-│       │   │   │   └── repository/         # StudentProfileRepository, WaterIntakeRepository, HeatHealthRepository
+│       │   │   │   ├── local/              # Room DB v3, Entities (StudentProfile, WaterIntake, HeatRiskLog, AlertLog, CampusFacility), DAOs, DataStore
+│       │   │   │   ├── model/              # CampusFacility, PersonalizedGuidance, ProfileUiState, WaterTrackerUiState, DashboardUiState
+│       │   │   │   └── repository/         # CampusCoolMapRepository, StudentProfileRepository, WaterIntakeRepository, HeatHealthRepository
 │       │   │   ├── network/                # BackendApiConfig (Multi-Endpoint Failover), HeatHealthApiService, DTOs
 │       │   │   ├── ui/
-│       │   │   │   ├── components/         # OutdoorActivityPlanner, PersonalSafetyDashboard, WeatherSummary, HourlyForecast, CustomMlPredictor, RiskIndicator, Safety
-│       │   │   │   └── screens/            # MainScreen, DashboardScreen, WaterTrackerScreen, ProfileScreen, RiskMapScreen, AlertsScreen, SafetyScreen
+│       │   │   │   ├── components/         # InteractiveCampusMapView, CampusFacilityDetails, CampusCoolMapShortcut, OutdoorActivityPlanner, PersonalSafetyDashboard, WeatherSummary
+│       │   │   │   └── screens/            # CampusCoolMapScreen, MainScreen, DashboardScreen, WaterTrackerScreen, ProfileScreen, RiskMapScreen, AlertsScreen, SafetyScreen
 │       │   │   ├── util/                   # NotificationHelper
 │       │   │   ├── worker/                 # HydrationReminderWorker, HeatAlertCheckWorker, HydrationActionReceiver, WorkManagerScheduler
-│       │   │   └── viewmodel/              # DashboardViewModel, StudentProfileViewModel, WaterTrackerViewModel
+│       │   │   └── viewmodel/              # CampusCoolMapViewModel, DashboardViewModel, StudentProfileViewModel, WaterTrackerViewModel
 │       │   └── res/
-│       └── test/                            # Comprehensive Unit Test Suite (31 Tests)
+│       └── test/                            # Comprehensive Unit Test Suite (49 Tests)
 ├── backend/                                # Python FastAPI Backend Module
 ├── build.gradle.kts                        # Root Gradle configuration
 ├── README.md                               # Combined project documentation
@@ -114,6 +127,8 @@ HeatHealth/
 ├── README_PHASE3.md                        # Dedicated Phase 3 documentation
 ├── README_PHASE4.md                        # Dedicated Phase 4 documentation
 ├── README_PHASE5.md                        # Dedicated Phase 5 documentation
+├── README_PHASE6.md                        # Dedicated Phase 6 documentation
+├── README_PHASE7.md                        # Dedicated Phase 7 documentation
 └── .gitignore                              # Git exclusion rules
 ```
 
@@ -125,10 +140,11 @@ HeatHealth/
 - **Phase 2 Backend Audit & Integration Tests**: 100% Passed
 - **Phase 3 ML Inference Tests**: 100% Passed
 - **Phase 4 Android Unit Tests**: 100% Passed
-- **Phase 5 Android Unit Tests**: **31/31 PASSED (100% Success)**
-  - `PersonalizedGuidanceTest`: Guidance mapping for all risk levels, student activity contexts, and emergency heatstroke protocol text.
-  - `OutdoorActivityPlannerTest`: Forecast hour lookup, alternative cooler times filtering, and missing/unavailable forecast window handling.
-  - `UserPreferencesAndAlertsTest`: Preference defaults, alert threshold filtering, duplicate alert suppression logic, and WorkManager task identifiers.
-  - `HeatHealthUnitTest`, `StudentProfileViewModelTest`, `WaterTrackerViewModelTest`, `WaterIntakeRepositoryTest`.
+- **Phase 5 Android Unit Tests**: 100% Passed
+- **Phase 6 Android Unit Tests**: 100% Passed
+- **Phase 7 Android Unit Tests**: **49/49 PASSED (100% Success)**
+  - `CampusCoolMapTest`: Category filtering, facility search, combined search+filter, missing coordinates handling, Room entity conversion, duplicate prevention, and offline fallback.
+  - `BackendOfflineVerificationTest`: 9-step backend offline and recovery sequence.
+  - `NetworkReliabilityAndErrorHandlingTest`, `AlertDeduplicationAndThresholdTest`, `ViewModelDebounceTest`, `PersonalizedGuidanceTest`, `OutdoorActivityPlannerTest`, `UserPreferencesAndAlertsTest`, `HeatHealthUnitTest`, `StudentProfileViewModelTest`, `WaterTrackerViewModelTest`, `WaterIntakeRepositoryTest`.
 - **Backend Test Suite (`test_backend.py` & `run_audit_tests.py`)**: **16/16 PASSED (100% Success)**
-- **Android Gradle Assembly (`assembleDebug`)**: **BUILD SUCCESSFUL**
+- **Android Gradle Assembly (`assembleDebug` & `assembleRelease`)**: **BUILD SUCCESSFUL**

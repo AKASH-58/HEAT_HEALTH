@@ -103,6 +103,7 @@ private fun HourlyForecastItemCard(
         RiskLevel.MODERATE -> HeatAmber
         RiskLevel.HIGH -> HeatOrange
         RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> Color(0xFFC62828)
+        else -> PrimaryTeal
     }
 
     Card(
@@ -160,7 +161,7 @@ private fun HourlyForecastItemCard(
                         .background(levelColor)
                 )
                 Text(
-                    text = item.riskLevel.displayName,
+                    text = item.riskLevel.getLocalizedName(),
                     style = MaterialTheme.typography.labelSmall,
                     color = levelColor
                 )

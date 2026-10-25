@@ -1,6 +1,5 @@
 package com.heathealth.app.ui.screens
 
-import android.app.Application
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -57,6 +56,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import com.heathealth.app.R
 import com.heathealth.app.data.local.entity.WaterIntakeEntity
 import com.heathealth.app.ui.theme.BorderLight
 import com.heathealth.app.ui.theme.PrimaryTeal
@@ -69,19 +70,23 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
+import androidx.compose.material.icons.filled.NotificationsActive
+
 @Composable
 fun WaterTrackerScreen(
-    viewModel: WaterTrackerViewModel = viewModel()
+    viewModel: WaterTrackerViewModel = viewModel(),
+    onNavigateToAlerts: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val undoLabel = stringResource(R.string.undo)
 
     LaunchedEffect(uiState.userFeedbackMessage) {
         uiState.userFeedbackMessage?.let { msg ->
             if (uiState.lastDeletedEntry != null) {
                 val result = snackbarHostState.showSnackbar(
                     message = msg,
-                    actionLabel = "Undo",
+                    actionLabel = undoLabel,
                     duration = SnackbarDuration.Short
                 )
                 if (result == SnackbarResult.ActionPerformed) {
@@ -108,30 +113,50 @@ fun WaterTrackerScreen(
         ) {
             // Header
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.WaterDrop,
-                    contentDescription = "Hydration Tracker",
-                    tint = PrimaryTeal,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.WaterDrop,
+                        contentDescription = "Hydration Tracker",
+                        tint = PrimaryTeal,
+                        modifier = Modifier
+                            .size(42.dp)
+                            .clip(CircleShape)
+                            .background(PrimaryTealLight)
+                            .padding(8.dp)
+                    )
+
+                    Column {
+                        Text(
+                            text = stringResource(R.string.daily_water_tracker),
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = TextPrimary
+                        )
+                        Text(
+                            text = stringResource(R.string.daily_water_tracker_sub),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = TextSecondary
+                        )
+                    }
+                }
+
+                IconButton(
+                    onClick = onNavigateToAlerts,
                     modifier = Modifier
-                        .size(42.dp)
+                        .size(40.dp)
                         .clip(CircleShape)
                         .background(PrimaryTealLight)
-                        .padding(8.dp)
-                )
-
-                Column {
-                    Text(
-                        text = "Daily Water Tracker",
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = TextPrimary
-                    )
-                    Text(
-                        text = "Record intake and monitor daily hydration goal",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = TextSecondary
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.NotificationsActive,
+                        contentDescription = stringResource(R.string.smart_heat_alerts),
+                        tint = PrimaryTeal
                     )
                 }
             }
@@ -157,7 +182,7 @@ fun WaterTrackerScreen(
                     ) {
                         Column {
                             Text(
-                                text = "Today's Total Intake",
+                                text = stringResource(R.string.todays_total_intake),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = TextSecondary
                             )
@@ -220,7 +245,7 @@ fun WaterTrackerScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        text = "Quick Add Water",
+                        text = stringResource(R.string.quick_add_water),
                         style = MaterialTheme.typography.titleMedium,
                         color = TextPrimary
                     )
@@ -229,13 +254,13 @@ fun WaterTrackerScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        QuickAddButton(label = "+150 mL", subtitle = "Small glass", modifier = Modifier.weight(1f)) {
+                        QuickAddButton(label = "+150 mL", subtitle = stringResource(R.string.small_glass), modifier = Modifier.weight(1f)) {
                             viewModel.addQuickWater(150)
                         }
-                        QuickAddButton(label = "+250 mL", subtitle = "Standard cup", modifier = Modifier.weight(1f)) {
+                        QuickAddButton(label = "+250 mL", subtitle = stringResource(R.string.standard_cup), modifier = Modifier.weight(1f)) {
                             viewModel.addQuickWater(250)
                         }
-                        QuickAddButton(label = "+500 mL", subtitle = "Water bottle", modifier = Modifier.weight(1f)) {
+                        QuickAddButton(label = "+500 mL", subtitle = stringResource(R.string.water_bottle), modifier = Modifier.weight(1f)) {
                             viewModel.addQuickWater(500)
                         }
                     }
@@ -257,7 +282,7 @@ fun WaterTrackerScreen(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Text(
-                        text = "Custom Amount",
+                        text = stringResource(R.string.custom_amount),
                         style = MaterialTheme.typography.titleMedium,
                         color = TextPrimary
                     )
@@ -293,7 +318,7 @@ fun WaterTrackerScreen(
                         ) {
                             Icon(imageVector = Icons.Default.Add, contentDescription = "Add Custom")
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Add")
+                            Text(stringResource(R.string.btn_add))
                         }
                     }
 
@@ -327,7 +352,7 @@ fun WaterTrackerScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Today's Water Entries",
+                            text = stringResource(R.string.todays_water_entries),
                             style = MaterialTheme.typography.titleMedium,
                             color = TextPrimary
                         )
@@ -357,12 +382,12 @@ fun WaterTrackerScreen(
                                     modifier = Modifier.size(36.dp)
                                 )
                                 Text(
-                                    text = "No water entries recorded for today yet.",
+                                    text = stringResource(R.string.no_water_entries_recorded),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = TextSecondary
                                 )
                                 Text(
-                                    text = "Tap quick add buttons above or enter a custom amount.",
+                                    text = stringResource(R.string.tap_quick_add_hint),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = TextSecondary
                                 )
@@ -406,7 +431,7 @@ fun WaterTrackerScreen(
                     )
 
                     Text(
-                        text = "Hydration targets are general reference guidelines. Increase intake during high ambient temperature or strenuous outdoor activity.",
+                        text = stringResource(R.string.hydration_notice),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary
                     )

@@ -1,3 +1,257 @@
 <resources>
+    <!-- App Information & Navigation -->
     <string name="app_name">HeatHealth</string>
+    <string name="app_description">Heat-Health Risk Prediction &amp; Early Warning System</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_hydration">Hydration</string>
+    <string name="nav_cool_map">Cool Map</string>
+    <string name="nav_alerts">Alerts</string>
+    <string name="nav_safety">Safety</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- General Buttons & Common Labels -->
+    <string name="btn_view">View</string>
+    <string name="btn_retry">Retry</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_clear_all">Clear All</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_switch">Switch</string>
+    <string name="btn_directions">Directions</string>
+    <string name="btn_report_issue">Report Issue</string>
+
+    <!-- Home & Dashboard -->
+    <string name="fetching_weather_evaluating_risk">Updating weather &amp; heat risk…</string>
+    <string name="backend_connection_issue">Connection Issue</string>
+    <string name="backend_offline_displaying_cached">Offline — Showing Saved Weather Data</string>
+    <string name="last_successful_update">Last successful update: %1$s</string>
+    <string name="heat_risk_history_trends">Heat-Risk History &amp; Trends</string>
+    <string name="view_recorded_prediction_trends">View recorded prediction trends &amp; student insights</string>
+    <string name="btn_view_offline_demo">View Sample Data</string>
+
+    <!-- Weather Summary Card -->
+    <string name="weather_summary">Weather Summary</string>
+    <string name="live_data">LIVE DATA</string>
+    <string name="cached_data_offline">CACHED DATA (OFFLINE)</string>
+    <string name="demonstration_data">DEMONSTRATION DATA</string>
+    <string name="unavailable">UNAVAILABLE</string>
+    <string name="temp">Temp</string>
+    <string name="feels_like">Feels Like</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="source_label">Source: %1$s</string>
+
+    <!-- Risk Levels -->
+    <string name="risk_low">Low</string>
+    <string name="risk_moderate">Moderate</string>
+    <string name="risk_high">High</string>
+    <string name="risk_very_high">Very High</string>
+    <string name="risk_extreme">Extreme</string>
+    <string name="risk_unknown">General Guidance</string>
+    <string name="risk_level_title">%1$s Heat Risk</string>
+    <string name="risk_level_badge">%1$s Risk</string>
+    <string name="category_label">Category:</string>
+    <string name="score_label">Score: %1$s°C</string>
+    <string name="contributing_factors">Contributing Factors:</string>
+
+    <!-- Personal Safety Dashboard -->
+    <string name="personal_safety_dashboard">Personal Safety Dashboard</string>
+    <string name="personal_safety_dashboard_sub">Summary of risk predictions, alerts, and hydration logs</string>
+    <string name="current_heat_risk_state">Current Heat Risk State</string>
+    <string name="todays_hydration_progress">Today\'s Hydration Progress</string>
+    <string name="recent_recorded_risk_assessments">Recent Recorded Risk Assessments</string>
+    <string name="no_recent_risk_predictions">No recent risk predictions recorded in local database yet.</string>
+    <string name="recent_triggered_heat_alerts">Recent Triggered Heat Alerts</string>
+    <string name="no_local_heat_alerts">No local heat alerts triggered yet.</string>
+
+    <!-- Outdoor Activity Planner -->
+    <string name="student_outdoor_activity_planner">Student Outdoor Activity Planner</string>
+    <string name="plan_safe_outdoor_times">Plan safe outdoor times based on hourly heat risk predictions</string>
+    <string name="select_planned_activity">Select Planned Activity:</string>
+    <string name="select_planned_time">Select Planned Time:</string>
+    <string name="activity_walking">Walking to Class</string>
+    <string name="activity_sports">Outdoor Sports</string>
+    <string name="activity_commute">Campus Commute</string>
+    <string name="activity_fieldwork">Fieldwork</string>
+    <string name="planned_time_label">Planned Time: %1$s</string>
+    <string name="suggested_cooler_alternative_times">Suggested Cooler Alternative Times:</string>
+    <string name="no_cooler_hours_found">No significantly cooler hours found in current 24-hour forecast.</string>
+    <string name="future_risk_estimate_unavailable">Future risk estimate is unavailable for the selected date/time beyond the 24-hour forecast window.</string>
+    <string name="rec_low_risk">Good conditions for %1$s. Maintain normal hydration.</string>
+    <string name="rec_mod_risk">Proceed with caution. Walk in shade, carry a water bottle, and take rest breaks.</string>
+    <string name="rec_high_risk">High heat risk window. Consider rescheduling %1$s to a cooler hour or reducing outdoor intensity.</string>
+    <string name="rec_extreme_risk">Avoid strenuous outdoor activity during this window. Reschedule to early morning or evening.</string>
+
+    <!-- Custom Heat Risk Simulator -->
+    <string name="custom_heat_risk_simulator">Custom Heat Risk Simulator</string>
+    <string name="custom_heat_risk_sub">Adjust environmental variables to simulate custom heat-health risk scenarios.</string>
+    <string name="temperature_label">Temperature</string>
+    <string name="relative_humidity">Relative Humidity</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="btn_predict_custom_heat_risk">Simulate Heat Risk</string>
+    <string name="running_ml_inference">Evaluating risk…</string>
+    <string name="predicted_label">Predicted: %1$s</string>
+    <string name="prototype_ml_model">RISK ASSESSMENT</string>
+    <string name="heat_index_score">Heat Index Score: %1$s°C</string>
+    <string name="model_version_label">Index: %1$s</string>
+
+    <!-- Safety Recommendations -->
+    <string name="safety_recommendations">Safety Recommendations</string>
+
+    <!-- Campus Cool Map -->
+    <string name="campus_cool_map">Campus Cool Map</string>
+    <string name="campus_cool_map_sub">Locate water points, shaded areas, AC study halls &amp; first aid</string>
+    <string name="real_time_synced">Verified Directory</string>
+    <string name="switch_college">Switch College</string>
+    <string name="search_facility_placeholder">Search water point, study lounge, building…</string>
+    <string name="all_facilities">All Facilities</string>
+    <string name="cat_drinking_water">Drinking Water</string>
+    <string name="cat_shaded_area">Shaded Area</string>
+    <string name="cat_cool_indoor">Cool Indoor Space</string>
+    <string name="cat_first_aid">First Aid</string>
+    <string name="fetching_verified_campus_facilities">Fetching campus facilities…</string>
+    <string name="campus_server_connection_issue">Directory Offline</string>
+    <string name="view_demo_directory">View Saved Directory</string>
+    <string name="campus_directory">Campus Directory (%1$d Facilities)</string>
+    <string name="no_facilities_found">No Facilities Found for %1$s</string>
+    <string name="be_first_student_to_contribute">Be the first student to contribute a water point or shaded area!</string>
+    <string name="btn_add_facility_to_campus">+ Add Facility to Campus</string>
+    <string name="btn_add_facility">Add Facility</string>
+
+    <!-- Water Tracker -->
+    <string name="daily_water_tracker">Daily Water Tracker</string>
+    <string name="daily_water_tracker_sub">Record intake and monitor daily hydration goal</string>
+    <string name="todays_total_intake">Today\'s Total Intake</string>
+    <string name="quick_add_water">Quick Add Water</string>
+    <string name="small_glass">Small glass</string>
+    <string name="standard_cup">Standard cup</string>
+    <string name="water_bottle">Water bottle</string>
+    <string name="custom_amount">Custom Amount</string>
+    <string name="todays_water_entries">Today\'s Water Entries</string>
+    <string name="no_water_entries_recorded">No water entries recorded for today yet.</string>
+    <string name="tap_quick_add_hint">Tap quick add buttons above or enter a custom amount.</string>
+    <string name="hydration_notice">Hydration targets are general reference guidelines. Increase intake during high ambient temperature or strenuous outdoor activity.</string>
+    <string name="undo">Undo</string>
+
+    <!-- Smart Heat Alerts -->
+    <string name="smart_heat_alerts">Smart Heat Alerts</string>
+    <string name="smart_heat_alerts_sub">Real-time risk warnings &amp; student safety</string>
+    <string name="live_environmental_thermal_risk">Live Environmental Thermal Risk</string>
+    <string name="evaluating_heat_health_metrics">Evaluating heat health metrics…</string>
+    <string name="prediction_data_unavailable">Prediction Data Unavailable</string>
+    <string name="upcoming_high_risk_periods">Upcoming High-Risk Periods</string>
+    <string name="loading_hourly_forecast">Loading hourly forecast data…</string>
+    <string name="no_upcoming_high_risk_periods">No upcoming high-risk periods detected from weather forecast provider.</string>
+    <string name="alert_history_advisories">Alert History &amp; Advisories</string>
+    <string name="no_historical_heat_risk_alerts">No historical heat risk alerts recorded.</string>
+    <string name="notification_preferences_controls">Notification Preferences &amp; Controls</string>
+    <string name="notification_perm_granted">Notification Permission Granted</string>
+    <string name="notification_perm_required">Notification Permission Required</string>
+    <string name="android_notifications_enabled">Android notifications enabled</string>
+    <string name="tap_to_enable_system_perm">Tap below to enable system permissions</string>
+    <string name="enable_smart_heat_alerts">Enable Smart Heat Alerts</string>
+    <string name="periodically_check_live_risk">Periodically check live risk and alert on threshold escalation</string>
+    <string name="alert_trigger_threshold">Alert Trigger Threshold:</string>
+    <string name="check_frequency_cooldown">Check Frequency / Cooldown:</string>
+    <string name="btn_trigger_sample_heat_alert">Trigger Sample Heat Alert</string>
+    <string name="threshold_moderate">Moderate</string>
+    <string name="threshold_high">High</string>
+    <string name="threshold_extreme">Extreme</string>
+
+    <!-- Student Heat-Safety Center -->
+    <string name="student_heat_safety_center">Student Heat-Safety Center</string>
+    <string name="student_heat_safety_center_sub">Protection protocols, daily checklist, first aid &amp; emergency contacts</string>
+    <string name="tab_safety_guidance">Safety Guidance</string>
+    <string name="tab_daily_checklist">Daily Checklist</string>
+    <string name="tab_first_aid">First Aid</string>
+    <string name="tab_emergency_contacts">Emergency Contacts</string>
+    <string name="live_risk_label">Current Risk: %1$s</string>
+    <string name="offline_heat_safety_guidance">Heat Safety Guidance</string>
+    <string name="live_prediction_badge">Live Guidance</string>
+    <string name="offline_protocols_badge">Safety Protocols</string>
+    <string name="select_student_profile_context">Select Student Profile / Activity Context:</string>
+    <string name="profile_commuter">Campus Commuter</string>
+    <string name="profile_athlete">Student Athlete</string>
+    <string name="profile_outdoor_class">Outdoor Class</string>
+    <string name="profile_regular">Regular Student</string>
+    <string name="tailored_activity_protocols">Tailored Activity Protocols</string>
+    <string name="recommended_action">Recommended Action</string>
+    <string name="hydration_tip">Hydration Tip</string>
+    <string name="todays_safety_actions">Today\'s Safety Actions</string>
+    <string name="checklist_progress_notice">Progress is saved automatically on your device and resets each local calendar day at midnight.</string>
+    <string name="practical_safety_checklist">Practical Safety Checklist:</string>
+    <string name="critical_medical_emergency_notice">CRITICAL MEDICAL EMERGENCY NOTICE</string>
+    <string name="heatstroke_emergency_warning">Suspected heatstroke is a life-threatening medical emergency! Seek immediate emergency medical assistance. Do NOT wait for symptoms to improve or rely on this app for treatment.</string>
+    <string name="btn_call_emergency_helpline">Call Emergency Helpline (112 / 108)</string>
+    <string name="heat_exhaustion_title">Heat Exhaustion (Early Warning Stage)</string>
+    <string name="heat_exhaustion_warning_signs">Warning Signs: Heavy sweating, dizziness, headache, nausea, rapid pulse, muscle cramps, weakness, or feeling faint.</string>
+    <string name="immediate_first_aid_actions">Immediate First-Aid Actions:</string>
+    <string name="heatstroke_title">Suspected Heatstroke (Medical Emergency)</string>
+    <string name="heatstroke_warning_signs">Warning Signs: High body temperature (&gt;40°C / 104°F), confusion, altered mental state, slurred speech, unconsciousness, hot dry skin or heavy sweating, vomiting, or seizures.</string>
+    <string name="immediate_cooling_protocols">Immediate Cooling Protocols:</string>
+
+    <!-- Student Profile & Settings Screen -->
+    <string name="student_profile_preferences">Student Profile &amp; Preferences</string>
+    <string name="customize_activity_language_hydration">Customize activity levels, language, and hydration targets</string>
+    <string name="personal_details_optional">Personal Details (Optional)</string>
+    <string name="nickname_display_name">Nickname / Display Name</string>
+    <string name="daily_activity_pattern">Daily Activity Pattern</string>
+    <string name="select_typical_routine">Select your typical daily routine to contextualize safety recommendations.</string>
+    <string name="activity_indoors">Mostly indoors</string>
+    <string name="activity_commuting">Regular commuting</string>
+    <string name="activity_outdoor">Frequent outdoor activities</string>
+    <string name="app_preferences">App Preferences</string>
+    <string name="preferred_language">Preferred Language</string>
+    <string name="daily_hydration_reference_target">Daily Hydration Reference Target (mL)</string>
+    <string name="daily_water_goal">Daily Water Goal (mL)</string>
+    <string name="suggested_guideline">Suggested general guideline: 2000 - 3000 mL/day</string>
+    <string name="hydration_reminders">Hydration Reminders</string>
+    <string name="save_preference_periodic_water">Save preference for periodic water intake reminders</string>
+    <string name="reminder_interval">Reminder Interval</string>
+    <string name="non_medical_notice">General Guidelines Notice: Hydration targets are general reference guidelines for educational purpose. No individual medical claims or personal diagnostic calculations are implied.</string>
+    <string name="btn_save_profile">Save Profile</string>
+
+    <!-- Languages Native Names -->
+    <string name="lang_english">English — English</string>
+    <string name="lang_hindi">Hindi — हिन्दी</string>
+    <string name="lang_kannada">Kannada — ಕನ್ನಡ</string>
+    <string name="lang_telugu">Telugu — తెలుగు</string>
+    <string name="lang_tamil">Tamil — தமிழ்</string>
+    <string name="lang_malayalam">Malayalam — മലയാളം</string>
+
+    <!-- Risk History Screen -->
+    <string name="historical_analytics_title">Heat-Risk History &amp; Trends</string>
+    <string name="historical_analytics_sub">Historical analytics, risk distribution &amp; student insights</string>
+    <string name="time_period_today">Today</string>
+    <string name="time_period_week">Past 7 Days</string>
+    <string name="time_period_month">Past 30 Days</string>
+    <string name="time_period_all">All Time</string>
+    <string name="risk_trends">Risk Trends (%1$s)</string>
+    <string name="predictions_count">Predictions</string>
+    <string name="peak_risk">Peak Risk</string>
+    <string name="avg_feels_like">Avg Feels-Like</string>
+    <string name="risk_category_distribution">Risk Category Distribution:</string>
+    <string name="timeline_risk_trend">Timeline Risk Trend:</string>
+    <string name="oldest">Oldest</string>
+    <string name="timeline_trend">Timeline Trend</string>
+    <string name="latest">Latest</string>
+    <string name="student_friendly_insights">Student-Friendly Insights</string>
+    <string name="historical_prediction_records">Historical Prediction Records</string>
+    <string name="records_count">%1$d records</string>
+    <string name="no_predictions_recorded_for">No Predictions Recorded for %1$s</string>
+    <string name="fetch_live_risk_to_build_history">Fetch live risk predictions on the Home dashboard to begin building your personal heat-health prediction history.</string>
+    <string name="clear_risk_history_title">Clear Risk History?</string>
+    <string name="clear_risk_history_msg">Are you sure you want to delete all recorded heat-risk prediction history? This action cannot be undone.</string>
+    <string name="delete_record_title">Delete Record?</string>
+    <string name="delete_record_msg">Remove this prediction record from history?</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_hydration">Hydration Reminders</string>
+    <string name="notification_channel_hydration_desc">Periodic reminders to stay hydrated during warm student activities.</string>
+    <string name="notification_channel_alerts">Heat Risk Alerts</string>
+    <string name="notification_channel_alerts_desc">High or Extreme thermal risk warning alerts.</string>
+    <string name="notification_mark_hydrated">Mark as Hydrated (+250mL)</string>
 </resources>

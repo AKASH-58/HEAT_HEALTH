@@ -1,0 +1,257 @@
+<resources>
+    <!-- App Information & Navigation -->
+    <string name="app_name">HeatHealth</string>
+    <string name="app_description">வெப்ப-சுகாதார ஆபத்து முன்னறிவிப்பு மற்றும் முன்னெச்சரிக்கை அமைப்பு</string>
+    <string name="nav_home">முகப்பு</string>
+    <string name="nav_hydration">நீர்ச்சத்து</string>
+    <string name="nav_cool_map">கூல் மேப்</string>
+    <string name="nav_alerts">எச்சரிக்கைகள்</string>
+    <string name="nav_safety">பாதுகாப்பு</string>
+    <string name="nav_profile">சுயவிவரம்</string>
+
+    <!-- General Buttons & Common Labels -->
+    <string name="btn_view">பார்வை</string>
+    <string name="btn_retry">மீண்டும் முயல்க</string>
+    <string name="btn_save">சேமிக்க</string>
+    <string name="btn_reset">மீட்டமை</string>
+    <string name="btn_cancel">ரத்து செய்</string>
+    <string name="btn_delete">நீக்குக</string>
+    <string name="btn_edit">திருத்து</string>
+    <string name="btn_clear_all">அனைத்தையும் நீக்கு</string>
+    <string name="btn_add">சேர்</string>
+    <string name="btn_switch">மாற்று</string>
+    <string name="btn_directions">வழிமுறைகள்</string>
+    <string name="btn_report_issue">பிரச்சனையை புகார் செய்</string>
+
+    <!-- Home & Dashboard -->
+    <string name="fetching_weather_evaluating_risk">நேரடி வானிலை பெறப்பட்டு வெப்ப ஆபத்து மதிப்பிடப்படுகிறது…</string>
+    <string name="backend_connection_issue">சர்வர் இணைப்பு பிரச்சனை</string>
+    <string name="backend_offline_displaying_cached">சர்வர் ஆஃப்லைன் — சேமிக்கப்பட்ட முன்னறிவிப்பு காட்டப்படுகிறது</string>
+    <string name="last_successful_update">கடைசி புதுப்பிப்பு: %1$s</string>
+    <string name="heat_risk_history_trends">வெப்ப ஆபத்து வரலாறு மற்றும் போக்குகள்</string>
+    <string name="view_recorded_prediction_trends">பதிவுசெய்யப்பட்ட முன்னறிவிப்பு போக்குகளைப் பார்க்கவும்</string>
+    <string name="btn_view_offline_demo">ஆஃப்லைன் டெமோ பார்க்க</string>
+
+    <!-- Weather Summary Card -->
+    <string name="weather_summary">வானிலை சுருக்கம்</string>
+    <string name="live_data">நேரடி தரவு</string>
+    <string name="cached_data_offline">சேமிக்கப்பட்ட தரவு (ஆஃப்லைன்)</string>
+    <string name="demonstration_data">டெமோ தரவு</string>
+    <string name="unavailable">கிடைக்கவில்லை</string>
+    <string name="temp">வெப்பநிலை</string>
+    <string name="feels_like">உணரப்படும் வெப்பநிலை</string>
+    <string name="humidity">ஈரப்பதம்</string>
+    <string name="wind">காற்றின் வேகம்</string>
+    <string name="source_label">ஆதாரம்: %1$s</string>
+
+    <!-- Risk Levels -->
+    <string name="risk_low">குறைவு</string>
+    <string name="risk_moderate">மிதமான</string>
+    <string name="risk_high">அதிகம்</string>
+    <string name="risk_very_high">மிக அதிகம்</string>
+    <string name="risk_extreme">மிகவும் ஆபத்தானது</string>
+    <string name="risk_unknown">பொதுவான வழிகாட்டுதல்</string>
+    <string name="risk_level_title">%1$s வெப்ப ஆபத்து</string>
+    <string name="risk_level_badge">%1$s ஆபத்து</string>
+    <string name="category_label">வகை:</string>
+    <string name="score_label">மதிப்பெண்: %1$s°C</string>
+    <string name="contributing_factors">காரணமான காரணிகள்:</string>
+
+    <!-- Personal Safety Dashboard -->
+    <string name="personal_safety_dashboard">தனிப்பட்ட பாதுகாப்பு டாஷ்போர்டு</string>
+    <string name="personal_safety_dashboard_sub">ஆபத்து முன்னறிவிப்புகள், எச்சரிக்கைகள் மற்றும் நீர்ச்சத்து சுருக்கம்</string>
+    <string name="current_heat_risk_state">தற்போதைய வெப்ப ஆபத்து நிலை</string>
+    <string name="todays_hydration_progress">இன்றைய நீர்ச்சத்து முன்னேற்றம்</string>
+    <string name="recent_recorded_risk_assessments">சமீபத்தில் பதிவு செய்யப்பட்ட ஆபத்து மதிப்பீடுகள்</string>
+    <string name="no_recent_risk_predictions">உள்ளூர் தரவுத்தளத்தில் இன்னும் பதிவுகள் எதுவும் இல்லை.</string>
+    <string name="recent_triggered_heat_alerts">சமீபத்திய வெப்ப எச்சரிக்கைகள்</string>
+    <string name="no_local_heat_alerts">இன்னும் வெப்ப எச்சரிக்கைகள் எதுவும் வரவில்லை.</string>
+
+    <!-- Outdoor Activity Planner -->
+    <string name="student_outdoor_activity_planner">மாணவர் வெளிப்புற செயல்பாட்டு திட்டமிடுபவர்</string>
+    <string name="plan_safe_outdoor_times">மணிநேர ஆபத்து முன்னறிவிப்பின் அடிப்படையில் பாதுகாப்பான நேரத்தை திட்டமிடுங்கள்</string>
+    <string name="select_planned_activity">திட்டமிட்ட செயல்பாட்டைத் தேர்ந்தெடுக்கவும்:</string>
+    <string name="select_planned_time">திட்டமிட்ட நேரத்தைத் தேர்ந்தெடுக்கவும்:</string>
+    <string name="activity_walking">வகுப்பிற்கு நடந்து செல்லுதல்</string>
+    <string name="activity_sports">வெளிப்புற விளையாட்டுகள்</string>
+    <string name="activity_commute">வளாகப் பயணம்</string>
+    <string name="activity_fieldwork">களப்பணி</string>
+    <string name="planned_time_label">திட்டமிட்ட நேரம்: %1$s</string>
+    <string name="suggested_cooler_alternative_times">பரிந்துரைக்கப்பட்ட குளிர்ந்த மாற்று நேரங்கள்:</string>
+    <string name="no_cooler_hours_found">தற்போதைய 24 மணிநேர முன்னறிவிப்பில் குளிர்ந்த நேரங்கள் எதுவும் காணப்படவில்லை.</string>
+    <string name="future_risk_estimate_unavailable">தேர்ந்தெடுக்கப்பட்ட நேரத்திற்கு 24 மணிநேரத்திற்கு அப்பால் முன்னறிவிப்பு கிடைக்கவில்லை.</string>
+    <string name="rec_low_risk">%1$s செய்ய நல்ல சூழல். வழக்கமான நீர்ச்சத்தை பராமரிக்கவும்.</string>
+    <string name="rec_mod_risk">எச்சரிக்கையுடன் செயல்படவும். நிழலில் நடக்கவும், தண்ணீர் பாட்டில் வைத்திருக்கவும்.</string>
+    <string name="rec_high_risk">அதிக வெப்ப நேரம். %1$s செயல்பாட்டை வேறு நேரத்திற்கு மாற்றவும்.</string>
+    <string name="rec_extreme_risk">இந்த நேரத்தில் கடுமையான வெளிப்புற செயல்பாடுகளைத் தவிர்க்கவும். காலை அல்லது மாலைக்கு மாற்றவும்.</string>
+
+    <!-- Custom ML Simulator -->
+    <string name="custom_heat_risk_simulator">தனிப்பயன் வெப்ப ஆபத்து சிமுலேட்டர் (ML)</string>
+    <string name="custom_heat_risk_sub">மெஷின் லேர்னிங் மூலம் வெப்ப ஆபத்தை கணக்கிடுங்கள்.</string>
+    <string name="temperature_label">வெப்பநிலை</string>
+    <string name="relative_humidity">ஒப்பீட்டு ஈரப்பதம்</string>
+    <string name="wind_speed">காற்றின் வேகம்</string>
+    <string name="btn_predict_custom_heat_risk">வெப்ப ஆபத்தைக் கணக்கிடுங்கள் (ML)</string>
+    <string name="running_ml_inference">கணக்கிடப்படுகிறது…</string>
+    <string name="predicted_label">கணிக்கப்பட்டது: %1$s</string>
+    <string name="prototype_ml_model">மாதிரி ML மாடல்</string>
+    <string name="heat_index_score">வெப்பக் குறியீட்டு மதிப்பெண்: %1$s°C</string>
+    <string name="model_version_label">மாடல் பதிப்பு: %1$s</string>
+
+    <!-- Safety Recommendations -->
+    <string name="safety_recommendations">பாதுகாப்பு பரிந்துரைகள்</string>
+
+    <!-- Campus Cool Map -->
+    <string name="campus_cool_map">கேம்பஸ் கூல் மேப்</string>
+    <string name="campus_cool_map_sub">குடிநீர் புள்ளிகள், நிழல் பகுதிகள், ஏசி ஆய்வுக்கூடங்கள் மற்றும் முதலுதவி மையங்கள்</string>
+    <string name="real_time_synced">நேரலையில் ஒத்திசைக்கப்படுகிறது</string>
+    <string name="switch_college">கல்லூரியை மாற்று</string>
+    <string name="search_facility_placeholder">குடிநீர், அறை, கட்டிடங்களைத் தேடுங்கள்…</string>
+    <string name="all_facilities">அனைத்து வசதிகள்</string>
+    <string name="cat_drinking_water">குடிநீர்</string>
+    <string name="cat_shaded_area">நிழல் பகுதி</string>
+    <string name="cat_cool_indoor">குளிர்ந்த கட்டிடம்</string>
+    <string name="cat_first_aid">முதலுதவி</string>
+    <string name="fetching_verified_campus_facilities">சரிபார்க்கப்பட்ட வளாக வசதிகள் பெறப்படுகின்றன…</string>
+    <string name="campus_server_connection_issue">வளாக சர்வர் இணைப்பு பிரச்சனை</string>
+    <string name="view_demo_directory">டெமோ அடைவைப் பார்க்கவும்</string>
+    <string name="campus_directory">வளாக அடைவு (%1$d வசதிகள்)</string>
+    <string name="no_facilities_found">%1$s க்கு வசதிகள் எதுவும் காணப்படவில்லை</string>
+    <string name="be_first_student_to_contribute">குடிநீர் அல்லது நிழல் பகுதியை சேர்க்கும் முதல் மாணவராக இருங்கள்!</string>
+    <string name="btn_add_facility_to_campus">+ வளாகத்தில் வசதியைச் சேர்</string>
+    <string name="btn_add_facility">வசதியைச் சேர்</string>
+
+    <!-- Water Tracker -->
+    <string name="daily_water_tracker">தினசரி நீர் கண்காணிப்பாளர்</string>
+    <string name="daily_water_tracker_sub">நீர் அருந்துவதைப் பதிவு செய்து இலக்கைக் கண்காணிக்கவும்</string>
+    <string name="todays_total_intake">இன்றைய மொத்த நீர் அருந்துதல்</string>
+    <string name="quick_add_water">விரைவாக நீர் சேர்க்க</string>
+    <string name="small_glass">சிறிய டம்ளர்</string>
+    <string name="standard_cup">சாதாரண கப்</string>
+    <string name="water_bottle">தண்ணீர் பாட்டில்</string>
+    <string name="custom_amount">குறிப்பிட்ட அளவு</string>
+    <string name="todays_water_entries">இன்றைய நீர் பதிவுகள்</string>
+    <string name="no_water_entries_recorded">இன்று வரை நீர் பதிவுகள் எதுவும் பதிவு செய்யப்படவில்லை.</string>
+    <string name="tap_quick_add_hint">மேலே உள்ள பொத்தான்களை அழுத்தவும் அல்லது அளவை உள்ளிடவும்.</string>
+    <string name="hydration_notice">நீர்ச்சத்து இலக்குகள் பொதுவான வழிகாட்டுதல்கள் மட்டுமே. வெயில் அதிகமாக இருக்கும் போது தண்ணீர் அதிகம் அருந்தவும்.</string>
+    <string name="undo">செயல்நீக்கு</string>
+
+    <!-- Smart Heat Alerts -->
+    <string name="smart_heat_alerts">ஸ்மார்ட் வெப்ப எச்சரிக்கைகள்</string>
+    <string name="smart_heat_alerts_sub">நேரலை ஆபத்து எச்சரிக்கைகள் மற்றும் மாணவர் பாதுகாப்பு</string>
+    <string name="live_environmental_thermal_risk">நேரலை சுற்றுச்சூழல் வெப்ப ஆபத்து</string>
+    <string name="evaluating_heat_health_metrics">ஆரோக்கிய அளவீடுகள் மதிப்பிடப்படுகின்றன…</string>
+    <string name="prediction_data_unavailable">முன்னறிவிப்பு தரவு கிடைக்கவில்லை</string>
+    <string name="upcoming_high_risk_periods">வரவிருக்கும் அதிக ஆபத்தான நேரங்கள்</string>
+    <string name="loading_hourly_forecast">மணிநேர முன்னறிவிப்பு ஏற்றப்படுகிறது…</string>
+    <string name="no_upcoming_high_risk_periods">வரவிருக்கும் நேரத்தில் அதிக ஆபத்தான நேரங்கள் எதுவும் இல்லை.</string>
+    <string name="alert_history_advisories">எச்சரிக்கை வரலாறு மற்றும் ஆலோசனைகள்</string>
+    <string name="no_historical_heat_risk_alerts">வரலாற்று வெப்ப எச்சரிக்கைகள் எதுவும் பதிவு செய்யப்படவில்லை.</string>
+    <string name="notification_preferences_controls">அறிவிப்பு அமைப்புகள்</string>
+    <string name="notification_perm_granted">அறிவிப்பு அனுமதி வழங்கப்பட்டது</string>
+    <string name="notification_perm_required">அறிவிப்பு அனுமதி தேவை</string>
+    <string name="android_notifications_enabled">ஆண்ட்ராய்டு அறிவிப்புகள் இயக்கப்பட்டுள்ளன</string>
+    <string name="tap_to_enable_system_perm">அனுமதி வழங்க கீழே அழுத்தவும்</string>
+    <string name="enable_smart_heat_alerts">ஸ்மார்ட் வெப்ப எச்சரிக்கைகளை இயக்கு</string>
+    <string name="periodically_check_live_risk">வெப்பநிலையை அவ்வப்போது பரிசோதித்து ஆபத்து அதிகமானால் எச்சரிக்கும்</string>
+    <string name="alert_trigger_threshold">எச்சரிக்கை வரம்பு:</string>
+    <string name="check_frequency_cooldown">பரிசோதனை இடைவெளி:</string>
+    <string name="btn_trigger_sample_heat_alert">மாதிரி எச்சரிக்கையை உருவாக்கு</string>
+    <string name="threshold_moderate">மிதமான</string>
+    <string name="threshold_high">அதிகம்</string>
+    <string name="threshold_extreme">மிகவும் ஆபத்தானது</string>
+
+    <!-- Student Heat-Safety Center -->
+    <string name="student_heat_safety_center">மாணவர் வெப்ப-பாதுகாப்பு மையம்</string>
+    <string name="student_heat_safety_center_sub">பாதுகாப்பு விதிகள், தினசரி பட்டியல், முதலுதவி மற்றும் அவசர தொடர்புகள்</string>
+    <string name="tab_safety_guidance">பாதுகாப்பு வழிகாட்டுதல்</string>
+    <string name="tab_daily_checklist">தினசரி சரிபார்ப்புப் பட்டியல்</string>
+    <string name="tab_first_aid">முதலுதவி</string>
+    <string name="tab_emergency_contacts">அவசர தொடர்புகள்</string>
+    <string name="live_risk_label">நேரலை ஆபத்து: %1$s</string>
+    <string name="offline_heat_safety_guidance">ஆஃப்லைன் வெப்ப-பாதுகாப்பு வழிகாட்டுதல்</string>
+    <string name="live_prediction_badge">நேரலை முன்னறிவிப்பு</string>
+    <string name="offline_protocols_badge">ஆஃப்லைன் விதிகள்</string>
+    <string name="select_student_profile_context">மாணவர் சுயவிவரத்தைத் தேர்ந்தெடுக்கவும்:</string>
+    <string name="profile_commuter">வளாகப் பயணி</string>
+    <string name="profile_athlete">விளையாட்டு மாணவர்</string>
+    <string name="profile_outdoor_class">வெளிப்புற வகுப்பு</string>
+    <string name="profile_regular">வழக்கமான மாணவர்</string>
+    <string name="tailored_activity_protocols">சிறப்பு பாதுகாப்பு விதிகள்</string>
+    <string name="recommended_action">பரிந்துரைக்கப்பட்ட நடவடிக்கை</string>
+    <string name="hydration_tip">நீர்ச்சத்து உதவிக்குறிப்பு</string>
+    <string name="todays_safety_actions">இன்றைய பாதுகாப்பு நடவடிக்கைகள்</string>
+    <string name="checklist_progress_notice">முன்னேற்றம் உங்கள் போனில் சேமிக்கப்பட்டு நள்ளிரவில் மீட்டமைக்கப்படும்.</string>
+    <string name="practical_safety_checklist">நடைமுறை பாதுகாப்பு சரிபார்ப்புப் பட்டியல்:</string>
+    <string name="critical_medical_emergency_notice">முக்கிய மருத்துவ அவசர அறிவிப்பு</string>
+    <string name="heatstroke_emergency_warning">சூரிய பக்கவாதம் உயிருக்கு ஆபத்தான அவசர நிலை! உடனடியாக மருத்துவ உதவியைப் நாடுங்கள்.</string>
+    <string name="btn_call_emergency_helpline">அவசர உதவி எண்ணை அழைக்கவும் (112 / 108)</string>
+    <string name="heat_exhaustion_title">வெப்ப மயக்கம் (ஆரம்ப எச்சரிக்கை)</string>
+    <string name="heat_exhaustion_warning_signs">அறிகுறிகள்: அதிக வேர்வை, தலைச்சுற்றல், தலைவலி, மயக்கம், சோர்வு.</string>
+    <string name="immediate_first_aid_actions">உடனடி முதலுதவி நடவடிக்கைகள்:</string>
+    <string name="heatstroke_title">சூரிய பக்கவாதம் (மருத்துவ அவசரநிலை)</string>
+    <string name="heatstroke_warning_signs">அறிகுறிகள்: அதிக உடல் வெப்பநிலை (&gt;40°C / 104°F), குழப்பம், சுயநினைவின்மை, உலர் சருமம்.</string>
+    <string name="immediate_cooling_protocols">உடனடி குளிரூட்டும் முறைகள்:</string>
+
+    <!-- Student Profile & Settings Screen -->
+    <string name="student_profile_preferences">மாணவர் சுயவிவர அமைப்புகள்</string>
+    <string name="customize_activity_language_hydration">மொழி, நீர்ச்சத்து இலக்குகள் மற்றும் பிற அமைப்புகள்</string>
+    <string name="personal_details_optional">தனிப்பட்ட விவரங்கள் (விருப்பமானவை)</string>
+    <string name="nickname_display_name">பெயர்</string>
+    <string name="daily_activity_pattern">தினசரி செயல்பாடு</string>
+    <string name="select_typical_routine">உங்கள் பழக்க வழக்கங்களுக்கு ஏற்ப ஆலோசனைகளைப் பெறத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="activity_indoors">பெரும்பாலும் வீட்டிற்குள்</string>
+    <string name="activity_commuting">வழக்கமான பயணம்</string>
+    <string name="activity_outdoor">அடிக்கடி வெளிப்புற செயல்பாடுகள்</string>
+    <string name="app_preferences">செயலி அமைப்புகள்</string>
+    <string name="preferred_language">விருப்பமான மொழி</string>
+    <string name="daily_hydration_reference_target">தினசரி நீர் இலக்கு (mL)</string>
+    <string name="daily_water_goal">தினசரி நீர் இலக்கு (mL)</string>
+    <string name="suggested_guideline">பரிந்துரைக்கப்பட்ட பொதுவான அளவு: 2000 - 3000 mL/நாள்</string>
+    <string name="hydration_reminders">நீர்ச்சத்து நினைவூட்டல்கள்</string>
+    <string name="save_preference_periodic_water">தண்ணீர் அருந்த நினைவூட்டும் அமைப்பைச் சேமிக்கவும்</string>
+    <string name="reminder_interval">நினைவூட்டல் இடைவெளி</string>
+    <string name="non_medical_notice">அறிவிப்பு: நீர் இலக்குகள் விழிப்புணர்விற்காக மட்டுமே.</string>
+    <string name="btn_save_profile">சுயவிவரத்தைச் சேமிக்கவும்</string>
+
+    <!-- Languages Native Names -->
+    <string name="lang_english">English — English</string>
+    <string name="lang_hindi">Hindi — हिन्दी</string>
+    <string name="lang_kannada">Kannada — ಕನ್ನಡ</string>
+    <string name="lang_telugu">Telugu — తెలుగు</string>
+    <string name="lang_tamil">Tamil — தமிழ்</string>
+    <string name="lang_malayalam">Malayalam — മലയാളം</string>
+
+    <!-- Risk History Screen -->
+    <string name="historical_analytics_title">வெப்ப ஆபத்து வரலாறு மற்றும் போக்குகள்</string>
+    <string name="historical_analytics_sub">வரலாற்று பகுப்பாய்வு மற்றும் மாணவர் தகவல்கள்</string>
+    <string name="time_period_today">இன்று</string>
+    <string name="time_period_week">கடந்த 7 நாட்கள்</string>
+    <string name="time_period_month">கடந்த 30 நாட்கள்</string>
+    <string name="time_period_all">அனைத்து நேரமும்</string>
+    <string name="risk_trends">ஆபத்து போக்குகள் (%1$s)</string>
+    <string name="predictions_count">முன்னறிவிப்புகள்</string>
+    <string name="peak_risk">அதிகபட்ச ஆபத்து</string>
+    <string name="avg_feels_like">சராசரி உணரும் வெப்பநிலை</string>
+    <string name="risk_category_distribution">ஆபத்து வகை விநியோகம்:</string>
+    <string name="timeline_risk_trend">காலப்போக்கு வரைபடம்:</string>
+    <string name="oldest">பழையது</string>
+    <string name="timeline_trend">காலப்போக்கு</string>
+    <string name="latest">சமீபத்தியது</string>
+    <string name="student_friendly_insights">மாணவர் தகவல்கள்</string>
+    <string name="historical_prediction_records">வரலாற்று முன்னறிவிப்பு பதிவுகள்</string>
+    <string name="records_count">%1$d பதிவுகள்</string>
+    <string name="no_predictions_recorded_for">%1$s க்கு முன்னறிவிப்புகள் எதுவும் பதிவு செய்யப்படவில்லை</string>
+    <string name="fetch_live_risk_to_build_history">உங்கள் வரலாற்றை உருவாக்க முகப்புப் பக்கத்தில் நேரலைத் தகவலைப் பெறுங்கள்.</string>
+    <string name="clear_risk_history_title">வரலாற்றை நீக்கவா?</string>
+    <string name="clear_risk_history_msg">பதிவுசெய்யப்பட்ட அனைத்து வரலாற்றையும் நீக்க விரும்புகிறீர்களா? இதை மீட்டெடுக்க முடியாது.</string>
+    <string name="delete_record_title">பதிவை நீக்கவா?</string>
+    <string name="delete_record_msg">இந்தப் பதிவை வரலாற்றிலிருந்து நீக்கவா?</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_hydration">நீர்ச்சத்து நினைவூட்டல்கள்</string>
+    <string name="notification_channel_hydration_desc">தண்ணீர் அருந்த நினைவூட்டும் அறிவிப்புகள்.</string>
+    <string name="notification_channel_alerts">வெப்ப ஆபத்து எச்சரிக்கைகள்</string>
+    <string name="notification_channel_alerts_desc">வெப்பம் அதிகமாக இருக்கும் போது வரும் எச்சரிக்கைகள்.</string>
+    <string name="notification_mark_hydrated">தண்ணீர் அருந்தினேன் (+250mL)</string>
+</resources>

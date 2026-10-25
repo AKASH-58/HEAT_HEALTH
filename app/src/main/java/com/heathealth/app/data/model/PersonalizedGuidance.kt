@@ -27,6 +27,7 @@ object PersonalizedGuidanceEngine {
             RiskLevel.MODERATE -> "Moderate thermal strain ($temperatureC°C, $humidityPercent% RH). Prolonged exposure may cause mild fatigue. Stay hydrated."
             RiskLevel.HIGH -> "High environmental heat risk ($temperatureC°C, $humidityPercent% RH). Increased risk of heat exhaustion during outdoor campus travel or sports."
             RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> "Extreme thermal strain danger ($temperatureC°C, $humidityPercent% RH). Avoid prolonged physical exertion outdoors. High risk of heat illness."
+            else -> "General Student Heat-Safety Guidelines: Live environmental heat-risk data is unavailable. Follow baseline hydration, shade, and rest precautions."
         }
 
         val isHighOrExtreme = riskLevel == RiskLevel.HIGH || riskLevel == RiskLevel.VERY_HIGH || riskLevel == RiskLevel.EXTREME
@@ -82,6 +83,46 @@ object PersonalizedGuidanceEngine {
 
         return PersonalizedGuidance(
             riskLevel = riskLevel,
+            overviewMessage = overview,
+            activityGuidances = activities,
+            heatstrokeEmergencyAdvice = emergencyAdvice
+        )
+    }
+
+    fun generateOfflineGuidance(activityPattern: String = "Campus Commuter"): PersonalizedGuidance {
+        val overview = "General Student Heat-Safety Guidelines (Offline / Stale Prediction): Live environmental heat-risk data is unavailable. Follow baseline hydration, shade, and rest precautions for $activityPattern."
+
+        val activities = listOf(
+            ActivityGuidance(
+                activityName = "Walking to College / Campus Commute",
+                recommendedAction = "Use shaded campus walkways, walk at a relaxed pace, and carry a water bottle.",
+                hydrationTip = "Drink 250–300 mL clean water before starting your commute."
+            ),
+            ActivityGuidance(
+                activityName = "Outdoor Classes & Fieldwork",
+                recommendedAction = "Seek shaded seating under tree canopies or covered pergolas during lectures.",
+                hydrationTip = "Keep a refillable water bottle with you during outdoor class hours."
+            ),
+            ActivityGuidance(
+                activityName = "Sports & Physical Activities",
+                recommendedAction = "Avoid heavy outdoor exertion during peak midday heat hours; take shaded rest breaks every 20–30 minutes.",
+                hydrationTip = "Drink fluids every 15–20 minutes during physical activity."
+            ),
+            ActivityGuidance(
+                activityName = "Indoor Study & Classroom Exposure",
+                recommendedAction = "Ensure fans or air conditioning are running in reading halls; stay in well-ventilated spaces.",
+                hydrationTip = "Sip small amounts of water continuously while studying."
+            )
+        )
+
+        val emergencyAdvice = "Emergency Protocol: If someone shows heatstroke signs (confusion, fainting, hot dry skin, body temp >40°C):\n" +
+                "1. Call Emergency Medical Services (112 / 108) immediately.\n" +
+                "2. Move them to a cool, shaded space right away.\n" +
+                "3. Cool body rapidly with cool water, wet cloths, or fanning.\n" +
+                "4. CRITICAL: Do NOT give fluids to any person who is confused, unconscious, having seizures, or unable to swallow safely."
+
+        return PersonalizedGuidance(
+            riskLevel = RiskLevel.UNKNOWN,
             overviewMessage = overview,
             activityGuidances = activities,
             heatstrokeEmergencyAdvice = emergencyAdvice

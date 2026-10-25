@@ -1,0 +1,257 @@
+<resources>
+    <!-- App Information & Navigation -->
+    <string name="app_name">HeatHealth</string>
+    <string name="app_description">వేడి-ఆరోగ్య ప్రమాద ముందస్తు అంచనా మరియు హెచ్చరిక వ్యవస్థ</string>
+    <string name="nav_home">హోమ్</string>
+    <string name="nav_hydration">హైడ్రేషన్</string>
+    <string name="nav_cool_map">కూల్ మ్యాప్</string>
+    <string name="nav_alerts">అలర్ట్‌లు</string>
+    <string name="nav_safety">రక్షణ</string>
+    <string name="nav_profile">ప్రొఫైల్</string>
+
+    <!-- General Buttons & Common Labels -->
+    <string name="btn_view">చూడండి</string>
+    <string name="btn_retry">మళ్లీ ప్రయత్నించండి</string>
+    <string name="btn_save">సేవ్ చేయండి</string>
+    <string name="btn_reset">రీసెట్ చేయండి</string>
+    <string name="btn_cancel">రద్దు చేయండి</string>
+    <string name="btn_delete">తొలగించండి</string>
+    <string name="btn_edit">సవరించండి</string>
+    <string name="btn_clear_all">అన్నీ తొలగించండి</string>
+    <string name="btn_add">జతచేయండి</string>
+    <string name="btn_switch">మార్చండి</string>
+    <string name="btn_directions">దారి చూపించు</string>
+    <string name="btn_report_issue">సమస్యను నివేదించండి</string>
+
+    <!-- Home & Dashboard -->
+    <string name="fetching_weather_evaluating_risk">వాతావరణ వివరాలు తీసుకుంటోంది మరియు వేడి ప్రమాదాన్ని అంచనా వేస్తోంది…</string>
+    <string name="backend_connection_issue">బ్యాకెండ్ కనెక్షన్ సమస్య</string>
+    <string name="backend_offline_displaying_cached">బ్యాకెండ్ ఆఫ్‌లైన్ — సేవ్ చేసిన ముందస్తు అంచనా చూపిస్తోంది</string>
+    <string name="last_successful_update">చివరిగా విజయవంతమైన అప్‌డేట్: %1$s</string>
+    <string name="heat_risk_history_trends">వేడి-ప్రమాద చరిత్ర మరియు ట్రెండ్‌లు</string>
+    <string name="view_recorded_prediction_trends">నమోదైన అంచనా ట్రెండ్‌లు మరియు విద్యార్థి వివరాలను చూడండి</string>
+    <string name="btn_view_offline_demo">ఆఫ్‌లైన్ డెమో చూడండి</string>
+
+    <!-- Weather Summary Card -->
+    <string name="weather_summary">వాతావరణ సారాంశం</string>
+    <string name="live_data">లైవ్ డేటా</string>
+    <string name="cached_data_offline">సేవ్ చేసిన డేటా (ఆఫ్‌లైన్)</string>
+    <string name="demonstration_data">డెమో డేటా</string>
+    <string name="unavailable">లభ్యం కావడం లేదు</string>
+    <string name="temp">ఉష్ణోగ్రత</string>
+    <string name="feels_like">అనిపించే ఉష్ణోగ్రత</string>
+    <string name="humidity">తేమ</string>
+    <string name="wind">గాలి</string>
+    <string name="source_label">మూలం: %1$s</string>
+
+    <!-- Risk Levels -->
+    <string name="risk_low">తక్కువ</string>
+    <string name="risk_moderate">మధ్యస్థం</string>
+    <string name="risk_high">ఎక్కువ</string>
+    <string name="risk_very_high">చాలా ఎక్కువ</string>
+    <string name="risk_extreme">తీవ్రమైనది</string>
+    <string name="risk_unknown">సాధారణ మార్గదర్శకం</string>
+    <string name="risk_level_title">%1$s వేడి ప్రమాదం</string>
+    <string name="risk_level_badge">%1$s ప్రమాదం</string>
+    <string name="category_label">వర్గం:</string>
+    <string name="score_label">స్కోరు: %1$s°C</string>
+    <string name="contributing_factors">కారణమైన అంశాలు:</string>
+
+    <!-- Personal Safety Dashboard -->
+    <string name="personal_safety_dashboard">వ్యక్తిగత రక్షణ డాష్‌బోర్డ్</string>
+    <string name="personal_safety_dashboard_sub">ప్రమాద అంచనాలు, అలర్ట్‌లు మరియు నీటి వినియోగ సారాంశం</string>
+    <string name="current_heat_risk_state">ప్రస్తుత వేడి ప్రమాద పరిస్థితి</string>
+    <string name="todays_hydration_progress">ఈరోజు నీటి వినియోగ ప్రగతి</string>
+    <string name="recent_recorded_risk_assessments">ఇటీవల నమోదైన ప్రమాద అంచనాలు</string>
+    <string name="no_recent_risk_predictions">లోకల్ డేటాబేస్‌లో ఇప్పుడే ఎటువంటి అంచనాలు నమోదు కాలేదు.</string>
+    <string name="recent_triggered_heat_alerts">ఇటీవల వచ్చిన వేడి అలర్ట్‌లు</string>
+    <string name="no_local_heat_alerts">ఇప్పటివరకు ఎటువంటి వేడి అలర్ట్‌లు రాలేదు.</string>
+
+    <!-- Outdoor Activity Planner -->
+    <string name="student_outdoor_activity_planner">విద్యార్థి అవుట్‌డోర్ యాక్టివిటీ ప్లానర్</string>
+    <string name="plan_safe_outdoor_times">గంటవారీ ప్రమాద అంచనా ఆధారంగా సురక్షితమైన సమయాన్ని ప్లాన్ చేయండి</string>
+    <string name="select_planned_activity">ప్లాన్ చేసిన పనిని ఎంచుకోండి:</string>
+    <string name="select_planned_time">ప్లాన్ చేసిన సమయాన్ని ఎంచుకోండి:</string>
+    <string name="activity_walking">క్లాస్‌కు నడిచి వెళ్లడం</string>
+    <string name="activity_sports">అవుట్‌డోర్ ఆటలు</string>
+    <string name="activity_commute">క్యాంపస్ ప్రయాణం</string>
+    <string name="activity_fieldwork">ఫీల్డ్‌వర్క్</string>
+    <string name="planned_time_label">ప్లాన్ చేసిన సమయం: %1$s</string>
+    <string name="suggested_cooler_alternative_times">చల్లగా ఉండే ప్రత్యామ్నాయ సమయాలు:</string>
+    <string name="no_cooler_hours_found">ప్రస్తుత 24 గంటల అంచనాలో చల్లని సమయాలు ఏవీ కనిపించలేదు.</string>
+    <string name="future_risk_estimate_unavailable">ఎంచుకున్న తేదీ/సమయానికి 24 గంటల కంటే ఎక్కువ అంచనా అందుబాటులో లేదు.</string>
+    <string name="rec_low_risk">%1$s కు మంచి వాతావరణం. సాధారణంగా నీరు తాగుతూ ఉండండి.</string>
+    <string name="rec_mod_risk">జాగ్రత్తగా ముందుకు సాగండి. నీడలో నడవండి, నీటి సీసా వెంట ఉంచుకోండి.</string>
+    <string name="rec_high_risk">ఎక్కువ వేడి ఉండే సమయం. %1$s ను మరొక చల్లని సమయానికి మార్చడం మంచిది.</string>
+    <string name="rec_extreme_risk">ఈ సమయంలో కష్టమైన పనులు చేయవద్దు. ఉదయం లేదా సాయంత్రానికి వాయిదా వేయండి.</string>
+
+    <!-- Custom ML Simulator -->
+    <string name="custom_heat_risk_simulator">కస్టమ్ వేడి ప్రమాద సిమ్యులేటర్ (ML)</string>
+    <string name="custom_heat_risk_sub">మెషిన్ లెర్నింగ్ ఇంజిన్ ద్వారా వేడి ప్రమాదాన్ని అంచనా వేయండి.</string>
+    <string name="temperature_label">ఉష్ణోగ్రత</string>
+    <string name="relative_humidity">తేమ శాతం</string>
+    <string name="wind_speed">గాలి వేగం</string>
+    <string name="btn_predict_custom_heat_risk">వేడి ప్రమాదాన్ని అంచనా వేయండి (ML)</string>
+    <string name="running_ml_inference">ML అంచనా వేస్తోంది…</string>
+    <string name="predicted_label">అంచనా: %1$s</string>
+    <string name="prototype_ml_model">ప్రోటోటైప్ ML మోడల్</string>
+    <string name="heat_index_score">హీట్ ఇండెక్స్ స్కోరు: %1$s°C</string>
+    <string name="model_version_label">మోడల్ వెర్షన్: %1$s</string>
+
+    <!-- Safety Recommendations -->
+    <string name="safety_recommendations">రక్షణ సూచనలు</string>
+
+    <!-- Campus Cool Map -->
+    <string name="campus_cool_map">క్యాంపస్ కూల్ మ్యాప్</string>
+    <string name="campus_cool_map_sub">మంచినీటి ప్రదేశాలు, నీడ ప్రాంతాలు, AC చదువుకునే హాళ్లు మరియు ప్రథమ చికిత్స కేంద్రాలు</string>
+    <string name="real_time_synced">అన్ని పరికరాలలో రియల్-టైమ్ సింక్ అవుతుంది</string>
+    <string name="switch_college">కాలేజీ మార్చండి</string>
+    <string name="search_facility_placeholder">నీటి ప్రదేశం, రూమ్, భవనం వెతకండి…</string>
+    <string name="all_facilities">అన్ని వసతులు</string>
+    <string name="cat_drinking_water">తాగునీరు</string>
+    <string name="cat_shaded_area">నీడ ప్రాంతం</string>
+    <string name="cat_cool_indoor">చల్లని భవనం</string>
+    <string name="cat_first_aid">ప్రథమ చికిత్స</string>
+    <string name="fetching_verified_campus_facilities">ధృవీకరించిన క్యాంపస్ వివరాలు తీసుకుంటోంది…</string>
+    <string name="campus_server_connection_issue">క్యాంపస్ సర్వర్ కనెక్షన్ సమస్య</string>
+    <string name="view_demo_directory">డెమో జాబితా చూడండి</string>
+    <string name="campus_directory">క్యాంపస్ జాబితా (%1$d వసతులు)</string>
+    <string name="no_facilities_found">%1$s కు వసతులు ఏవీ లభించలేదు</string>
+    <string name="be_first_student_to_contribute">నీటి ప్రదేశాన్ని లేదా నీడ ప్రాంతాన్ని జోడించే మొదటి విద్యార్థి అవ్వండి!</string>
+    <string name="btn_add_facility_to_campus">+ క్యాంపస్‌లో వసతి జోడించండి</string>
+    <string name="btn_add_facility">వసతి జోడించండి</string>
+
+    <!-- Water Tracker -->
+    <string name="daily_water_tracker">రోజువారీ వాటర్ ట్రాకర్</string>
+    <string name="daily_water_tracker_sub">నీటి తాగుడు నమోదు చేయండి మరియు రోజువారీ లక్ష్యాన్ని గమనించండి</string>
+    <string name="todays_total_intake">ఈరోజు మొత్తం తాగిన నీరు</string>
+    <string name="quick_add_water">త్వరగా నీరు జోడించండి</string>
+    <string name="small_glass">చిన్న గ్లాసు</string>
+    <string name="standard_cup">సాధారణ కప్పు</string>
+    <string name="water_bottle">నీటి సీసా</string>
+    <string name="custom_amount">సొంత పరిమాణం</string>
+    <string name="todays_water_entries">ఈరోజు నీటి వివరాలు</string>
+    <string name="no_water_entries_recorded">ఈరోజుకి వివరాలు ఏవీ నమోదు కాలేదు.</string>
+    <string name="tap_quick_add_hint">పైన ఉన్న బటన్ నొక్కండి లేదా సొంత పరిమాణం నమోదు చేయండి.</string>
+    <string name="hydration_notice">నీటి లక్ష్యాలు సాధారణ సూచనలు మాత్రమే. ఎక్కువ వేడి ఉన్నప్పుడు ఎక్కువ నీరు తాగండి.</string>
+    <string name="undo">వెనక్కి తీసుకో</string>
+
+    <!-- Smart Heat Alerts -->
+    <string name="smart_heat_alerts">స్మార్ట్ వేడి అలర్ట్‌లు</string>
+    <string name="smart_heat_alerts_sub">రియల్-టైమ్ హెచ్చరికలు మరియు విద్యార్థి రక్షణ</string>
+    <string name="live_environmental_thermal_risk">లైవ్ వాతావరణ వేడి ప్రమాదం</string>
+    <string name="evaluating_heat_health_metrics">ఆరోగ్య సూచికలను అంచనా వేస్తోంది…</string>
+    <string name="prediction_data_unavailable">అంచనా వివరాలు అందుబాటులో లేవు</string>
+    <string name="upcoming_high_risk_periods">రాబోయే ఎక్కువ ప్రమాదం ఉన్న సమయాలు</string>
+    <string name="loading_hourly_forecast">గంటవారీ అంచనా లోడ్ అవుతోంది…</string>
+    <string name="no_upcoming_high_risk_periods">రాబోయే సమయంలో ఎక్కువ ప్రమాదం ఉన్న సమయాలు ఏవీ లేవు.</string>
+    <string name="alert_history_advisories">అలర్ట్ చరిత్ర మరియు సూచనలు</string>
+    <string name="no_historical_heat_risk_alerts">గతంలో వచ్చిన అలర్ట్‌లు ఏవీ లేవు.</string>
+    <string name="notification_preferences_controls">నోటిఫికేషన్ సెట్టింగ్‌లు</string>
+    <string name="notification_perm_granted">నోటిఫికేషన్ అనుమతి ఇవ్వబడింది</string>
+    <string name="notification_perm_required">నోటిఫికేషన్ అనుమతి అవసరం</string>
+    <string name="android_notifications_enabled">ఆండ్రాయిడ్ నోటిఫికేషన్‌లు ఆన్‌లో ఉన్నాయి</string>
+    <string name="tap_to_enable_system_perm">అనుమతి ఇవ్వడానికి కింద నొక్కండి</string>
+    <string name="enable_smart_heat_alerts">స్మార్ట్ వేడి అలర్ట్‌లను ఆన్ చేయండి</string>
+    <string name="periodically_check_live_risk">ఎప్పటికప్పుడు వాతావరణాన్ని తనిఖీ చేసి వేడి ఎక్కువైతే హెచ్చరిస్తుంది</string>
+    <string name="alert_trigger_threshold">అలర్ట్ వచ్చే పరిమితి:</string>
+    <string name="check_frequency_cooldown">తనిఖీ చేసే సమయం:</string>
+    <string name="btn_trigger_sample_heat_alert">నమూనా అలర్ట్‌ను రన్ చేయండి</string>
+    <string name="threshold_moderate">మధ్యస్థం</string>
+    <string name="threshold_high">ఎక్కువ</string>
+    <string name="threshold_extreme">తీవ్రమైనది</string>
+
+    <!-- Student Heat-Safety Center -->
+    <string name="student_heat_safety_center">విద్యార్థి వేడి-రక్షణ కేంద్రం</string>
+    <string name="student_heat_safety_center_sub">రక్షణ నిబంధనలు, రోజువారీ లిస్ట్, ప్రథమ చికిత్స మరియు అత్యవసర నంబర్లు</string>
+    <string name="tab_safety_guidance">రక్షణ సూచనలు</string>
+    <string name="tab_daily_checklist">రోజువారీ లిస్ట్</string>
+    <string name="tab_first_aid">ప్రథమ చికిత్స</string>
+    <string name="tab_emergency_contacts">అత్యవసర నంబర్లు</string>
+    <string name="live_risk_label">లైవ్ ప్రమాదం: %1$s</string>
+    <string name="offline_heat_safety_guidance">ఆఫ్‌లైన్ వేడి-రక్షణ సూచనలు</string>
+    <string name="live_prediction_badge">లైవ్ అంచనా</string>
+    <string name="offline_protocols_badge">ఆఫ్‌లైన్ నిబంధనలు</string>
+    <string name="select_student_profile_context">విద్యార్థి రకం ఎంచుకోండి:</string>
+    <string name="profile_commuter">క్యాంపస్ ప్రయాణికుడు</string>
+    <string name="profile_athlete">క్రీడాకారుడు</string>
+    <string name="profile_outdoor_class">బయట క్లాస్</string>
+    <string name="profile_regular">సాధారణ విద్యార్థి</string>
+    <string name="tailored_activity_protocols">ప్రత్యేక రక్షణ నిబంధనలు</string>
+    <string name="recommended_action">చేయవలసిన పని</string>
+    <string name="hydration_tip">నీటి చిట్కా</string>
+    <string name="todays_safety_actions">ఈరోజు చేయవలసిన పనులు</string>
+    <string name="checklist_progress_notice">వివరాలు మీ ఫోన్‌లో సేవ్ అవుతాయి మరియు అర్ధరాత్రి రీసెట్ అవుతాయి.</string>
+    <string name="practical_safety_checklist">ముఖ్యమైన రక్షణ లిస్ట్:</string>
+    <string name="critical_medical_emergency_notice">అత్యవసర వైద్య సమాచారం</string>
+    <string name="heatstroke_emergency_warning">వడదెబ్బ చాలా ప్రమాదకరమైన పరిస్థితి! వెంటనే వైద్య సహాయం పొందండి.</string>
+    <string name="btn_call_emergency_helpline">అత్యవసర నంబర్‌కు కాల్ చేయండి (112 / 108)</string>
+    <string name="heat_exhaustion_title">నీరసం (ప్రారంభ సూచన)</string>
+    <string name="heat_exhaustion_warning_signs">లక్షణాలు: ఎక్కువ చెమట, తలతిరగడం, తలనొప్పి, వాంతులు అనిపించడం, నీరసం.</string>
+    <string name="immediate_first_aid_actions">వెంటనే చేయవలసిన ప్రథమ చికిత్స:</string>
+    <string name="heatstroke_title">వడదెబ్బ (అత్యవసర పరిస్థితి)</string>
+    <string name="heatstroke_warning_signs">లక్షణాలు: శరీర ఉష్ణోగ్రత బాగా పెరగడం (&gt;40°C / 104°F), గందరగోళం, స్పృహ తప్పడం, శరీరం వేడిగా పొడిగా ఉండటం.</string>
+    <string name="immediate_cooling_protocols">వెంటనే చల్లబరిచే పద్ధతులు:</string>
+
+    <!-- Student Profile & Settings Screen -->
+    <string name="student_profile_preferences">విద్యార్థి ప్రొఫైల్ సెట్టింగ్‌లు</string>
+    <string name="customize_activity_language_hydration">భాష, నీటి లక్ష్యాలు మరియు ఇతర సెట్టింగ్‌లు</string>
+    <string name="personal_details_optional">వ్యక్తిగత వివరాలు (ఐచ్ఛికం)</string>
+    <string name="nickname_display_name">పేరు</string>
+    <string name="daily_activity_pattern">రోజువారీ అలవాటు</string>
+    <string name="select_typical_routine">మీ అలవాటుకు తగినట్లుగా సూచనలు పొందడానికి ఎంచుకోండి.</string>
+    <string name="activity_indoors">ఎక్కువగా లోపలే ఉంటాను</string>
+    <string name="activity_commuting">రోజూ ప్రయాణం చేస్తాను</string>
+    <string name="activity_outdoor">ఎక్కువగా బయటే ఉంటాను</string>
+    <string name="app_preferences">యాప్ సెట్టింగ్‌లు</string>
+    <string name="preferred_language">భాష</string>
+    <string name="daily_hydration_reference_target">రోజువారీ నీటి లక్ష్యం (mL)</string>
+    <string name="daily_water_goal">రోజువారీ నీటి లక్ష్యం (mL)</string>
+    <string name="suggested_guideline">సాధారణ సూచన: 2000 - 3000 mL/రోజు</string>
+    <string name="hydration_reminders">నీటి అలర్ట్‌లు</string>
+    <string name="save_preference_periodic_water">సమయానికి నీరు తాగమని గుర్తు చేస్తుంది</string>
+    <string name="reminder_interval">గుర్తుచేసే సమయం</string>
+    <string name="non_medical_notice">సూచన: నీటి పరిమాణం అవగాహన కోసం మాత్రమే.</string>
+    <string name="btn_save_profile">సేవ్ చేయండి</string>
+
+    <!-- Languages Native Names -->
+    <string name="lang_english">English — English</string>
+    <string name="lang_hindi">Hindi — हिन्दी</string>
+    <string name="lang_kannada">Kannada — ಕನ್ನಡ</string>
+    <string name="lang_telugu">Telugu — తెలుగు</string>
+    <string name="lang_tamil">Tamil — தமிழ்</string>
+    <string name="lang_malayalam">Malayalam — മലയാളം</string>
+
+    <!-- Risk History Screen -->
+    <string name="historical_analytics_title">వేడి-ప్రమాద చరిత్ర మరియు ట్రెండ్‌లు</string>
+    <string name="historical_analytics_sub">చరిత్ర విశ్లేషణ, ప్రమాద విభాగాలు మరియు విద్యార్థి వివరాలు</string>
+    <string name="time_period_today">ఈరోజు</string>
+    <string name="time_period_week">గత 7 రోజులు</string>
+    <string name="time_period_month">గత 30 రోజులు</string>
+    <string name="time_period_all">మొత్తం సమయం</string>
+    <string name="risk_trends">ప్రమాద ట్రెండ్‌లు (%1$s)</string>
+    <string name="predictions_count">అంచనాలు</string>
+    <string name="peak_risk">ఎక్కువ ప్రమాదం</string>
+    <string name="avg_feels_like">సగటు అనిపించే ఉష్ణోగ్రత</string>
+    <string name="risk_category_distribution">ప్రమాద విభాగాల శాతాలు:</string>
+    <string name="timeline_risk_trend">సమయరేఖ ప్రమాద గ్రాఫ్:</string>
+    <string name="oldest">పాతది</string>
+    <string name="timeline_trend">గ్రాఫ్ ట్రెండ్</string>
+    <string name="latest">తాజాది</string>
+    <string name="student_friendly_insights">విద్యార్థి సమాచారం</string>
+    <string name="historical_prediction_records">పాత అంచనా వివరాలు</string>
+    <string name="records_count">%1$d వివరాలు</string>
+    <string name="no_predictions_recorded_for">%1$s కు ఎటువంటి అంచనాలు నమోదు కాలేదు</string>
+    <string name="fetch_live_risk_to_build_history">మీ చరిత్ర చూడటానికి హోమ్‌ స్క్రీన్‌లో లైవ్ వాతావరణం చూడండి.</string>
+    <string name="clear_risk_history_title">చరిత్రను తొలగించాలా?</string>
+    <string name="clear_risk_history_msg">నమోదైన మొత్తం చరిత్రను తొలగించాలనుకుంటున్నారా? దీనిని వెనక్కి తీసుకోలేము.</string>
+    <string name="delete_record_title">వివరాలను తొలగించాలా?</string>
+    <string name="delete_record_msg">ఈ వివరాలను చరిత్ర నుండి తొలగించాలా?</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_hydration">నీటి అలర్ట్‌లు</string>
+    <string name="notification_channel_hydration_desc">ఎండలో నీరు తాగమని గుర్తు చేసే నోటిఫికేషన్‌లు.</string>
+    <string name="notification_channel_alerts">వేడి ప్రమాద హెచ్చరికలు</string>
+    <string name="notification_channel_alerts_desc">ఎక్కువ వేడి ఉన్నప్పుడు వచ్చే హెచ్చరికలు.</string>
+    <string name="notification_mark_hydrated">నీరు తాగాను (+250mL)</string>
+</resources>

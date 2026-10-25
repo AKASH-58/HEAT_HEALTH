@@ -195,6 +195,7 @@ private fun LocationCardItem(
         RiskLevel.MODERATE -> HeatAmber
         RiskLevel.HIGH -> HeatOrange
         RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> Color(0xFFC62828)
+        else -> PrimaryTeal
     }
 
     Card(

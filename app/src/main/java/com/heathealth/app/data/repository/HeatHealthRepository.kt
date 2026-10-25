@@ -1,10 +1,13 @@
 package com.heathealth.app.data.repository
 
+import com.google.gson.JsonParseException
+import com.google.gson.JsonSyntaxException
 import com.heathealth.app.data.local.dao.AlertLogDao
 import com.heathealth.app.data.local.dao.HeatRiskLogDao
 import com.heathealth.app.data.local.entity.AlertLogEntity
 import com.heathealth.app.data.local.entity.HeatRiskLogEntity
 import com.heathealth.app.data.model.DashboardUiState
+import com.heathealth.app.data.model.DataSource
 import com.heathealth.app.data.model.HourlyForecast
 import com.heathealth.app.data.model.Recommendation
 import com.heathealth.app.data.model.RiskLevel
@@ -16,13 +19,16 @@ import com.heathealth.app.network.dto.HeatRiskResponseDto
 import com.heathealth.app.network.dto.PredictRequestDto
 import com.heathealth.app.network.dto.PredictResponseDto
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
+import retrofit2.HttpException
 import java.io.IOException
 
 class HeatHealthRepository(
     private var apiService: HeatHealthApiService = BackendApiConfig.createApiService(),
     private val heatRiskLogDao: HeatRiskLogDao? = null,
-    private val alertLogDao: AlertLogDao? = null
+    private val alertLogDao: AlertLogDao? = null,
+    private val enableCandidateFailover: Boolean = true
 ) {
 
     suspend fun fetchHeatRiskData(
@@ -30,48 +36,110 @@ class HeatHealthRepository(
         longitude: Double,
         label: String? = "New Delhi, India"
     ): Result<DashboardUiState> {
-        val candidates = BackendApiConfig.getCandidateBaseUrls()
-        var lastException: Exception? = null
+        try {
+            val dto = apiService.getHeatRisk(latitude, longitude, label)
+            val state = mapDtoToUiState(dto, latitude, longitude, label)
+            persistRiskLog(dto, label)
+            return Result.success(state)
+        } catch (e: HttpException) {
+            val code = e.code()
+            if (code == 400 || code == 422) {
+                return Result.failure(IllegalArgumentException("Invalid input coordinates (Latitude -90..90, Longitude -180..180). HTTP $code", e))
+            } else {
+                return Result.failure(IOException("Server error ($code): ${e.message()}", e))
+            }
+        } catch (e: JsonSyntaxException) {
+            return Result.failure(IllegalArgumentException("Received malformed JSON data from server.", e))
+        } catch (e: JsonParseException) {
+            return Result.failure(IllegalArgumentException("Received malformed JSON payload structure from server.", e))
+        } catch (initialErr: Exception) {
+            if (!enableCandidateFailover) {
+                val details = initialErr.localizedMessage ?: "Unable to connect to backend server"
+                return Result.failure(IOException("Unable to connect to FastAPI backend. ($details)", initialErr))
+            }
 
-        for (candidateUrl in candidates) {
+            // Fallback across candidate base URLs for network connection issues
+            var lastException: Exception = initialErr
+            for (candidateUrl in BackendApiConfig.getCandidateBaseUrls()) {
+                try {
+                    val service = BackendApiConfig.createApiService(candidateUrl)
+                    val dto = service.getHeatRisk(latitude, longitude, label)
+                    BackendApiConfig.baseUrl = candidateUrl
+                    this.apiService = service
+                    val state = mapDtoToUiState(dto, latitude, longitude, label)
+                    persistRiskLog(dto, label)
+                    return Result.success(state)
+                } catch (e: Exception) {
+                    lastException = e
+                }
+            }
+
+            val details = lastException.localizedMessage ?: "Unable to connect to backend server"
+            return Result.failure(IOException("Unable to connect to FastAPI backend at ${BackendApiConfig.baseUrl}. Ensure FastAPI is running on host 0.0.0.0:8000. ($details)", lastException))
+        }
+    }
+
+    private suspend fun persistRiskLog(dto: HeatRiskResponseDto, label: String?) {
+        heatRiskLogDao?.let { dao ->
             try {
-                val service = BackendApiConfig.createApiService(candidateUrl)
-                val dto = service.getHeatRisk(latitude, longitude, label)
-                BackendApiConfig.baseUrl = candidateUrl
-                this.apiService = service
-                val state = mapDtoToUiState(dto, latitude, longitude, label)
+                val nowMs = System.currentTimeMillis()
+                val targetLabel = label ?: dto.location.locationLabel ?: "Current Location"
+                val latest = dao.getLatestLog()
 
-                // Persist risk assessment to Room database
-                heatRiskLogDao?.let { dao ->
-                    try {
-                        val log = HeatRiskLogEntity(
-                            timestamp = System.currentTimeMillis(),
-                            isoTimestamp = dto.metadata.predictionTimestamp,
-                            riskLevel = dto.risk.level,
-                            riskScore = dto.risk.score,
-                            temperatureCelsius = dto.weather.temperature.toInt(),
-                            humidityPercent = dto.weather.relativeHumidity.toInt(),
-                            feelsLikeCelsius = (dto.weather.apparentTemperature ?: dto.weather.temperature).toInt(),
-                            locationLabel = label ?: dto.location.locationLabel ?: "Current Location"
-                        )
-                        dao.insertLog(log)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                // Skip duplicate insert if identical location & risk level within 60 seconds
+                if (latest != null &&
+                    latest.locationLabel.equals(targetLabel, ignoreCase = true) &&
+                    latest.riskLevel.equals(dto.risk.level, ignoreCase = true) &&
+                    (nowMs - latest.timestamp) < 60000L
+                ) {
+                    return
                 }
 
-                return Result.success(state)
+                val log = HeatRiskLogEntity(
+                    timestamp = nowMs,
+                    isoTimestamp = dto.metadata.predictionTimestamp,
+                    riskLevel = dto.risk.level,
+                    riskScore = dto.risk.score,
+                    temperatureCelsius = dto.weather.temperature.toInt(),
+                    humidityPercent = dto.weather.relativeHumidity.toInt(),
+                    feelsLikeCelsius = (dto.weather.apparentTemperature ?: dto.weather.temperature).toInt(),
+                    locationLabel = targetLabel
+                )
+                dao.insertLog(log)
             } catch (e: Exception) {
-                lastException = e
+                e.printStackTrace()
             }
         }
-
-        val details = lastException?.localizedMessage ?: "Unable to connect to backend server"
-        return Result.failure(IOException("Unable to connect to FastAPI backend at ${BackendApiConfig.baseUrl}. Ensure FastAPI is running on host 0.0.0.0:8000. ($details)", lastException))
     }
 
     fun getRecentRiskLogs(limit: Int = 5): Flow<List<HeatRiskLogEntity>> {
         return heatRiskLogDao?.getRecentLogs(limit) ?: flowOf(emptyList())
+    }
+
+    fun getAllRiskLogs(): Flow<List<HeatRiskLogEntity>> {
+        return heatRiskLogDao?.getAllLogs() ?: flowOf(emptyList())
+    }
+
+    fun getRiskLogsSince(minTimestamp: Long): Flow<List<HeatRiskLogEntity>> {
+        return heatRiskLogDao?.getLogsSince(minTimestamp) ?: flowOf(emptyList())
+    }
+
+    suspend fun deleteRiskLogById(id: Long): Result<Boolean> {
+        return try {
+            heatRiskLogDao?.deleteLogById(id)
+            Result.success(true)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun clearAllRiskLogs(): Result<Boolean> {
+        return try {
+            heatRiskLogDao?.clearAllLogs()
+            Result.success(true)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     fun getRecentAlertLogs(limit: Int = 5): Flow<List<AlertLogEntity>> {
@@ -83,28 +151,50 @@ class HeatHealthRepository(
         humidity: Double,
         windSpeed: Double? = null
     ): Result<PredictResponseDto> {
-        val candidates = listOf(BackendApiConfig.baseUrl) + BackendApiConfig.getCandidateBaseUrls()
-        var lastException: Exception? = null
+        val req = PredictRequestDto(
+            temperatureC = temperature,
+            humidityPercent = humidity,
+            windSpeedKmh = windSpeed
+        )
 
-        for (candidateUrl in candidates.distinct()) {
-            try {
-                val service = BackendApiConfig.createApiService(candidateUrl)
-                val req = PredictRequestDto(
-                    temperatureC = temperature,
-                    humidityPercent = humidity,
-                    windSpeedKmh = windSpeed
-                )
-                val res = service.predictHeatRisk(req)
-                BackendApiConfig.baseUrl = candidateUrl
-                this.apiService = service
-                return Result.success(res)
-            } catch (e: Exception) {
-                lastException = e
+        try {
+            val res = apiService.predictHeatRisk(req)
+            return Result.success(res)
+        } catch (e: HttpException) {
+            val code = e.code()
+            if (code == 400 || code == 422) {
+                return Result.failure(IllegalArgumentException("Invalid prediction parameters (Temp -100..80°C, Humidity 0..100%). HTTP $code", e))
+            } else {
+                return Result.failure(IOException("Server error ($code) during prediction: ${e.message()}", e))
             }
-        }
+        } catch (e: JsonSyntaxException) {
+            return Result.failure(IllegalArgumentException("Received malformed JSON prediction response.", e))
+        } catch (e: JsonParseException) {
+            return Result.failure(IllegalArgumentException("Received invalid prediction response structure.", e))
+        } catch (initialErr: Exception) {
+            if (!enableCandidateFailover) {
+                val details = initialErr.localizedMessage ?: "ML model inference error"
+                return Result.failure(IOException("Failed custom ML prediction: $details", initialErr))
+            }
 
-        val details = lastException?.localizedMessage ?: "ML model inference error"
-        return Result.failure(IOException("Failed custom ML prediction: $details", lastException))
+            var lastException: Exception = initialErr
+            val candidates = listOf(BackendApiConfig.baseUrl) + BackendApiConfig.getCandidateBaseUrls()
+
+            for (candidateUrl in candidates.distinct()) {
+                try {
+                    val service = BackendApiConfig.createApiService(candidateUrl)
+                    val res = service.predictHeatRisk(req)
+                    BackendApiConfig.baseUrl = candidateUrl
+                    this.apiService = service
+                    return Result.success(res)
+                } catch (e: Exception) {
+                    lastException = e
+                }
+            }
+
+            val details = lastException.localizedMessage ?: "ML model inference error"
+            return Result.failure(IOException("Failed custom ML prediction: $details", lastException))
+        }
     }
 
     private fun mapDtoToUiState(
@@ -172,7 +262,8 @@ class HeatHealthRepository(
             locationLabel = label ?: dto.location.locationLabel ?: "Coordinates ($latitude, $longitude)",
             latitude = latitude,
             longitude = longitude,
-            lastUpdated = dto.metadata.predictionTimestamp
+            lastUpdated = dto.metadata.predictionTimestamp,
+            dataSource = DataSource.LIVE
         )
     }
 
@@ -233,7 +324,196 @@ class HeatHealthRepository(
             disclaimer = "Prototype Notice: HeatHealth is an early-phase research prototype and does not provide a medical diagnosis or official heat warning. Always follow instructions from public health authorities.",
             isLoading = false,
             isRefreshing = false,
-            errorMessage = null
+            errorMessage = null,
+            dataSource = DataSource.DEMO
         )
+    }
+
+    // Phase 8 Smart Heat Alerts Methods
+    suspend fun fetchAlertHistory(limit: Int = 20, offset: Int = 0): Result<List<AlertLogEntity>> {
+        try {
+            val response = apiService.getAlertHistory(limit, offset)
+            val entities = response.alerts.map { dto ->
+                AlertLogEntity(
+                    isoTimestamp = dto.isoTimestamp,
+                    timestamp = dto.timestamp,
+                    title = dto.title,
+                    description = dto.description,
+                    riskLevel = dto.riskLevel,
+                    triggerSource = dto.triggerSource
+                )
+            }
+
+            // Sync into Room DB if available
+            alertLogDao?.let { dao ->
+                entities.forEach { entity ->
+                    try {
+                        dao.insertAlert(entity)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+            return Result.success(entities)
+        } catch (initialErr: Exception) {
+            // Fall back across candidate base URLs
+            if (enableCandidateFailover) {
+                for (candidateUrl in BackendApiConfig.getCandidateBaseUrls()) {
+                    try {
+                        val service = BackendApiConfig.createApiService(candidateUrl)
+                        val response = service.getAlertHistory(limit, offset)
+                        BackendApiConfig.baseUrl = candidateUrl
+                        this.apiService = service
+                        val entities = response.alerts.map { dto ->
+                            AlertLogEntity(
+                                isoTimestamp = dto.isoTimestamp,
+                                timestamp = dto.timestamp,
+                                title = dto.title,
+                                description = dto.description,
+                                riskLevel = dto.riskLevel,
+                                triggerSource = dto.triggerSource
+                            )
+                        }
+                        return Result.success(entities)
+                    } catch (e: Exception) {
+                        // ignore and try next candidate
+                    }
+                }
+            }
+
+            // Fallback to local Room DB if network fails
+            return try {
+                val localAlerts: List<AlertLogEntity> = alertLogDao?.getRecentAlerts(limit)?.firstOrNull() ?: emptyList()
+                Result.success(localAlerts)
+            } catch (e: Exception) {
+                Result.failure(IOException("Failed to fetch alert history: ${initialErr.localizedMessage}", initialErr))
+            }
+        }
+    }
+
+    suspend fun logAlert(
+        title: String,
+        description: String,
+        riskLevel: String,
+        triggerSource: String = "Local Risk Monitor",
+        recommendations: List<String> = emptyList()
+    ): Result<AlertLogEntity> {
+        val nowMs = System.currentTimeMillis()
+        val nowIso = java.time.Instant.ofEpochMilli(nowMs).toString()
+
+        val entity = AlertLogEntity(
+            timestamp = nowMs,
+            isoTimestamp = nowIso,
+            title = title,
+            description = description,
+            riskLevel = riskLevel,
+            triggerSource = triggerSource
+        )
+
+        // Save locally first
+        alertLogDao?.insertAlert(entity)
+
+        // Sync with backend API asynchronously
+        try {
+            val req = com.heathealth.app.network.dto.CreateAlertRequestDto(
+                title = title,
+                description = description,
+                riskLevel = riskLevel,
+                triggerSource = triggerSource,
+                recommendations = recommendations
+            )
+            apiService.createAlertHistory(req)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return Result.success(entity)
+    }
+
+    suspend fun clearAlertHistory(): Result<Boolean> {
+        alertLogDao?.clearAllAlerts()
+        try {
+            apiService.clearAlertHistory()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return Result.success(true)
+    }
+
+    suspend fun fetchUpcomingForecast(
+        latitude: Double,
+        longitude: Double,
+        label: String? = null
+    ): Result<com.heathealth.app.network.dto.UpcomingForecastResponseDto> {
+        try {
+            val res = apiService.getUpcomingForecast(latitude, longitude, label)
+            return Result.success(res)
+        } catch (initialErr: Exception) {
+            if (enableCandidateFailover) {
+                for (candidateUrl in BackendApiConfig.getCandidateBaseUrls()) {
+                    try {
+                        val service = BackendApiConfig.createApiService(candidateUrl)
+                        val res = service.getUpcomingForecast(latitude, longitude, label)
+                        BackendApiConfig.baseUrl = candidateUrl
+                        this.apiService = service
+                        return Result.success(res)
+                    } catch (e: Exception) {
+                        // try next
+                    }
+                }
+            }
+            return Result.failure(IOException("Failed to fetch upcoming forecast: ${initialErr.localizedMessage}", initialErr))
+        }
+    }
+
+    suspend fun evaluateAlert(
+        temperature: Double,
+        humidity: Double,
+        userThreshold: String,
+        lastAlertedRiskLevel: String
+    ): Result<com.heathealth.app.network.dto.AlertEvaluationResponseDto> {
+        try {
+            val req = com.heathealth.app.network.dto.AlertEvaluationRequestDto(
+                temperatureC = temperature,
+                humidityPercent = humidity,
+                userThreshold = userThreshold,
+                lastAlertedRiskLevel = lastAlertedRiskLevel
+            )
+            val res = apiService.evaluateAlert(req)
+            return Result.success(res)
+        } catch (e: Exception) {
+            return Result.failure(IOException("Alert evaluation failed: ${e.localizedMessage}", e))
+        }
+    }
+
+    suspend fun fetchRemoteAlertPreferences(): Result<com.heathealth.app.network.dto.AlertPreferencesDto> {
+        try {
+            val res = apiService.getAlertPreferences()
+            return Result.success(res)
+        } catch (e: Exception) {
+            return Result.failure(IOException("Failed to fetch alert preferences: ${e.localizedMessage}", e))
+        }
+    }
+
+    suspend fun updateRemoteAlertPreferences(
+        prefs: com.heathealth.app.network.dto.AlertPreferencesDto
+    ): Result<com.heathealth.app.network.dto.AlertPreferencesDto> {
+        try {
+            val res = apiService.updateAlertPreferences(prefs)
+            return Result.success(res)
+        } catch (e: Exception) {
+            return Result.failure(IOException("Failed to update alert preferences: ${e.localizedMessage}", e))
+        }
+    }
+
+    suspend fun registerDeviceToken(token: String): Result<Boolean> {
+        try {
+            val req = com.heathealth.app.network.dto.DeviceTokenRequestDto(deviceToken = token)
+            apiService.registerDeviceToken(req)
+            return Result.success(true)
+        } catch (e: Exception) {
+            return Result.failure(IOException("Failed to register device token: ${e.localizedMessage}", e))
+        }
     }
 }

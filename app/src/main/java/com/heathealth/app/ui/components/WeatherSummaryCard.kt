@@ -12,9 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.filled.Air
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Thermostat
 import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material.icons.filled.WbSunny
@@ -28,9 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.heathealth.app.R
+import com.heathealth.app.data.model.DataSource
 import com.heathealth.app.data.model.WeatherData
 import com.heathealth.app.ui.theme.BorderLight
+import com.heathealth.app.ui.theme.HeatAmber
 import com.heathealth.app.ui.theme.HeatOrange
 import com.heathealth.app.ui.theme.PrimaryTeal
 import com.heathealth.app.ui.theme.PrimaryTealLight
@@ -41,7 +46,10 @@ import com.heathealth.app.ui.theme.TextSecondary
 @Composable
 fun WeatherSummaryCard(
     weatherData: WeatherData,
-    locationLabel: String = ""
+    locationLabel: String = "",
+    dataSource: DataSource = DataSource.LIVE,
+    lastUpdated: String = "",
+    onMyLocationClick: (() -> Unit)? = null
 ) {
     Card(
         modifier = Modifier
@@ -61,63 +69,56 @@ fun WeatherSummaryCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Weather Summary",
+                        text = stringResource(R.string.weather_summary),
                         style = MaterialTheme.typography.titleMedium,
                         color = TextPrimary
                     )
-                    if (locationLabel.isNotEmpty()) {
-                        Text(
-                            text = locationLabel,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = TextSecondary
-                        )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        if (onMyLocationClick != null) {
+                            Icon(
+                                imageVector = Icons.Default.LocationOn,
+                                contentDescription = "Use Device Location",
+                                tint = PrimaryTeal,
+                                modifier = Modifier
+                                    .size(16.dp)
+                                    .clickable { onMyLocationClick() }
+                            )
+                        }
+                        if (locationLabel.isNotEmpty()) {
+                            Text(
+                                text = locationLabel,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = TextSecondary,
+                                modifier = if (onMyLocationClick != null) Modifier.clickable { onMyLocationClick() } else Modifier
+                            )
+                        }
                     }
                 }
 
-                if (weatherData.isDemoData) {
-                    Row(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(PrimaryTealLight)
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Info,
-                            contentDescription = "Demo Badge",
-                            tint = PrimaryTeal,
-                            modifier = Modifier.size(14.dp)
-                        )
-                        Text(
-                            text = "DEMONSTRATION DATA",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = PrimaryTeal
-                        )
-                    }
-                } else {
-                    Row(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(PrimaryTeal.copy(alpha = 0.15f))
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.CheckCircle,
-                            contentDescription = "Live Data Badge",
-                            tint = PrimaryTeal,
-                            modifier = Modifier.size(14.dp)
-                        )
-                        Text(
-                            text = "LIVE DATA",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = PrimaryTeal
-                        )
-                    }
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(PrimaryTeal.copy(alpha = 0.12f))
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = "Live Status",
+                        tint = PrimaryTeal,
+                        modifier = Modifier.size(14.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.live_data),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = PrimaryTeal
+                    )
                 }
             }
 
@@ -129,7 +130,7 @@ fun WeatherSummaryCard(
             ) {
                 WeatherMetricItem(
                     icon = Icons.Default.Thermostat,
-                    label = "Temp",
+                    label = stringResource(R.string.temp),
                     value = if (weatherData.temperatureCelsius != null) "${weatherData.temperatureCelsius}°C" else "N/A",
                     iconColor = HeatOrange,
                     modifier = Modifier.weight(1f)
@@ -137,7 +138,7 @@ fun WeatherSummaryCard(
 
                 WeatherMetricItem(
                     icon = Icons.Default.WbSunny,
-                    label = "Feels Like",
+                    label = stringResource(R.string.feels_like),
                     value = if (weatherData.feelsLikeCelsius != null) "${weatherData.feelsLikeCelsius}°C" else "N/A",
                     iconColor = HeatOrange,
                     modifier = Modifier.weight(1f)
@@ -145,7 +146,7 @@ fun WeatherSummaryCard(
 
                 WeatherMetricItem(
                     icon = Icons.Default.WaterDrop,
-                    label = "Humidity",
+                    label = stringResource(R.string.humidity),
                     value = if (weatherData.humidityPercent != null) "${weatherData.humidityPercent}%" else "N/A",
                     iconColor = PrimaryTeal,
                     modifier = Modifier.weight(1f)
@@ -153,21 +154,22 @@ fun WeatherSummaryCard(
 
                 WeatherMetricItem(
                     icon = Icons.Default.Air,
-                    label = "Wind",
+                    label = stringResource(R.string.wind),
                     value = if (weatherData.windSpeedKmh != null) "${weatherData.windSpeedKmh} km/h" else "N/A",
                     iconColor = PrimaryTeal,
                     modifier = Modifier.weight(1f)
                 )
             }
 
-            if (weatherData.source.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    text = "Source: ${weatherData.source}${if (weatherData.timestamp.isNotEmpty()) " • " + weatherData.timestamp else ""}",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = TextSecondary
-                )
-            }
+            val timestampText = if (lastUpdated.isNotEmpty()) lastUpdated else weatherData.timestamp
+            val statusLabel = if (timestampText.isNotEmpty()) "Weather Observations • Updated $timestampText" else "Weather Observations"
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = statusLabel,
+                style = MaterialTheme.typography.labelSmall,
+                color = TextSecondary
+            )
         }
     }
 }

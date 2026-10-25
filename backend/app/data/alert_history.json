@@ -1,0 +1,17 @@
+[
+  {
+    "id": "alert_log_1792915222385",
+    "timestamp": 1792915222385,
+    "iso_timestamp": "2026-10-25T08:00:22Z",
+    "title": "Moderate Heat Risk Advisory",
+    "description": "Current thermal risk is Moderate (31\u00b0C feels-like). Take shade and stay hydrated.",
+    "risk_level": "Moderate",
+    "trigger_source": "User Triggered Test Alert",
+    "recommendations": [
+      "Maintain regular hydration",
+      "Take shaded breaks",
+      "Wear lightweight clothing",
+      "Stay aware of indoor heat"
+    ]
+  }
+]

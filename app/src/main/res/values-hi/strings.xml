@@ -1,0 +1,257 @@
+<resources>
+    <!-- App Information & Navigation -->
+    <string name="app_name">HeatHealth</string>
+    <string name="app_description">गर्मी-स्वास्थ्य जोखिम पूर्वानुमान एवं पूर्व चेतावनी प्रणाली</string>
+    <string name="nav_home">होम</string>
+    <string name="nav_hydration">जल संतुलन</string>
+    <string name="nav_cool_map">कूल मैप</string>
+    <string name="nav_alerts">अलर्ट</string>
+    <string name="nav_safety">सुरक्षा</string>
+    <string name="nav_profile">प्रोफाइल</string>
+
+    <!-- General Buttons & Common Labels -->
+    <string name="btn_view">देखें</string>
+    <string name="btn_retry">पुनः प्रयास करें</string>
+    <string name="btn_save">सहेजें</string>
+    <string name="btn_reset">रीसेट करें</string>
+    <string name="btn_cancel">रद्द करें</string>
+    <string name="btn_delete">हटाएं</string>
+    <string name="btn_edit">संपादित करें</string>
+    <string name="btn_clear_all">सभी हटाएं</string>
+    <string name="btn_add">जोड़ें</string>
+    <string name="btn_switch">बदलें</string>
+    <string name="btn_directions">दिशा-निर्देश</string>
+    <string name="btn_report_issue">समस्या दर्ज करें</string>
+
+    <!-- Home & Dashboard -->
+    <string name="fetching_weather_evaluating_risk">लाइव मौसम प्राप्त किया जा रहा है और गर्मी जोखिम का मूल्यांकन हो रहा है…</string>
+    <string name="backend_connection_issue">बैकएंड कनेक्शन समस्या</string>
+    <string name="backend_offline_displaying_cached">बैकएंड ऑफलाइन — कैश किया गया पूर्वानुमान प्रदर्शित</string>
+    <string name="last_successful_update">अंतिम सफल अपडेट: %1$s</string>
+    <string name="heat_risk_history_trends">गर्मी-जोखिम इतिहास और रुझान</string>
+    <string name="view_recorded_prediction_trends">दर्ज पूर्वानुमान रुझान और छात्र अंतर्दृष्टि देखें</string>
+    <string name="btn_view_offline_demo">ऑफलाइन डेमो देखें</string>
+
+    <!-- Weather Summary Card -->
+    <string name="weather_summary">मौसम सारांश</string>
+    <string name="live_data">लाइव डेटा</string>
+    <string name="cached_data_offline">कैश डेटा (ऑफलाइन)</string>
+    <string name="demonstration_data">प्रदर्शन डेटा</string>
+    <string name="unavailable">अनुपलब्ध</string>
+    <string name="temp">तापमान</string>
+    <string name="feels_like">महसूस तापमान</string>
+    <string name="humidity">आर्द्रता</string>
+    <string name="wind">हवा</string>
+    <string name="source_label">स्रोतः %1$s</string>
+
+    <!-- Risk Levels -->
+    <string name="risk_low">कम</string>
+    <string name="risk_moderate">मध्यम</string>
+    <string name="risk_high">उच्च</string>
+    <string name="risk_very_high">बहुत उच्च</string>
+    <string name="risk_extreme">अत्यधिक</string>
+    <string name="risk_unknown">सामान्य मार्गदर्शन</string>
+    <string name="risk_level_title">%1$s गर्मी जोखिम</string>
+    <string name="risk_level_badge">%1$s जोखिम</string>
+    <string name="category_label">श्रेणी:</string>
+    <string name="score_label">स्कोर: %1$s°C</string>
+    <string name="contributing_factors">सहायक कारक:</string>
+
+    <!-- Personal Safety Dashboard -->
+    <string name="personal_safety_dashboard">व्यक्तिगत सुरक्षा डैशबोर्ड</string>
+    <string name="personal_safety_dashboard_sub">जोखिम पूर्वानुमान, अलर्ट और जल सेवन का सारांश</string>
+    <string name="current_heat_risk_state">वर्तमान गर्मी जोखिम स्थिति</string>
+    <string name="todays_hydration_progress">आज की जल सेवन प्रगति</string>
+    <string name="recent_recorded_risk_assessments">हालिया दर्ज जोखिम मूल्यांकन</string>
+    <string name="no_recent_risk_predictions">स्थानीय डेटाबेस में अभी तक कोई हालिया पूर्वानुमान दर्ज नहीं है।</string>
+    <string name="recent_triggered_heat_alerts">हाल ही में जारी गर्मी अलर्ट</string>
+    <string name="no_local_heat_alerts">अभी तक कोई स्थानीय गर्मी अलर्ट जारी नहीं हुआ है।</string>
+
+    <!-- Outdoor Activity Planner -->
+    <string name="student_outdoor_activity_planner">छात्र बाहरी गतिविधि योजनाकार</string>
+    <string name="plan_safe_outdoor_times">प्रति घंटा गर्मी जोखिम के आधार पर सुरक्षित बाहरी समय की योजना बनाएं</string>
+    <string name="select_planned_activity">नियोजित गतिविधि चुनें:</string>
+    <string name="select_planned_time">नियोजित समय चुनें:</string>
+    <string name="activity_walking">कक्षा के लिए पैदल चलना</string>
+    <string name="activity_sports">बाहरी खेल</string>
+    <string name="activity_commute">कैंपस आवागमन</string>
+    <string name="activity_fieldwork">फील्डवर्क</string>
+    <string name="planned_time_label">नियोजित समय: %1$s</string>
+    <string name="suggested_cooler_alternative_times">सुझाए गए ठंडे वैकल्पिक समय:</string>
+    <string name="no_cooler_hours_found">वर्तमान 24-घंटे के पूर्वानुमान में कोई विशेष रूप से ठंडा समय नहीं मिला।</string>
+    <string name="future_risk_estimate_unavailable">चयनित तिथि/समय के लिए भविष्य का जोखिम अनुमान 24-घंटे के पूर्वानुमान से आगे उपलब्ध नहीं है।</string>
+    <string name="rec_low_risk">%1$s के लिए अच्छी स्थितियां। सामान्य जल सेवन बनाए रखें।</string>
+    <string name="rec_mod_risk">सावधानी से आगे बढ़ें। छांव में चलें, पानी की बोतल साथ रखें और आराम करें।</string>
+    <string name="rec_high_risk">उच्च गर्मी जोखिम समय। %1$s को किसी ठंडे समय पर पुनर्निर्धारित करने पर विचार करें।</string>
+    <string name="rec_extreme_risk">इस दौरान कठिन बाहरी गतिविधियों से बचें। सुबह या शाम के समय पुनर्निर्धारित करें।</string>
+
+    <!-- Custom ML Simulator -->
+    <string name="custom_heat_risk_simulator">कस्टम गर्मी जोखिम सिमुलेटर (ML)</string>
+    <string name="custom_heat_risk_sub">मशीन लर्निंग इंजन का उपयोग करके कस्टम गर्मी-स्वास्थ्य जोखिम का सिमुलेशन करें।</string>
+    <string name="temperature_label">तापमान</string>
+    <string name="relative_humidity">सापेक्ष आर्द्रता</string>
+    <string name="wind_speed">हवा की गति</string>
+    <string name="btn_predict_custom_heat_risk">कस्टम गर्मी जोखिम का अनुमान लगाएं (ML)</string>
+    <string name="running_ml_inference">ML पूर्वानुमान चलाया जा रहा है…</string>
+    <string name="predicted_label">अनुमानित: %1$s</string>
+    <string name="prototype_ml_model">प्रोटोटाइप ML मॉडल</string>
+    <string name="heat_index_score">हीट इंडेक्स स्कोर: %1$s°C</string>
+    <string name="model_version_label">मॉडल संस्करण: %1$s</string>
+
+    <!-- Safety Recommendations -->
+    <string name="safety_recommendations">सुरक्षा सिफारिशें</string>
+
+    <!-- Campus Cool Map -->
+    <string name="campus_cool_map">कैंपस कूल मैप</string>
+    <string name="campus_cool_map_sub">पानी के स्थान, छायादार क्षेत्र, एसी अध्ययन कक्ष और प्राथमिक चिकित्सा खोजें</string>
+    <string name="real_time_synced">सभी डिवाइस पर रीयल-टाइम सिंक</string>
+    <string name="switch_college">कॉलेज बदलें</string>
+    <string name="search_facility_placeholder">जल स्थान, अध्ययन कक्ष, भवन खोजें…</string>
+    <string name="all_facilities">सभी सुविधाएं</string>
+    <string name="cat_drinking_water">पेयजल</string>
+    <string name="cat_shaded_area">छायादार क्षेत्र</string>
+    <string name="cat_cool_indoor">ठंडा इनडोर स्थान</string>
+    <string name="cat_first_aid">प्राथमिक चिकित्सा</string>
+    <string name="fetching_verified_campus_facilities">सत्यापित कैंपस सुविधाएं प्राप्त की जा रही हैं…</string>
+    <string name="campus_server_connection_issue">कैंपस सर्वर कनेक्शन समस्या</string>
+    <string name="view_demo_directory">डेमो निर्देशिका देखें</string>
+    <string name="campus_directory">कैंपस निर्देशिका (%1$d सुविधाएं)</string>
+    <string name="no_facilities_found">%1$s के लिए कोई सुविधा नहीं मिली</string>
+    <string name="be_first_student_to_contribute">पानी के स्थान या छायादार क्षेत्र जोड़ने वाले पहले छात्र बनें!</string>
+    <string name="btn_add_facility_to_campus">+ कैंपस में सुविधा जोड़ें</string>
+    <string name="btn_add_facility">सुविधा जोड़ें</string>
+
+    <!-- Water Tracker -->
+    <string name="daily_water_tracker">दैनिक जल ट्रैकर</string>
+    <string name="daily_water_tracker_sub">जल सेवन दर्ज करें और दैनिक लक्ष्य की निगरानी करें</string>
+    <string name="todays_total_intake">आज का कुल जल सेवन</string>
+    <string name="quick_add_water">त्वरित जल जोड़ें</string>
+    <string name="small_glass">छोटा गिलास</string>
+    <string name="standard_cup">मानक कप</string>
+    <string name="water_bottle">पानी की बोतल</string>
+    <string name="custom_amount">कस्टम मात्रा</string>
+    <string name="todays_water_entries">आज की जल प्रविष्टियां</string>
+    <string name="no_water_entries_recorded">आज के लिए अभी तक कोई जल प्रविष्टि दर्ज नहीं हुई है।</string>
+    <string name="tap_quick_add_hint">ऊपर दिए गए त्वरित बटन पर टैप करें या कस्टम मात्रा दर्ज करें।</string>
+    <string name="hydration_notice">जल सेवन लक्ष्य सामान्य संदर्भ दिशानिर्देश हैं। अधिक तापमान या कठिन बाहरी गतिविधि के दौरान सेवन बढ़ाएं।</string>
+    <string name="undo">पूर्ववत करें</string>
+
+    <!-- Smart Heat Alerts -->
+    <string name="smart_heat_alerts">स्मार्ट गर्मी अलर्ट</string>
+    <string name="smart_heat_alerts_sub">रीयल-टाइम जोखिम चेतावनी और छात्र सुरक्षा</string>
+    <string name="live_environmental_thermal_risk">लाइव पर्यावरण तापीय जोखिम</string>
+    <string name="evaluating_heat_health_metrics">गर्मी स्वास्थ्य मेट्रिक्स का मूल्यांकन हो रहा है…</string>
+    <string name="prediction_data_unavailable">पूर्वानुमान डेटा अनुपलब्ध</string>
+    <string name="upcoming_high_risk_periods">आगामी उच्च-जोखिम की अवधि</string>
+    <string name="loading_hourly_forecast">प्रति घंटा पूर्वानुमान लोड हो रहा है…</string>
+    <string name="no_upcoming_high_risk_periods">मौसम पूर्वानुमान प्रदाता से कोई आगामी उच्च-जोखिम अवधि नहीं मिली।</string>
+    <string name="alert_history_advisories">अलर्ट इतिहास और परामर्श</string>
+    <string name="no_historical_heat_risk_alerts">कोई ऐतिहासिक गर्मी अलर्ट दर्ज नहीं है।</string>
+    <string name="notification_preferences_controls">अधिसूचना प्राथमिकताएं और नियंत्रण</string>
+    <string name="notification_perm_granted">अधिसूचना अनुमति स्वीकृत</string>
+    <string name="notification_perm_required">अधिसूचना अनुमति आवश्यक</string>
+    <string name="android_notifications_enabled">एंड्रॉइड सूचनाएं सक्षम हैं</string>
+    <string name="tap_to_enable_system_perm">सिस्टम अनुमति सक्षम करने के लिए नीचे टैप करें</string>
+    <string name="enable_smart_heat_alerts">स्मार्ट गर्मी अलर्ट सक्षम करें</string>
+    <string name="periodically_check_live_risk">समय-समय पर लाइव जोखिम की जांच करें और जोखिम बढ़ने पर सचेत करें</string>
+    <string name="alert_trigger_threshold">अलर्ट ट्रिगर सीमा:</string>
+    <string name="check_frequency_cooldown">जांच आवृत्ति / कूलडाउन:</string>
+    <string name="btn_trigger_sample_heat_alert">नमूना गर्मी अलर्ट जारी करें</string>
+    <string name="threshold_moderate">मध्यम</string>
+    <string name="threshold_high">उच्च</string>
+    <string name="threshold_extreme">अत्यधिक</string>
+
+    <!-- Student Heat-Safety Center -->
+    <string name="student_heat_safety_center">छात्र गर्मी-सुरक्षा केंद्र</string>
+    <string name="student_heat_safety_center_sub">सुरक्षा प्रोटोकॉल, दैनिक चेकलिस्ट, प्राथमिक चिकित्सा और आपातकालीन संपर्क</string>
+    <string name="tab_safety_guidance">सुरक्षा मार्गदर्शन</string>
+    <string name="tab_daily_checklist">दैनिक चेकलिस्ट</string>
+    <string name="tab_first_aid">प्राथमिक चिकित्सा</string>
+    <string name="tab_emergency_contacts">आपातकालीन संपर्क</string>
+    <string name="live_risk_label">लाइव जोखिम: %1$s</string>
+    <string name="offline_heat_safety_guidance">ऑफलाइन गर्मी-सुरक्षा मार्गदर्शन</string>
+    <string name="live_prediction_badge">लाइव पूर्वानुमान</string>
+    <string name="offline_protocols_badge">ऑफलाइन प्रोटोकॉल</string>
+    <string name="select_student_profile_context">छात्र प्रोफाइल / गतिविधि संदर्भ चुनें:</string>
+    <string name="profile_commuter">कैंपस यात्री</string>
+    <string name="profile_athlete">छात्र एथलीट</string>
+    <string name="profile_outdoor_class">बाहरी कक्षा</string>
+    <string name="profile_regular">नियमित छात्र</string>
+    <string name="tailored_activity_protocols">अनुकूलित गतिविधि प्रोटोकॉल</string>
+    <string name="recommended_action">अनुशंसित कार्रवाई</string>
+    <string name="hydration_tip">जल सेवन टिप</string>
+    <string name="todays_safety_actions">आज की सुरक्षा कार्रवाइयां</string>
+    <string name="checklist_progress_notice">प्रगति आपके डिवाइस पर स्वचालित रूप से सहेजी जाती है और मध्यरात्रि में रीसेट होती है।</string>
+    <string name="practical_safety_checklist">व्यावहारिक सुरक्षा चेकलिस्ट:</string>
+    <string name="critical_medical_emergency_notice">गंभीर चिकित्सा आपातकालीन सूचना</string>
+    <string name="heatstroke_emergency_warning">संदिग्ध हीटस्ट्रोक एक जीवन-घातक आपात स्थिति है! तुरंत चिकित्सा सहायता प्राप्त करें। लक्षणों के ठीक होने का इंतजार न करें।</string>
+    <string name="btn_call_emergency_helpline">आपातकालीन हेल्पलाइन पर कॉल करें (112 / 108)</string>
+    <string name="heat_exhaustion_title">गर्मी की थकावट (प्रारंभिक चेतावनी)</string>
+    <string name="heat_exhaustion_warning_signs">चेतावनी संकेत: अत्यधिक पसीना, चक्कर आना, सिरदर्द, मतली, तेज नाड़ी, मांसपेशियों में ऐंठन, कमजोरी।</string>
+    <string name="immediate_first_aid_actions">तत्काल प्राथमिक चिकित्सा कार्रवाई:</string>
+    <string name="heatstroke_title">संदिग्ध हीटस्ट्रोक (चिकित्सा आपातकाल)</string>
+    <string name="heatstroke_warning_signs">चेतावनी संकेत: उच्च शरीर का तापमान (&gt;40°C / 104°F), भ्रम, बेहोशी, गर्म सूखी त्वचा या अत्यधिक पसीना, उल्टी या दौरे।</string>
+    <string name="immediate_cooling_protocols">तत्काल ठंडा करने के प्रोटोकॉल:</string>
+
+    <!-- Student Profile & Settings Screen -->
+    <string name="student_profile_preferences">छात्र प्रोफाइल और प्राथमिकताएं</string>
+    <string name="customize_activity_language_hydration">गतिविधि स्तर, भाषा और जल लक्ष्य अनुकूलित करें</string>
+    <string name="personal_details_optional">व्यक्तिगत विवरण (वैकल्पिक)</string>
+    <string name="nickname_display_name">उपनाम / प्रदर्शित नाम</string>
+    <string name="daily_activity_pattern">दैनिक गतिविधि पैटर्न</string>
+    <string name="select_typical_routine">सुरक्षा सिफारिशों को अनुकूलित करने के लिए अपनी दिनचर्या चुनें।</string>
+    <string name="activity_indoors">अधिकतर इनडोर</string>
+    <string name="activity_commuting">नियमित आवागमन</string>
+    <string name="activity_outdoor">अक्सर बाहरी गतिविधियां</string>
+    <string name="app_preferences">ऐप प्राथमिकताएं</string>
+    <string name="preferred_language">पसंदीदा भाषा</string>
+    <string name="daily_hydration_reference_target">दैनिक जल सेवन लक्ष्य (mL)</string>
+    <string name="daily_water_goal">दैनिक जल लक्ष्य (mL)</string>
+    <string name="suggested_guideline">सुझाया गया सामान्य दिशानिर्देश: 2000 - 3000 mL/दिन</string>
+    <string name="hydration_reminders">जल सेवन रिमाइंडर</string>
+    <string name="save_preference_periodic_water">समय-समय पर जल सेवन रिमाइंडर के लिए प्राथमिकता सहेजें</string>
+    <string name="reminder_interval">रिमाइंडर अंतराल</string>
+    <string name="non_medical_notice">सामान्य दिशानिर्देश सूचना: जल लक्ष्य केवल शैक्षिक उद्देश्य के लिए सामान्य संदर्भ दिशानिर्देश हैं।</string>
+    <string name="btn_save_profile">प्रोफाइल सहेजें</string>
+
+    <!-- Languages Native Names -->
+    <string name="lang_english">English — English</string>
+    <string name="lang_hindi">Hindi — हिन्दी</string>
+    <string name="lang_kannada">Kannada — ಕನ್ನಡ</string>
+    <string name="lang_telugu">Telugu — తెలుగు</string>
+    <string name="lang_tamil">Tamil — தமிழ்</string>
+    <string name="lang_malayalam">Malayalam — മലയാളം</string>
+
+    <!-- Risk History Screen -->
+    <string name="historical_analytics_title">गर्मी-जोखिम इतिहास और रुझान</string>
+    <string name="historical_analytics_sub">ऐतिहासिक विश्लेषण, जोखिम वितरण और छात्र अंतर्दृष्टि</string>
+    <string name="time_period_today">आज</string>
+    <string name="time_period_week">पिछले 7 दिन</string>
+    <string name="time_period_month">पिछले 30 दिन</string>
+    <string name="time_period_all">सभी समय</string>
+    <string name="risk_trends">जोखिम रुझान (%1$s)</string>
+    <string name="predictions_count">पूर्वानुमान</string>
+    <string name="peak_risk">उच्चतम जोखिम</string>
+    <string name="avg_feels_like">औसत महसूस तापमान</string>
+    <string name="risk_category_distribution">जोखिम श्रेणी वितरण:</string>
+    <string name="timeline_risk_trend">समय-रेखा जोखिम रुझान:</string>
+    <string name="oldest">सबसे पुराना</string>
+    <string name="timeline_trend">समय-रेखा रुझान</string>
+    <string name="latest">नवीनतम</string>
+    <string name="student_friendly_insights">छात्र-अनुकूल अंतर्दृष्टि</string>
+    <string name="historical_prediction_records">ऐतिहासिक पूर्वानुमान रिकॉर्ड</string>
+    <string name="records_count">%1$d रिकॉर्ड</string>
+    <string name="no_predictions_recorded_for">%1$s के लिए कोई पूर्वानुमान दर्ज नहीं है</string>
+    <string name="fetch_live_risk_to_build_history">अपना व्यक्तिगत इतिहास बनाने के लिए होम डैशबोर्ड पर लाइव जोखिम प्राप्त करें।</string>
+    <string name="clear_risk_history_title">जोखिम इतिहास हटाएं?</string>
+    <string name="clear_risk_history_msg">क्या आप सभी दर्ज इतिहास हटाना चाहते हैं? यह कार्रवाई वापस नहीं ली जा सकती।</string>
+    <string name="delete_record_title">रिकॉर्ड हटाएं?</string>
+    <string name="delete_record_msg">इस पूर्वानुमान रिकॉर्ड को इतिहास से हटाएं?</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_hydration">जल सेवन रिमाइंडर</string>
+    <string name="notification_channel_hydration_desc">गर्म छात्र गतिविधियों के दौरान हाइड्रेटेड रहने के लिए समय-समय पर रिमाइंडर।</string>
+    <string name="notification_channel_alerts">गर्मी जोखिम अलर्ट</string>
+    <string name="notification_channel_alerts_desc">उच्च या अत्यधिक तापीय जोखिम की चेतावनी अलर्ट।</string>
+    <string name="notification_mark_hydrated">जल सेवन दर्ज करें (+250mL)</string>
+</resources>

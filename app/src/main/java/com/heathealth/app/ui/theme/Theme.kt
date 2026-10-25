@@ -6,12 +6,12 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
 private val HeatHealthLightColorScheme = lightColorScheme(
-    primary = PrimaryTeal,
+    primary = PrimaryBlue,
     onPrimary = SurfaceWhite,
-    primaryContainer = PrimaryTealLight,
-    onPrimaryContainer = PrimaryTealDark,
+    primaryContainer = PrimaryBlueLight,
+    onPrimaryContainer = PrimaryBlueDark,
     secondary = HeatAmber,
-    onSecondary = SurfaceWhite,
+    onSecondary = DeepNavy,
     secondaryContainer = HeatRiskBg,
     onSecondaryContainer = HeatOrange,
     background = BackgroundLight,
@@ -28,7 +28,6 @@ fun HeatHealthTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    // HeatHealth is designed around a clean light health-technology aesthetic
     MaterialTheme(
         colorScheme = HeatHealthLightColorScheme,
         typography = Typography,

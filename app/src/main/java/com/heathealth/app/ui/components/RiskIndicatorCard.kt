@@ -25,7 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.heathealth.app.R
 import com.heathealth.app.data.model.RiskLevel
 import com.heathealth.app.data.model.RiskPrediction
 import com.heathealth.app.ui.theme.HeatAmber
@@ -47,6 +50,7 @@ fun RiskIndicatorCard(
         RiskLevel.MODERATE -> HeatAmber      // Amber
         RiskLevel.HIGH -> HeatOrange        // Orange
         RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> Color(0xFFC62828) // Red
+        else -> PrimaryTeal
     }
 
     Card(
@@ -78,7 +82,7 @@ fun RiskIndicatorCard(
                         modifier = Modifier.size(24.dp)
                     )
                     Text(
-                        text = riskPrediction.title,
+                        text = stringResource(R.string.risk_level_title, riskPrediction.level.getLocalizedName()),
                         style = MaterialTheme.typography.titleMedium,
                         color = TextPrimary
                     )
@@ -86,8 +90,9 @@ fun RiskIndicatorCard(
 
                 // Method / Subtitle Badge
                 Text(
-                    text = riskPrediction.method,
+                    text = "Heat Risk Index",
                     style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
                     color = levelColor,
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
@@ -104,7 +109,7 @@ fun RiskIndicatorCard(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Text(
-                    text = "Category:",
+                    text = stringResource(R.string.category_label),
                     style = MaterialTheme.typography.bodyMedium,
                     color = TextSecondary
                 )
@@ -124,7 +129,7 @@ fun RiskIndicatorCard(
                             .background(levelColor)
                     )
                     Text(
-                        text = riskPrediction.level.displayName,
+                        text = riskPrediction.level.getLocalizedName(),
                         style = MaterialTheme.typography.titleLarge,
                         color = levelColor
                     )
@@ -132,7 +137,7 @@ fun RiskIndicatorCard(
 
                 riskPrediction.score?.let { scoreVal ->
                     Text(
-                        text = "Score: ${scoreVal}°C",
+                        text = stringResource(R.string.score_label, scoreVal.toString()),
                         style = MaterialTheme.typography.labelMedium,
                         color = TextSecondary
                     )
@@ -161,7 +166,7 @@ fun RiskIndicatorCard(
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
-                        text = "Contributing Factors:",
+                        text = stringResource(R.string.contributing_factors),
                         style = MaterialTheme.typography.titleSmall,
                         color = TextPrimary
                     )

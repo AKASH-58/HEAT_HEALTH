@@ -4,9 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.heathealth.app.data.local.HeatHealthDatabase
+import com.heathealth.app.data.local.datastore.UserPreferencesRepository
 import com.heathealth.app.data.local.entity.AlertLogEntity
 import com.heathealth.app.data.local.entity.HeatRiskLogEntity
 import com.heathealth.app.data.model.DashboardUiState
+import com.heathealth.app.data.model.DataSource
 import com.heathealth.app.data.model.PersonalizedGuidance
 import com.heathealth.app.data.model.PersonalizedGuidanceEngine
 import com.heathealth.app.data.repository.HeatHealthRepository
@@ -15,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -33,12 +36,14 @@ class DashboardViewModel @JvmOverloads constructor(
             HeatHealthRepository()
         }
     },
+    private val userPrefsRepository: UserPreferencesRepository = UserPreferencesRepository(application),
     autoLoad: Boolean = true
 ) : AndroidViewModel(application) {
 
     constructor(repository: HeatHealthRepository, autoLoad: Boolean = true) : this(
         application = Application(),
         repository = repository,
+        userPrefsRepository = UserPreferencesRepository(null),
         autoLoad = autoLoad
     )
 
@@ -49,8 +54,20 @@ class DashboardViewModel @JvmOverloads constructor(
         null
     }
 
+    private val profileDao = try {
+        HeatHealthDatabase.getDatabase(application).studentProfileDao()
+    } catch (e: Throwable) {
+        null
+    }
+
     private val _uiState = MutableStateFlow(DashboardUiState(isLoading = autoLoad))
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
+
+    val studentNickname: StateFlow<String> = (profileDao?.getProfile() ?: flowOf(null))
+        .map { profile ->
+            if (profile != null && profile.nickname.isNotBlank()) profile.nickname else "Student"
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "Student")
 
     val recentRiskLogs: StateFlow<List<HeatRiskLogEntity>> = repository.getRecentRiskLogs(5)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -81,7 +98,17 @@ class DashboardViewModel @JvmOverloads constructor(
 
     init {
         if (autoLoad) {
-            loadData()
+            viewModelScope.launch {
+                val prefs = userPrefsRepository.userPreferencesFlow.firstOrNull()
+                if (prefs != null && prefs.lastLatitude != 0.0 && prefs.lastLongitude != 0.0 && prefs.lastLocationLabel.isNotEmpty()) {
+                    _uiState.value = _uiState.value.copy(
+                        latitude = prefs.lastLatitude,
+                        longitude = prefs.lastLongitude,
+                        locationLabel = prefs.lastLocationLabel
+                    )
+                }
+                loadData()
+            }
         }
     }
 
@@ -91,6 +118,8 @@ class DashboardViewModel @JvmOverloads constructor(
         label: String = _uiState.value.locationLabel,
         isRefresh: Boolean = false
     ) {
+        if (!isRefresh && _uiState.value.isLoading && _uiState.value.isRefreshing) return
+
         viewModelScope.launch {
             if (isRefresh) {
                 _uiState.value = _uiState.value.copy(isRefreshing = true, errorMessage = null)
@@ -104,15 +133,30 @@ class DashboardViewModel @JvmOverloads constructor(
                     _uiState.value = state.copy(
                         isLoading = false,
                         isRefreshing = false,
+                        dataSource = DataSource.LIVE,
+                        errorMessage = null,
                         customPrediction = _uiState.value.customPrediction
                     )
                 },
                 onFailure = { error ->
-                    _uiState.value = _uiState.value.copy(
-                        isLoading = false,
-                        isRefreshing = false,
-                        errorMessage = error.localizedMessage ?: "Failed to connect to backend server."
-                    )
+                    val currentState = _uiState.value
+                    val hasExistingData = currentState.dataSource == DataSource.LIVE || currentState.dataSource == DataSource.CACHED
+
+                    if (hasExistingData) {
+                        _uiState.value = currentState.copy(
+                            isLoading = false,
+                            isRefreshing = false,
+                            dataSource = DataSource.CACHED,
+                            errorMessage = error.localizedMessage ?: "Failed to connect to backend server."
+                        )
+                    } else {
+                        _uiState.value = currentState.copy(
+                            isLoading = false,
+                            isRefreshing = false,
+                            dataSource = DataSource.UNAVAILABLE,
+                            errorMessage = error.localizedMessage ?: "Failed to connect to backend server."
+                        )
+                    }
                 }
             )
         }
@@ -128,11 +172,17 @@ class DashboardViewModel @JvmOverloads constructor(
             longitude = longitude,
             locationLabel = label
         )
+        viewModelScope.launch {
+            userPrefsRepository.updateLocation(latitude, longitude, label)
+        }
         loadData(latitude, longitude, label)
     }
 
     fun loadSampleData() {
-        _uiState.value = repository.getDashboardSampleData()
+        val sampleState = repository.getDashboardSampleData()
+        _uiState.value = sampleState.copy(
+            customPrediction = _uiState.value.customPrediction
+        )
     }
 
     fun updateCustomInputs(temp: Double, humidity: Double, windSpeed: Double) {
@@ -147,6 +197,8 @@ class DashboardViewModel @JvmOverloads constructor(
 
     fun runCustomMlPrediction() {
         val current = _uiState.value.customPrediction
+        if (current.isPredicting) return
+
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(
                 customPrediction = current.copy(isPredicting = true, errorMessage = null)

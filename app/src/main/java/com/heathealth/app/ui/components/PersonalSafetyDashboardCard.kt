@@ -31,6 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.heathealth.app.R
 import com.heathealth.app.data.local.entity.AlertLogEntity
 import com.heathealth.app.data.local.entity.HeatRiskLogEntity
 import com.heathealth.app.data.model.RiskLevel
@@ -85,12 +87,12 @@ fun PersonalSafetyDashboardCard(
 
                 Column {
                     Text(
-                        text = "Personal Safety Dashboard",
+                        text = stringResource(R.string.personal_safety_dashboard),
                         style = MaterialTheme.typography.titleMedium,
                         color = TextPrimary
                     )
                     Text(
-                        text = "Summary of risk predictions, alerts, and hydration logs",
+                        text = stringResource(R.string.personal_safety_dashboard_sub),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary
                     )
@@ -103,6 +105,7 @@ fun PersonalSafetyDashboardCard(
                     RiskLevel.LOW -> PrimaryTeal
                     RiskLevel.MODERATE -> HeatAmber
                     RiskLevel.HIGH, RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> HeatOrange
+                    else -> PrimaryTeal
                 }
 
                 Card(
@@ -119,12 +122,12 @@ fun PersonalSafetyDashboardCard(
                     ) {
                         Column {
                             Text(
-                                text = "Current Heat Risk State",
+                                text = stringResource(R.string.current_heat_risk_state),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = TextSecondary
                             )
                             Text(
-                                text = risk.level.displayName,
+                                text = risk.level.getLocalizedName(),
                                 style = MaterialTheme.typography.titleMedium,
                                 color = riskColor
                             )
@@ -158,7 +161,7 @@ fun PersonalSafetyDashboardCard(
                         modifier = Modifier.size(18.dp)
                     )
                     Text(
-                        text = "Today's Hydration Progress",
+                        text = stringResource(R.string.todays_hydration_progress),
                         style = MaterialTheme.typography.titleSmall,
                         color = TextPrimary
                     )
@@ -208,7 +211,7 @@ fun PersonalSafetyDashboardCard(
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
-                        text = "Recent Recorded Risk Assessments",
+                        text = stringResource(R.string.recent_recorded_risk_assessments),
                         style = MaterialTheme.typography.titleSmall,
                         color = TextPrimary
                     )
@@ -238,7 +241,7 @@ fun PersonalSafetyDashboardCard(
                             }
 
                             Text(
-                                text = log.riskLevel,
+                                text = RiskLevel.fromDisplayName(log.riskLevel).getLocalizedName(),
                                 style = MaterialTheme.typography.labelLarge,
                                 color = PrimaryTeal
                             )
@@ -246,7 +249,7 @@ fun PersonalSafetyDashboardCard(
                     }
                 } else {
                     Text(
-                        text = "No recent risk predictions recorded in local database yet.",
+                        text = stringResource(R.string.no_recent_risk_predictions),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary
                     )
@@ -266,7 +269,7 @@ fun PersonalSafetyDashboardCard(
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
-                        text = "Recent Triggered Heat Alerts",
+                        text = stringResource(R.string.recent_triggered_heat_alerts),
                         style = MaterialTheme.typography.titleSmall,
                         color = TextPrimary
                     )
@@ -295,7 +298,7 @@ fun PersonalSafetyDashboardCard(
                     }
                 } else {
                     Text(
-                        text = "No local heat alerts triggered yet.",
+                        text = stringResource(R.string.no_local_heat_alerts),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary
                     )

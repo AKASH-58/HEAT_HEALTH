@@ -37,6 +37,16 @@ class StudentProfileRepository(
             updatedAt = System.currentTimeMillis()
         )
         profileDao.insertOrUpdateProfile(updated)
+
+        val langCode = when (preferredLanguage.lowercase()) {
+            "hindi", "hi" -> "hi"
+            "kannada", "kn" -> "kn"
+            "telugu", "te" -> "te"
+            "tamil", "ta" -> "ta"
+            "malayalam", "ml" -> "ml"
+            else -> "en"
+        }
+        userPreferencesRepository.updateSelectedLanguage(langCode)
     }
 
     suspend fun resetProfileToDefaults() = withContext(ioDispatcher) {

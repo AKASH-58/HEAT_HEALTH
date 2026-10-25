@@ -2,6 +2,13 @@ package com.heathealth.app.data.model
 
 import com.heathealth.app.network.dto.PredictResponseDto
 
+enum class DataSource {
+    LIVE,
+    CACHED,
+    DEMO,
+    UNAVAILABLE
+}
+
 data class CustomPredictionState(
     val temperatureC: Double = 38.0,
     val humidityPercent: Double = 65.0,
@@ -25,5 +32,6 @@ data class DashboardUiState(
     val latitude: Double = 28.6139,
     val longitude: Double = 77.2090,
     val lastUpdated: String = "",
+    val dataSource: DataSource = DataSource.UNAVAILABLE,
     val customPrediction: CustomPredictionState = CustomPredictionState()
 )

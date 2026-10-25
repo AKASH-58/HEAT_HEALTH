@@ -33,6 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.heathealth.app.R
 import com.heathealth.app.data.model.CustomPredictionState
 import com.heathealth.app.data.model.RiskLevel
 import com.heathealth.app.ui.theme.BorderLight
@@ -82,7 +84,7 @@ fun CustomMlPredictorCard(
                         modifier = Modifier.size(24.dp)
                     )
                     Text(
-                        text = "Custom Heat Risk Simulator (ML)",
+                        text = stringResource(R.string.custom_heat_risk_simulator),
                         style = MaterialTheme.typography.titleMedium,
                         color = TextPrimary
                     )
@@ -95,7 +97,7 @@ fun CustomMlPredictorCard(
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
-                        text = "POST /predict",
+                        text = "Interactive",
                         style = MaterialTheme.typography.labelSmall,
                         color = PrimaryTeal
                     )
@@ -103,7 +105,7 @@ fun CustomMlPredictorCard(
             }
 
             Text(
-                text = "Adjust environmental variables to simulate custom heat-health risk using the backend Machine Learning inference engine.",
+                text = stringResource(R.string.custom_heat_risk_sub),
                 style = MaterialTheme.typography.bodySmall,
                 color = TextSecondary
             )
@@ -115,7 +117,7 @@ fun CustomMlPredictorCard(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Temperature", style = MaterialTheme.typography.bodySmall, color = TextPrimary)
+                    Text(text = stringResource(R.string.temperature_label), style = MaterialTheme.typography.bodySmall, color = TextPrimary)
                     Text(text = "${customState.temperatureC.roundToInt()}°C", style = MaterialTheme.typography.labelLarge, color = HeatOrange)
                 }
                 Slider(
@@ -130,7 +132,7 @@ fun CustomMlPredictorCard(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Relative Humidity", style = MaterialTheme.typography.bodySmall, color = TextPrimary)
+                    Text(text = stringResource(R.string.relative_humidity), style = MaterialTheme.typography.bodySmall, color = TextPrimary)
                     Text(text = "${customState.humidityPercent.roundToInt()}%", style = MaterialTheme.typography.labelLarge, color = PrimaryTeal)
                 }
                 Slider(
@@ -145,7 +147,7 @@ fun CustomMlPredictorCard(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "Wind Speed", style = MaterialTheme.typography.bodySmall, color = TextPrimary)
+                    Text(text = stringResource(R.string.wind_speed), style = MaterialTheme.typography.bodySmall, color = TextPrimary)
                     Text(text = "${customState.windSpeedKmh.roundToInt()} km/h", style = MaterialTheme.typography.labelLarge, color = PrimaryTeal)
                 }
                 Slider(
@@ -171,7 +173,7 @@ fun CustomMlPredictorCard(
                         strokeWidth = 2.dp
                     )
                     Spacer(modifier = Modifier.size(8.dp))
-                    Text("Running ML Inference...")
+                    Text(stringResource(R.string.running_ml_inference))
                 } else {
                     Icon(
                         imageVector = Icons.Default.Psychology,
@@ -179,7 +181,7 @@ fun CustomMlPredictorCard(
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.size(8.dp))
-                    Text("Predict Custom Heat Risk (ML)")
+                    Text(stringResource(R.string.btn_predict_custom_heat_risk))
                 }
             }
 
@@ -200,6 +202,7 @@ fun CustomMlPredictorCard(
                     RiskLevel.MODERATE -> HeatAmber
                     RiskLevel.HIGH -> HeatOrange
                     RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> Color(0xFFC62828)
+                    else -> PrimaryTeal
                 }
 
                 Card(
@@ -216,38 +219,20 @@ fun CustomMlPredictorCard(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
                         ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(6.dp)
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(10.dp)
-                                        .clip(CircleShape)
-                                        .background(levelColor)
-                                )
-                                Text(
-                                    text = "Predicted: ${riskEnum.displayName}",
-                                    style = MaterialTheme.typography.titleMedium,
-                                    color = levelColor
-                                )
-                            }
-
-                            if (result.isDemoModel) {
-                                Text(
-                                    text = "PROTOTYPE ML MODEL",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = HeatOrange,
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(6.dp))
-                                        .background(SurfaceWhite)
-                                        .padding(horizontal = 6.dp, vertical = 2.dp)
-                                )
-                            }
+                            Box(
+                                modifier = Modifier
+                                    .size(10.dp)
+                                    .clip(CircleShape)
+                                    .background(levelColor)
+                            )
+                            Text(
+                                text = "Assessment: ${riskEnum.displayName}",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = levelColor
+                            )
                         }
 
                         result.riskScore?.let { score ->
@@ -262,12 +247,6 @@ fun CustomMlPredictorCard(
                             text = result.predictionMessage,
                             style = MaterialTheme.typography.bodySmall,
                             color = TextPrimary
-                        )
-
-                        Text(
-                            text = "Model Version: ${result.modelVersion}",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = TextSecondary
                         )
                     }
                 }

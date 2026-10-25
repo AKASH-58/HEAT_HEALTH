@@ -2,21 +2,31 @@ package com.heathealth.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Primary Accent Colors (Teal / Green)
-val PrimaryTeal = Color(0xFF00897B)
-val PrimaryTealDark = Color(0xFF005B4F)
-val PrimaryTealLight = Color(0xFFE0F2F1)
-val AccentGreen = Color(0xFF10B981)
+// Design System Colors (Heat-Health Palette)
+val DeepNavy = Color(0xFF14243A)
+val PrimaryBlue = Color(0xFF2563EB)
+val PrimaryBlueLight = Color(0xFFEFF6FF)
+val PrimaryBlueDark = Color(0xFF1D4ED8)
 
-// Heat & Risk Indicator Colors (Amber / Orange)
-val HeatAmber = Color(0xFFF59E0B)
-val HeatOrange = Color(0xFFE65100)
-val HeatRiskBg = Color(0xFFFFF3E0)
-val HeatRiskBorder = Color(0xFFFFB74D)
+// Semantic Risk & Status Colors
+val HeatGreen = Color(0xFF16A34A)
+val HeatAmber = Color(0xFFFBBF24)
+val HeatOrange = Color(0xFFF97316)
+val HeatRed = Color(0xFFDC2626)
 
-// Neutral Background & Surface Colors
-val BackgroundLight = Color(0xFFF8F9FA)
+val HeatRiskBg = Color(0xFFFFF7ED)
+val HeatRiskBorder = Color(0xFFFED7AA)
+
+// Neutral Surface & Text Colors
+val BackgroundLight = Color(0xFFF5F7FB)
 val SurfaceWhite = Color(0xFFFFFFFF)
-val TextPrimary = Color(0xFF1F2937)
-val TextSecondary = Color(0xFF6B7280)
-val BorderLight = Color(0xFFE5E7EB)
+val TextPrimary = Color(0xFF172033)
+val TextSecondary = Color(0xFF64748B)
+val BorderLight = Color(0xFFE2E8F0)
+
+// Legacy Aliases for Seamless Backward Compatibility
+val PrimaryTeal = PrimaryBlue
+val PrimaryTealDark = PrimaryBlueDark
+val PrimaryTealLight = PrimaryBlueLight
+val AccentGreen = HeatGreen
+

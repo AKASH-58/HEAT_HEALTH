@@ -37,6 +37,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.heathealth.app.R
 import com.heathealth.app.data.model.HourlyForecast
 import com.heathealth.app.data.model.RiskLevel
 import com.heathealth.app.ui.theme.BorderLight
@@ -53,8 +55,13 @@ import com.heathealth.app.ui.theme.TextSecondary
 fun OutdoorActivityPlannerCard(
     hourlyForecast: List<HourlyForecast>
 ) {
-    val activities = listOf("Walking to Class", "Outdoor Sports", "Campus Commute", "Fieldwork")
-    var selectedActivity by remember { mutableStateOf("Walking to Class") }
+    val activities = listOf(
+        stringResource(R.string.activity_walking),
+        stringResource(R.string.activity_sports),
+        stringResource(R.string.activity_commute),
+        stringResource(R.string.activity_fieldwork)
+    )
+    var selectedActivity by remember { mutableStateOf(activities.first()) }
 
     val defaultHour = hourlyForecast.firstOrNull()?.time ?: "14:00"
     var selectedTime by remember { mutableStateOf(defaultHour) }
@@ -95,12 +102,12 @@ fun OutdoorActivityPlannerCard(
 
                 Column {
                     Text(
-                        text = "Student Outdoor Activity Planner",
+                        text = stringResource(R.string.student_outdoor_activity_planner),
                         style = MaterialTheme.typography.titleMedium,
                         color = TextPrimary
                     )
                     Text(
-                        text = "Plan safe outdoor times based on hourly heat risk predictions",
+                        text = stringResource(R.string.plan_safe_outdoor_times),
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary
                     )
@@ -108,7 +115,7 @@ fun OutdoorActivityPlannerCard(
             }
 
             Text(
-                text = "Select Planned Activity:",
+                text = stringResource(R.string.select_planned_activity),
                 style = MaterialTheme.typography.labelMedium,
                 color = TextSecondary
             )
@@ -136,7 +143,7 @@ fun OutdoorActivityPlannerCard(
             }
 
             Text(
-                text = "Select Planned Time:",
+                text = stringResource(R.string.select_planned_time),
                 style = MaterialTheme.typography.labelMedium,
                 color = TextSecondary
             )
@@ -178,6 +185,7 @@ fun OutdoorActivityPlannerCard(
                     RiskLevel.LOW -> PrimaryTeal
                     RiskLevel.MODERATE -> HeatAmber
                     RiskLevel.HIGH, RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> HeatOrange
+                    else -> PrimaryTeal
                 }
 
                 Card(
@@ -207,14 +215,14 @@ fun OutdoorActivityPlannerCard(
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Text(
-                                    text = "Planned Time: ${matchedForecast.time}",
+                                    text = stringResource(R.string.planned_time_label, matchedForecast.time),
                                     style = MaterialTheme.typography.titleSmall,
                                     color = TextPrimary
                                 )
                             }
 
                             Text(
-                                text = risk.displayName,
+                                text = risk.getLocalizedName(),
                                 style = MaterialTheme.typography.labelLarge,
                                 color = riskColor
                             )
@@ -227,10 +235,11 @@ fun OutdoorActivityPlannerCard(
                         )
 
                         val actionRecommendation = when (risk) {
-                            RiskLevel.LOW -> "Good conditions for $selectedActivity. Maintain normal hydration."
-                            RiskLevel.MODERATE -> "Proceed with caution. Walk in shade, carry a water bottle, and take rest breaks."
-                            RiskLevel.HIGH -> "High heat risk window. Consider rescheduling $selectedActivity to a cooler hour or reducing outdoor intensity."
-                            RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> "Avoid strenuous outdoor activity during this window. Reschedule to early morning or evening."
+                            RiskLevel.LOW -> stringResource(R.string.rec_low_risk, selectedActivity)
+                            RiskLevel.MODERATE -> stringResource(R.string.rec_mod_risk)
+                            RiskLevel.HIGH -> stringResource(R.string.rec_high_risk, selectedActivity)
+                            RiskLevel.VERY_HIGH, RiskLevel.EXTREME -> stringResource(R.string.rec_extreme_risk)
+                            else -> "Maintain baseline hydration and rest precautions."
                         }
 
                         Text(
@@ -244,7 +253,7 @@ fun OutdoorActivityPlannerCard(
                 if (risk == RiskLevel.HIGH || risk == RiskLevel.VERY_HIGH || risk == RiskLevel.EXTREME) {
                     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                         Text(
-                            text = "Suggested Cooler Alternative Times:",
+                            text = stringResource(R.string.suggested_cooler_alternative_times),
                             style = MaterialTheme.typography.labelMedium,
                             color = PrimaryTeal
                         )
@@ -263,7 +272,7 @@ fun OutdoorActivityPlannerCard(
                                             .padding(horizontal = 8.dp, vertical = 4.dp)
                                     ) {
                                         Text(
-                                            text = "${alt.time} (${alt.temperatureCelsius}°C - ${alt.riskLevel.displayName})",
+                                            text = "${alt.time} (${alt.temperatureCelsius}°C - ${alt.riskLevel.getLocalizedName()})",
                                             style = MaterialTheme.typography.labelSmall,
                                             color = PrimaryTeal
                                         )
@@ -272,7 +281,7 @@ fun OutdoorActivityPlannerCard(
                             }
                         } else {
                             Text(
-                                text = "No significantly cooler hours found in current 24-hour forecast.",
+                                text = stringResource(R.string.no_cooler_hours_found),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = TextSecondary
                             )
@@ -299,7 +308,7 @@ fun OutdoorActivityPlannerCard(
                             modifier = Modifier.size(20.dp)
                         )
                         Text(
-                            text = "Future risk estimate is unavailable for the selected date/time beyond the 24-hour forecast window.",
+                            text = stringResource(R.string.future_risk_estimate_unavailable),
                             style = MaterialTheme.typography.bodySmall,
                             color = TextSecondary
                         )

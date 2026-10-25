@@ -5,7 +5,8 @@ enum class RiskLevel(val displayName: String) {
     MODERATE("Moderate"),
     HIGH("High"),
     VERY_HIGH("Very High"),
-    EXTREME("Extreme");
+    EXTREME("Extreme"),
+    UNKNOWN("General Guidance");
 
     companion object {
         fun fromDisplayName(name: String): RiskLevel {

@@ -25,6 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.heathealth.app.R
 import com.heathealth.app.data.model.Recommendation
 import com.heathealth.app.ui.theme.BorderLight
 import com.heathealth.app.ui.theme.PrimaryTeal
@@ -62,7 +64,7 @@ fun SafetyRecommendationsCard(
                 )
 
                 Text(
-                    text = "Safety Recommendations",
+                    text = stringResource(R.string.safety_recommendations),
                     style = MaterialTheme.typography.titleMedium,
                     color = TextPrimary
                 )

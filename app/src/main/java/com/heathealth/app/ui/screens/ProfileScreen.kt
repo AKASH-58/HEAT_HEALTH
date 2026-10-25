@@ -1,6 +1,5 @@
 package com.heathealth.app.ui.screens
 
-import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,21 +15,29 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.DirectionsRun
+import androidx.compose.material.icons.filled.DirectionsWalk
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -49,24 +56,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.heathealth.app.R
+import com.heathealth.app.ui.components.HeatHealthLogo
 import com.heathealth.app.ui.theme.BorderLight
 import com.heathealth.app.ui.theme.PrimaryTeal
 import com.heathealth.app.ui.theme.PrimaryTealLight
 import com.heathealth.app.ui.theme.SurfaceWhite
 import com.heathealth.app.ui.theme.TextPrimary
 import com.heathealth.app.ui.theme.TextSecondary
+import com.heathealth.app.util.LanguageManager
 import com.heathealth.app.viewmodel.StudentProfileViewModel
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ProfileScreen(
-    viewModel: StudentProfileViewModel = viewModel()
+    viewModel: StudentProfileViewModel = viewModel(),
+    onNavigateToAlerts: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(uiState.successMessage) {
         uiState.successMessage?.let { msg ->
@@ -76,7 +90,6 @@ fun ProfileScreen(
     }
 
     val activityTypes = listOf("Mostly indoors", "Regular commuting", "Frequent outdoor activities")
-    val supportedLanguages = listOf("English", "Hindi")
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -87,40 +100,111 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Header
+            // Header Area
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Profile",
-                    tint = PrimaryTeal,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Profile",
+                        tint = PrimaryTeal,
+                        modifier = Modifier
+                            .size(42.dp)
+                            .clip(CircleShape)
+                            .background(PrimaryTealLight)
+                            .padding(8.dp)
+                    )
+
+                    Column {
+                        Text(
+                            text = stringResource(R.string.student_profile_preferences),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = TextPrimary
+                        )
+                        Text(
+                            text = stringResource(R.string.customize_activity_language_hydration),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = TextSecondary
+                        )
+                    }
+                }
+
+                IconButton(
+                    onClick = onNavigateToAlerts,
                     modifier = Modifier
-                        .size(42.dp)
+                        .size(40.dp)
                         .clip(CircleShape)
                         .background(PrimaryTealLight)
-                        .padding(8.dp)
-                )
-
-                Column {
-                    Text(
-                        text = "Student Profile & Preferences",
-                        style = MaterialTheme.typography.headlineSmall,
-                        color = TextPrimary
-                    )
-                    Text(
-                        text = "Customize activity levels, language, and hydration targets",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = TextSecondary
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.NotificationsActive,
+                        contentDescription = stringResource(R.string.smart_heat_alerts),
+                        tint = PrimaryTeal,
+                        modifier = Modifier.size(20.dp)
                     )
                 }
             }
 
-            // Student Nickname Input
+            // Student Hero Profile Avatar Card
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(1.dp, PrimaryTeal, RoundedCornerShape(16.dp)),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = PrimaryTealLight.copy(alpha = 0.35f))
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(56.dp)
+                            .clip(CircleShape)
+                            .background(PrimaryTeal),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = if (uiState.nickname.isNotBlank()) uiState.nickname.take(1).uppercase() else "S",
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = SurfaceWhite
+                        )
+                    }
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = if (uiState.nickname.isNotBlank()) uiState.nickname else "Student User",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = TextPrimary
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = uiState.activityType,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = PrimaryTeal,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+            }
+
+            // Student Nickname Input Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -135,16 +219,18 @@ fun ProfileScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        text = "Personal Details (Optional)",
+                        text = "Personal Details",
                         style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
                         color = TextPrimary
                     )
 
                     OutlinedTextField(
                         value = uiState.nickname,
                         onValueChange = { viewModel.onNicknameChanged(it) },
-                        label = { Text("Nickname / Display Name") },
+                        label = { Text("Display Name / Nickname") },
                         placeholder = { Text("e.g. Alex") },
+                        leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = null, tint = PrimaryTeal) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         shape = RoundedCornerShape(12.dp)
@@ -152,7 +238,7 @@ fun ProfileScreen(
                 }
             }
 
-            // Activity Type Selection
+            // Daily Activity Pattern Selection Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -167,8 +253,9 @@ fun ProfileScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        text = "Daily Activity Pattern",
+                        text = "Daily Activity Routine",
                         style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
                         color = TextPrimary
                     )
                     Text(
@@ -180,27 +267,66 @@ fun ProfileScreen(
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         activityTypes.forEach { type ->
                             val isSelected = type == uiState.activityType
-                            Box(
+                            Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .background(if (isSelected) PrimaryTeal else PrimaryTealLight)
                                     .clickable { viewModel.onActivityTypeChanged(type) }
-                                    .padding(12.dp),
-                                contentAlignment = Alignment.CenterStart
-                            ) {
-                                Text(
-                                    text = type,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = if (isSelected) SurfaceWhite else PrimaryTeal
+                                    .border(
+                                        1.dp,
+                                        if (isSelected) PrimaryTeal else BorderLight,
+                                        RoundedCornerShape(12.dp)
+                                    ),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = if (isSelected) PrimaryTealLight else SurfaceWhite
                                 )
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(14.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                        modifier = Modifier.weight(1f)
+                                    ) {
+                                        Icon(
+                                            imageVector = when (type) {
+                                                "Mostly indoors" -> Icons.Default.Person
+                                                "Regular commuting" -> Icons.Default.DirectionsWalk
+                                                else -> Icons.Default.DirectionsRun
+                                            },
+                                            contentDescription = null,
+                                            tint = if (isSelected) PrimaryTeal else TextSecondary,
+                                            modifier = Modifier.size(20.dp)
+                                        )
+                                        Text(
+                                            text = type,
+                                            style = MaterialTheme.typography.titleSmall,
+                                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                            color = if (isSelected) PrimaryTeal else TextPrimary
+                                        )
+                                    }
+
+                                    if (isSelected) {
+                                        Icon(
+                                            imageVector = Icons.Default.Check,
+                                            contentDescription = "Selected",
+                                            tint = PrimaryTeal,
+                                            modifier = Modifier.size(20.dp)
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
 
-            // Preferred Language & Hydration Target
+            // Preferred Language Selection Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -214,49 +340,138 @@ fun ProfileScreen(
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(14.dp)
                 ) {
-                    Text(
-                        text = "App Preferences",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = TextPrimary
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Language,
+                            contentDescription = null,
+                            tint = PrimaryTeal,
+                            modifier = Modifier.size(22.dp)
+                        )
+                        Text(
+                            text = "Language Preferences",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = TextPrimary
+                        )
+                    }
 
-                    Text(
-                        text = "Preferred Language",
-                        style = MaterialTheme.typography.titleSmall,
-                        color = TextPrimary
-                    )
+                    val currentCode = LanguageManager.getCurrentLanguageCode()
 
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        LanguageManager.SUPPORTED_LANGUAGES.chunked(2).forEach { rowLangs ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                rowLangs.forEach { lang ->
+                                    val isSelected = lang.code == currentCode ||
+                                            lang.code.equals(uiState.preferredLanguage, ignoreCase = true) ||
+                                            lang.englishName.equals(uiState.preferredLanguage, ignoreCase = true)
+
+                                    Card(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .clickable {
+                                                viewModel.onPreferredLanguageChanged(lang.code)
+                                                LanguageManager.applyLanguage(context, lang.code)
+                                            }
+                                            .border(
+                                                1.dp,
+                                                if (isSelected) PrimaryTeal else BorderLight,
+                                                RoundedCornerShape(12.dp)
+                                            ),
+                                        shape = RoundedCornerShape(12.dp),
+                                        colors = CardDefaults.cardColors(
+                                            containerColor = if (isSelected) PrimaryTeal else PrimaryTealLight
+                                        )
+                                    ) {
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 12.dp, horizontal = 8.dp),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            verticalArrangement = Arrangement.spacedBy(2.dp)
+                                        ) {
+                                            Text(
+                                                text = lang.nativeName,
+                                                style = MaterialTheme.typography.titleMedium,
+                                                fontWeight = FontWeight.Bold,
+                                                color = if (isSelected) SurfaceWhite else PrimaryTeal
+                                            )
+                                            Text(
+                                                text = lang.englishName,
+                                                style = MaterialTheme.typography.labelSmall,
+                                                color = if (isSelected) SurfaceWhite.copy(alpha = 0.85f) else TextSecondary
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Hydration Target Card
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(1.dp, BorderLight, RoundedCornerShape(16.dp)),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = SurfaceWhite)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.WaterDrop,
+                            contentDescription = null,
+                            tint = PrimaryTeal,
+                            modifier = Modifier.size(22.dp)
+                        )
+                        Text(
+                            text = "Daily Hydration Target",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = TextPrimary
+                        )
+                    }
+
+                    // Preset Quick Goal Buttons
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        supportedLanguages.forEach { lang ->
-                            val isSelected = lang == uiState.preferredLanguage
+                        listOf(2000, 2500, 3000).forEach { preset ->
+                            val isSelected = uiState.hydrationTargetMlText == preset.toString()
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
-                                    .clip(RoundedCornerShape(10.dp))
+                                    .clip(RoundedCornerShape(8.dp))
                                     .background(if (isSelected) PrimaryTeal else PrimaryTealLight)
-                                    .clickable { viewModel.onPreferredLanguageChanged(lang) }
-                                    .padding(vertical = 10.dp),
+                                    .clickable { viewModel.onHydrationTargetChanged(preset.toString()) }
+                                    .padding(vertical = 8.dp),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = lang,
+                                    text = "$preset mL",
                                     style = MaterialTheme.typography.labelSmall,
+                                    fontWeight = FontWeight.Bold,
                                     color = if (isSelected) SurfaceWhite else PrimaryTeal
                                 )
                             }
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(4.dp))
-
-                    Text(
-                        text = "Daily Hydration Reference Target (mL)",
-                        style = MaterialTheme.typography.titleSmall,
-                        color = TextPrimary
-                    )
 
                     OutlinedTextField(
                         value = uiState.hydrationTargetMlText,
@@ -281,7 +496,7 @@ fun ProfileScreen(
                 }
             }
 
-            // Hydration Reminders Preference Card
+            // Hydration Reminders Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -304,10 +519,11 @@ fun ProfileScreen(
                             Text(
                                 text = "Hydration Reminders",
                                 style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
                                 color = TextPrimary
                             )
                             Text(
-                                text = "Save preference for periodic water intake reminders",
+                                text = "Periodic water intake reminders",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = TextSecondary
                             )
@@ -327,6 +543,7 @@ fun ProfileScreen(
                         Text(
                             text = "Reminder Interval",
                             style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Bold,
                             color = TextPrimary
                         )
 
@@ -346,6 +563,7 @@ fun ProfileScreen(
                                     Text(
                                         text = "Every $hours hr${if (hours > 1) "s" else ""}",
                                         style = MaterialTheme.typography.labelSmall,
+                                        fontWeight = FontWeight.Bold,
                                         color = if (isSelected) SurfaceWhite else PrimaryTeal
                                     )
                                 }
@@ -355,7 +573,7 @@ fun ProfileScreen(
                 }
             }
 
-            // Non-Medical Notice Card
+            // General Guidelines Disclaimer Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -378,7 +596,7 @@ fun ProfileScreen(
                     )
 
                     Text(
-                        text = "General Guidelines Notice: Hydration targets are general reference guidelines for educational purpose. No individual medical claims or personal diagnostic calculations are implied.",
+                        text = "General Guidelines Notice: Hydration targets are general reference guidelines for educational purpose.",
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary
                     )
@@ -392,22 +610,81 @@ fun ProfileScreen(
             ) {
                 Button(
                     onClick = { viewModel.saveProfile() },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = PrimaryTeal),
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Icon(imageVector = Icons.Default.Save, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(modifier = Modifier.size(6.dp))
-                    Text("Save Profile")
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Save Profile", fontWeight = FontWeight.Bold)
                 }
 
                 OutlinedButton(
                     onClick = { viewModel.resetToDefaults() },
+                    modifier = Modifier.height(48.dp),
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Icon(imageVector = Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(modifier = Modifier.size(6.dp))
-                    Text("Reset")
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Reset", fontWeight = FontWeight.Bold)
+                }
+            }
+
+            // HeatHealth App Info Card
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(1.dp, BorderLight, RoundedCornerShape(16.dp)),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = SurfaceWhite)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(14.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    HeatHealthLogo(
+                        modifier = Modifier
+                            .size(52.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                    )
+
+                    Column {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Text(
+                                text = "HeatHealth",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = TextPrimary
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(4.dp))
+                                    .background(PrimaryTealLight)
+                                    .padding(horizontal = 6.dp, vertical = 2.dp)
+                            ) {
+                                Text(
+                                    text = "v1.0.0",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = PrimaryTeal,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+
+                        Text(
+                            text = "Heat-Health Risk Prediction & Early Warning System",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = TextSecondary
+                        )
+                    }
                 }
             }
 
